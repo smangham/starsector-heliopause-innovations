@@ -1,0 +1,43 @@
+{
+  "displayName": "Exploration",
+  "fluxCapacitors": 0,
+  "fluxVents": 19,
+  "goalVariant": true,
+  "hullId": "toaster_hp_pinnacle",
+  "hullMods": [
+    "stabilizedshieldemitter",
+    "reinforcedhull"
+  ],
+  "permaMods": [],
+  "sMods": [],
+  "variantId": "toaster_hp_pinnacle_Exploration",
+  "weaponGroups": [
+    {
+      "autofire": false,
+      "mode": "LINKED",
+      "weapons": {"WS 009": "locust"}
+    },
+    {
+      "autofire": false,
+      "mode": "LINKED",
+      "weapons": {"WS 005": "sabot"}
+    },
+    {
+      "autofire": true,
+      "mode": "LINKED",
+      "weapons": {
+        "WS 001": "heavyburst",
+        "WS 002": "heavyburst"
+      }
+    },
+    {
+      "autofire": true,
+      "mode": "LINKED",
+      "weapons": {
+        "WS 003": "pdburst",
+        "WS 004": "pdburst"
+      }
+    }
+  ],
+  "wings": []
+}

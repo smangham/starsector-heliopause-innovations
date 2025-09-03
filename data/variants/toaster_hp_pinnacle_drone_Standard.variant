@@ -1,0 +1,19 @@
+{
+	"displayName":"Wing",
+	"hullId":"toaster_hp_pinnacle_drone",
+	"variantId":"toaster_hp_pinnacle_drone_Standard",
+	"fluxVents":0,
+	"fluxCapacitors":0,
+	"mods":[], # array of strings
+	
+	# mode is either LINKED or ALTERNATING
+	# slot ids (WS ***) must match what's in the .ship file
+  "weaponGroups":[
+      {
+          "mode":"LINKED",
+          "weapons":{
+              "WS 001":"targetinglaser1"
+          }
+      }
+  ]
+}
