@@ -10,12 +10,43 @@
 	# rules.csv can call Java from within a rule. The code must extend `BaseCommandPlugin`.
 	# This section is where we can tell the game where to look for our custom rule commands.
 	# Rules from multiple packages CAN NOT share the same name	
-	#"ruleCommandPackages":[
-	#	 "com.fs.starfarer.api.impl.campaign.rulecmd",
-	#],
+	"ruleCommandPackages":[
+		 "toaster.hp.campaign.rulecmd",
+	],
 	
     # This section is where we can define images that can be referenced ingame using Global.getSettings().getSpriteName("category", "name");
-	#"graphics":{
-	#	"category":{ "name":"graphics/ui/sector_age_young.png", }
-	#}
+	"graphics":{
+        "tstHP_possessed_hullmod":{
+            "mote_sprite":"graphics/fx/hit_glow.png",
+            "damage":"graphics/damage/ship_damage_over1.png",
+            "cloud_upper":"graphics/terrain/deep_hyperspace.png",
+            "cloud_lower":"graphics/terrain/deep_hyperspace2.png",
+            "glow":"graphics/fx/hit_glow.png",
+            "captain":"graphics/toaster/hp/portraits/ghost01.png",
+            "trail":"graphics/toaster/hp/hullmods/contrail_faded.png"
+        },
+        "tstHP_attractor_field":{
+            "glow_particle":"graphics/toaster/hp/shipsystems/attractor_field/glow_particle.png",
+            "glow_whirl":"graphics/toaster/hp/shipsystems/attractor_field/glow_whirl_bright.png"
+        },
+        "tstHP_pinnacle":{
+            "glow1": "graphics/toaster/hp/ships/pinnacle/pinnacle_glow1.png",
+            "glow2": "graphics/toaster/hp/ships/pinnacle/pinnacle_glow2.png",
+            "stormcaller_glow": "graphics/toaster/hp/ships/pinnacle/stormcaller_glow.png"
+        },
+        "hyperlib": {
+            "deep_hyperspace":"graphics/terrain/deep_hyperspace.png",
+            "deep_hyperspace_dark":"graphics/terrain/deep_hyperspace2.png",
+            "deep_hyperspace_glow":"graphics/terrain/deep_hyperspace_blue_glow.png"
+        },
+        "tstHP_heliopause_faction": {
+            "portrait_ceo":"graphics/portraits/portrait31.png"
+        },
+        "tstHP_heliopause_event": {
+            "icon":"graphics/toaster/hp/factions/heliopause_crest.png",
+            "stage_START":"graphics/icons/campaign/slipstream_detection.png",
+            "stage_MISSIONS":"graphics/toaster/hp/factions/heliopause_crest.png",
+            "stage_MAX":"graphics/icons/missions/hyperspace_oddity.png"
+        }
+	}
 }

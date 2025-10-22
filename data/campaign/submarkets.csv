@@ -1,0 +1,2 @@
+id,name,faction,desc,script,icon,order
+tstHP_heliopause_submarket,"Heliopause Innovations",tstHP_heliopause_faction,"A Domain-era megacorp still clinging on, Heliopause Innovations mostly serves scavengers and explorers headed for the outskirts of the sector.",toaster.hp.campaign.submarkets.HeliopauseSubmarketPlugin,graphics/toaster/hp/factions/heliopause_crest.png,800

@@ -2,4 +2,7 @@ name,id,flux/second,f/s (base rate),f/s (base cap),flux/use,f/u (base rate),f/u 
 # Add your ship systems here. One left commented out for reference.
 # See https://starsector.fandom.com/wiki/Ship_Systems_CSV.
 # Maneuvering Jets,maneuveringjets,,,,,,,,,,1,5,1,5,,,,,,,,,,,,,graphics/icons/hullsys/maneuvering_jets.png
-Energy Attractor,toaster_hp_energy_attractor,,,,,,,,,,0.5,5,0.5,30,FALSE,,,TRUE,FALSE,,,,FALSE,TRUE,,defensive,graphics/toaster/icons/hullsys/energy_attractor.png
+Attractor Field,tstHP_attractor_field,,,0.02,,,,,,,0.5,5,0.5,20,FALSE,,,FALSE,FALSE,,,,FALSE,TRUE,,defensive,graphics/toaster/hp/icons/hullsys/energy_attractor.png
+Attractor Field Mk 1,tstHP_attractor_field_mk1,,,0.05,,,,,,,0.5,5,0.5,20,FALSE,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,defensive,graphics/toaster/hp/icons/hullsys/energy_attractor.png
+Mote Controller,tstHP_possessed_mote_controller,,,,,,0,,1,0.025,0.1,,0.4,,,,,,,,,,,,,"restricted, offensive, defensive, tstHP_charged_system",graphics/icons/hullsys/mote_attractor.png
+Hyper-polarisation,tstHP_possessed_damper_system,1,,,,,,,1,0.025,0.25,2,0.25,,,,,,TRUE,,,,TRUE,TRUE,,"uses_damper_ai,defensive, restricted, tstHP_charged_system",graphics/icons/hullsys/damper_field.png

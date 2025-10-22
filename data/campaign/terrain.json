@@ -1,0 +1,7 @@
+{
+	"hyperspace":{
+		"plugin":"org.hyperlib.campaign.terrain.HyperLibHyperspaceTerrainPlugin",
+        "type":"hyperspace",
+		"musicSuppression":1
+    }
+}

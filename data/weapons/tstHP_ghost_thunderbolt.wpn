@@ -1,0 +1,22 @@
+{
+	"id":"tstHP_ghost_thunderbolt",  # this id must match what's in the spreadsheet
+	"specClass":"projectile",
+	"everyFrameEffect":"toaster.hp.weapons.ghost.GhostThunderboltEffect",
+	"type":"ENERGY",
+	"size":"MEDIUM",
+	"turretSprite":"",
+	"turretGlowSprite":"",
+	"hardpointSprite":"",
+	"hardpointGlowSprite":"",
+	"glowColor":[100,250,244,255],
+	"turretOffsets":[0, 0],
+	"turretAngleOffsets":[0],
+	"hardpointOffsets":[0, 0],
+	"hardpointAngleOffsets":[0],
+    "displayArcRadius":700,
+	"barrelMode":"ALTERNATING", # or LINKED.  whether barrels fire at the same time or alternate.
+	"animationType":"GLOW",
+	"autocharge":true,  # whether the weapon will continue charging and fire if the LMB is tapped instead of held
+	"projectileSpecId":"tstHP_ghost_thunderbolt_shot",  # projectile that will be fired
+	"fireSoundTwo":"rift_lightning_fire"
+}

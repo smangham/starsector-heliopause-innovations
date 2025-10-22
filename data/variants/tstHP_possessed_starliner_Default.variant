@@ -1,0 +1,34 @@
+{
+    "displayName": "Ghost",
+    "fluxCapacitors": 20,
+    "fluxVents": 20,
+    "goalVariant": true,
+    "hullId": "tstHP_possessed_starliner",
+    "hullMods": [],
+    "variantId": "tstHP_possessed_starliner_Default",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "ALTERNATING",
+            "weapons": {
+                "WS 001": "tstHP_ghost_static",
+                "WS 002": "tstHP_ghost_static"
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "ALTERNATING",
+            "weapons": {
+                "WS 003": "tstHP_ghost_thunderbolt",
+                "WS 004": "tstHP_ghost_thunderbolt"
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "ALTERNATING",
+            "weapons": {
+                "WS 005": "tstHP_ghost_stormcaller"
+            }
+        }
+    ]
+}

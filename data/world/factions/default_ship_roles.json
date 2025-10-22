@@ -1,0 +1,14 @@
+{
+    "utility":{
+        "tstHP_pinnacle_Exploration":2,
+    },
+    "combatSmall":{
+        "tstHP_possessed_shepherd_Default":1,
+    },
+    "combatMedium":{
+        "tstHP_possessed_tarsus_Default":1,
+    },
+    "combatLarge":{
+        "tstHP_possessed_starliner_Default":1,
+    },
+},

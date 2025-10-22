@@ -1,0 +1,44 @@
+{
+	"id":"tstHP_attractor_field_mk1",
+	"type":"PHASE_CLOAK",
+	"aiType":"CUSTOM",
+    "aiScript":"toaster.hp.shipsystems.AttractorFieldMk1AI",
+	"statsScript":"toaster.hp.shipsystems.AttractorFieldMk1",
+    "runScriptWhilePaused":true, # only for the player's ship
+    "runScriptWhileIdle":true,  # this means unapply() never gets called
+
+    "phaseHighlight":"_glow1",
+    "phaseDiffuse":"_glow2",
+    "effectColor1":[80, 55, 200, 128],
+    "effectColor2":[80, 55, 200, 64],
+
+    "jitterUnderColor":[80, 55, 200,128],
+    "jitterUnderCopies":8,
+    "jitterUnderMinRange":2,
+    "jitterUnderRange":12,
+    "jitterUnderRangeRadiusFraction":0,
+
+    "jitterColor":[80, 55, 200, 128],
+    "jitterCopies":4,
+    "jitterMinRange":0,
+    "jitterRange":4,
+    "jitterRangeRadiusFraction":0,
+
+    # Phase elements
+    "clampTurnRateAfter":true,
+    "clampMaxSpeedAfter":true,
+
+    "engineGlowColor":[0,0,0,0],
+    "engineGlowContrailColor":[0,0,0,0],
+    "engineGlowLengthMult":0,
+    "engineGlowWidthMult":0,
+    "engineGlowGlowMult":0,
+
+    "soundFilterType":"LOWPASS",
+    "soundFilterGain":0.8,
+    "soundFilterGainHF":0.25,
+
+    "useSound":"system_phase_cloak_activate",
+    "deactivateSound":"system_phase_cloak_deactivate",
+    "outOfUsesSound":"system_phase_cloak_collision"
+}

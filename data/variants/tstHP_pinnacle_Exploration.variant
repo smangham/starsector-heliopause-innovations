@@ -1,0 +1,48 @@
+{
+    "displayName": "Exploration",
+    "fluxCapacitors": 10,
+    "fluxVents": 16,
+    "goalVariant": true,
+    "hullId": "tstHP_pinnacle",
+    "hullMods": [
+        "hardenedshieldemitter",
+        "magazines",
+        "targetingunit"
+    ],
+    "variantId": "tstHP_pinnacle_Exploration",
+    "wings": [
+        "xyphos_wing"
+    ],
+    "weaponGroups": [
+        {
+            "autofire": false,
+            "mode": "LINKED",
+            "weapons": {
+                "WS 009": "squall"
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS 000": "heavyburst"
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS 002": "heavyburst",
+                "WS 001": "heavyburst"
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS 004": "pdburst",
+                "WS 003": "pdburst"
+            }
+        }
+    ]
+}

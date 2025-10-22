@@ -1,0 +1,15 @@
+{
+	"tstHP_possessed_engine":{
+		"engineColor":[0,0,0,0],
+		"engineCampaignColor":[130,250,244,255],
+		"contrailParticleSizeMult":2,
+		"contrailParticleDuration":3,
+		"contrailParticleFinalSizeMult":4,
+		"contrailMaxSpeedMult":0,
+		"contrailAngularVelocityMult":0,
+		"contrailColor":[130,250,244,128],
+		"contrailCampaignColor":[130,250,244,128],
+		"type":"GLOW"
+	}
+}
+

@@ -1,24 +1,24 @@
 {
-  "id": "toaster_hp", # For the convenience of troubleshooters, include your name and the mod name, not just an acronym.
-  "name": "Heliopause Innovations", # Displayed to the player
+  "id": "toaster_heliopause_innovations",
+  "name": "Heliopause Innovations",
   "author": "Talkie Toaster",
   "utility": false,
   "version": { "major": '1', "minor": '0', "patch": '0' },
   "description": "Starsector IntelliJ template.",
   "gameVersion": "0.98a-RC5",
-  "jars": [ "jars/toaster_hp.jar" ],
-  "modPlugin": "toaster.hp.TemplateModPlugin",
+  "jars": [ "jars/toaster_heliopause_innovations.jar" ],
+  "modPlugin": "toaster.hp.ToasterHeliopauseInnovationsModPlugin",
   "dependencies": [
-   # {
-   #     "id": "lw_lazylib",
-   #     "name": "LazyLib", # Optional (recommended)
-   #     #"version": "2.7b" # Optional
-   # },
-   # {
-   #     "id": "MagicLib",
-   #     "name": "MagicLib", # Optional (recommended)
-   #     #"version": "0.34" # Optional
-   # },
+    {
+        "id": "lw_lazylib",
+        "name": "LazyLib", # Optional (recommended)
+        # "version": "3.0.0" # Optional
+   },
+   {
+        "id": "MagicLib",
+        "name": "MagicLib", # Optional (recommended)
+        # "version": "1.5.6" # Optional
+   },
    # {
    #     "id": "shaderLib",
    #     "name": "GraphicsLib", # Optional (recommended)

@@ -1,0 +1,21 @@
+{
+    "baseHullId":"tstHP_pinnacle",
+    "skinHullId":"tstHP_pinnacle_mk1",
+    "hullName":"Pinnacle Mk 1",
+    "descriptionPrefix":"The prototype of the Pinnacle does not use ablative drones to intercept storm strikes. Instead, it performs short, shallow displacements into P-space to avoid them. Due to the complexity of this feature, and several disconcerting accidents, it was removed from the commercial model.",
+	"tags":["restricted", "no_dealer", "codex_unlockable"],
+    "spriteName":"graphics/toaster/hp/ships/pinnacle/pinnacle_mk1.png",
+    "baseValueMult":1.5,
+    "systemId":"tstHP_attractor_field_mk1",
+    "removeWeaponSlots":["WS 012"], 		# ids
+    "removeEngineSlots":[], 		# indices, as engine slots have no id in the .ship file
+    "removeBuiltInMods":[], 		# hullmod ids,
+    "removeBuiltInWings":["tstHP_pinnacle_drone_wing"],
+    "removeBuiltInWeapons":[""], 		# weapon slot ids
+    "builtInMods":["tstHP_pinnacle_mk1_hullmod"],
+    "builtInWeapons":{}
+}
+
+
+
+

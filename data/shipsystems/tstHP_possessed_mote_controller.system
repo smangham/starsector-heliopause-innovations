@@ -1,0 +1,19 @@
+{
+	"id":"tstHP_possessed_mote_controller",
+	"type":"STAT_MOD",
+	"aiType":"MOTE_ATTRACTOR",
+	
+	"runScriptWhileIdle":true,
+	"canUseWhileRightClickSystemOn":true,
+	
+	"statsScript":"toaster.hp.shipsystems.GhostMoteControlScript",
+	"useSound":"mote_attractor_system_activated",
+
+	"outOfUsesSound":"gun_out_of_ammo",
+
+    "aiHints":{}
+}
+
+
+
+

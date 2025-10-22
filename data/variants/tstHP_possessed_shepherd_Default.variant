@@ -1,0 +1,25 @@
+{
+    "displayName": "Ghost",
+    "fluxCapacitors": 20,
+    "fluxVents": 20,
+    "goalVariant": true,
+    "hullId": "tstHP_possessed_shepherd",
+    "hullMods": [],
+    "variantId": "tstHP_possessed_shepherd_Default",
+    "weaponGroups": [
+        {
+            "autofire": true,
+            "mode": "ALTERNATING",
+            "weapons": {
+                "WS 007": "tstHP_ghost_static"
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "ALTERNATING",
+            "weapons": {
+                "WS 008": "tstHP_ghost_thunderbolt"
+            }
+        }
+    ]
+}

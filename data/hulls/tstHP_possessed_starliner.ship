@@ -1,0 +1,132 @@
+{
+    "bounds": [
+        168,
+        0,
+        152,
+        -28,
+        125,
+        -39,
+        120,
+        -56,
+        81,
+        -54,
+        62,
+        -41,
+        30,
+        -41,
+        23,
+        -51,
+        2,
+        -50,
+        -38,
+        -34,
+        -48,
+        -50,
+        -77,
+        -50,
+        -105,
+        -23,
+        -105,
+        24,
+        -77,
+        51,
+        -47,
+        51,
+        -38,
+        35,
+        2,
+        51,
+        23,
+        52,
+        30,
+        42,
+        62,
+        42,
+        81,
+        55,
+        120,
+        57,
+        125,
+        39,
+        152,
+        29
+    ],
+    "builtInMods": ["tstHP_possessed_hullmod"],
+    "center": [
+        63,
+        113
+    ],
+    "collisionRadius": 202,
+    "engineSlots": [],
+    "height": 284,
+    "hullId": "tstHP_possessed_starliner",
+    "hullName": "Starliner (G)",
+    "hullSize": "CRUISER",
+    "shieldCenter": [
+        30,
+        0
+    ],
+    "shieldRadius": 170,
+    "spriteName": "graphics/ships/starliner/starliner.png",
+    "style": "MIDLINE",
+    "viewOffset": 0,
+    "weaponSlots": [
+        {
+            "angle": 0,
+            "arc": 360,
+            "id": "WS 001",
+            "locations": [0, 4],
+            "mount": "HIDDEN",
+            "size": "SMALL",
+            "type": "UNIVERSAL"
+        },
+        {
+            "angle": 0,
+            "arc": 360,
+            "id": "WS 002",
+            "locations": [0, -4],
+            "mount": "HIDDEN",
+            "size": "SMALL",
+            "type": "UNIVERSAL"
+        },
+        {
+            "angle": 0,
+            "arc": 360,
+            "id": "WS 003",
+            "locations": [
+                4, 0
+            ],
+            "mount": "HIDDEN",
+            "size": "MEDIUM",
+            "type": "UNIVERSAL"
+        },
+        {
+            "angle": 0,
+            "arc": 360,
+            "id": "WS 004",
+            "locations": [-4, 0],
+            "mount": "HIDDEN",
+            "size": "MEDIUM",
+            "type": "UNIVERSAL"
+        },
+        {
+            "angle": 0,
+            "arc": 360,
+            "id": "WS 005",
+            "locations": [4, 4],
+            "mount": "HIDDEN",
+            "size": "MEDIUM",
+            "type": "UNIVERSAL"
+        },
+        {
+            "angle": 0,
+            "arc": 360,
+            "id": "WS 006",
+            "locations": [-4, 4],
+            "mount": "HIDDEN",
+            "size": "LARGE",
+            "type": "UNIVERSAL"
+        }
+    ],
+    "width": 126
+}

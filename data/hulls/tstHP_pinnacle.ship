@@ -1,0 +1,262 @@
+{
+    "hullName": "Pinnacle",
+    "hullId": "tstHP_pinnacle",
+    "hullSize": "CRUISER",
+    "style": "HIGH_TECH",
+    "spriteName": "graphics/toaster/hp/ships/pinnacle/pinnacle.png",
+    "height": 280,
+    "width": 140,
+    "center": [
+        70, 115
+    ],
+    "collisionRadius": 220,
+    "coversColor": "255,255,255,255",
+    "shieldCenter": [
+        18, 0
+    ],
+    "shieldRadius": 200,
+    "viewOffset": 0,
+    "builtInMods": [
+        "hiressensors",
+        "tstHP_storm_dampner_hullmod",
+        "stabilizedshieldemitter"
+    ],
+    "builtInWeapons": {
+        "WS 005": "tstHP_pinnacle_stormcaller"
+    },
+    "builtInWings": [
+        "tstHP_pinnacle_drone_wing"
+    ],
+    "builtInModules": null,
+    "weaponSlots": [
+        {
+            "id": "WS 001",
+            "size": "MEDIUM",
+            "type": "ENERGY",
+            "mount": "TURRET",
+            "arc": 210,
+            "angle": 110,
+            "locations": [
+                     -55,       43
+            ]
+        },
+        {
+            "id": "WS 002",
+            "size": "MEDIUM",
+            "type": "ENERGY",
+            "mount": "TURRET",
+            "arc": 210,
+            "angle": 250,
+            "locations": [
+                     -55,      -47
+            ]
+        },
+        {
+            "id": "WS 003",
+            "size": "SMALL",
+            "type": "ENERGY",
+            "mount": "TURRET",
+            "arc": 130,
+            "angle": -80,
+            "locations": [
+                     -18,      -41
+            ]
+        },
+        {
+            "id": "WS 004",
+            "size": "SMALL",
+            "type": "ENERGY",
+            "mount": "TURRET",
+            "arc": 160,
+            "angle": 100,
+            "locations": [
+                      73,       52
+            ]
+        },
+        {
+            "id": "WS 009",
+            "size": "LARGE",
+            "type": "MISSILE",
+            "mount": "HARDPOINT",
+            "arc": 5,
+            "angle": 45,
+            "locations": [
+                      -2,       35
+            ]
+        },
+        {
+            "id": "WS 000",
+            "size": "MEDIUM",
+            "type": "ENERGY",
+            "mount": "TURRET",
+            "arc": 270,
+            "angle": 0,
+            "locations": [
+                     106,        0
+            ]
+        },
+        {
+            "id": "WS 005",
+            "size": "LARGE",
+            "type": "BUILT_IN",
+            "mount": "HIDDEN",
+            "arc": 90,
+            "angle": 0,
+            "locations": [
+                     132,        0
+            ]
+        },
+        {
+            "id": "WS 012",
+            "size": "LARGE",
+            "type": "LAUNCH_BAY",
+            "mount": "HIDDEN",
+            "arc": 5,
+            "angle": 0,
+            "locations": [
+                    25.5,      -30,
+                       0,      -32,
+                     6.5,      -32,
+                      38,      -30
+            ]
+        }
+    ],
+    "engineSlots": [
+        {
+            "location": [
+                -110, 44
+            ],
+            "length": 64,
+            "width": 16,
+            "angle": 180,
+            "contrailSize": 64,
+            "style": "HIGH_TECH"
+        },
+        {
+            "location": [
+                -111, 33
+            ],
+            "length": 80,
+            "width": 16,
+            "angle": 180,
+            "contrailSize": 64,
+            "style": "HIGH_TECH"
+        },
+        {
+            "location": [
+                -111, -32
+            ],
+            "length": 80,
+            "width": 16,
+            "angle": 180,
+            "contrailSize": 64,
+            "style": "HIGH_TECH"
+        },
+        {
+            "location": [
+                -110, -43
+            ],
+            "length": 64,
+            "width": 16,
+            "angle": 180,
+            "contrailSize": 64,
+            "style": "HIGH_TECH"
+        },
+        {
+            "location": [
+                -113, 14
+            ],
+            "length": 32,
+            "width": 8,
+            "angle": 180,
+            "contrailSize": 64,
+            "style": "HIGH_TECH"
+        },
+        {
+            "location": [
+                -113, 8
+            ],
+            "length": 32,
+            "width": 8,
+            "angle": 180,
+            "contrailSize": 64,
+            "style": "HIGH_TECH"
+        },
+        {
+            "location": [
+                -113, -7
+            ],
+            "length": 32,
+            "width": 8,
+            "angle": 180,
+            "contrailSize": 64,
+            "style": "HIGH_TECH"
+        },
+        {
+            "location": [
+                -113, -13
+            ],
+            "length": 32,
+            "width": 8,
+            "angle": 180,
+            "contrailSize": 64,
+            "style": "HIGH_TECH"
+        },
+        {
+            "location": [
+                -113, 0
+            ],
+            "length": 48,
+            "width": 12,
+            "angle": 180,
+            "contrailSize": 64,
+            "style": "HIGH_TECH"
+        }
+    ],
+    "bounds": [
+              65,       51,
+             105,       61,
+           129.5,     54.5,
+           161.5,     11.5,
+             162,    -10.5,
+        
+           153.5,      -28,
+             140,      -45,
+             116,      -59,
+              86,    -54.5,
+              83,    -60.5,
+        
+              53,      -53,
+              74,      -25,
+            42.5,      -24,
+            41.5,    -36.5,
+               1,      -42,
+        
+             -15,      -56,
+             -31,      -32,
+             -39,      -54,
+             -69,      -60,
+             -71,      -39,
+        
+             -91,      -54,
+            -108,      -49,
+            -108,      -27,
+             -98,      -22,
+            -111,      -16,
+        
+            -111,       16,
+             -95,       21,
+            -108,       27,
+            -107,       51,
+             -91,       51,
+        
+             -75,       39,
+             -64,       58,
+             -29,       33,
+               1,       50,
+               4,       23,
+        
+              76,       26
+    # 36 points total.
+    ]
+}

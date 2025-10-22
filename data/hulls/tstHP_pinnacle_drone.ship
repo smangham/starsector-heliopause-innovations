@@ -1,0 +1,63 @@
+{
+    "hullName": "Ablative Drone",
+    "hullId": "tstHP_pinnacle_drone",
+    "hullSize": "FIGHTER",
+    "style": "HIGH_TECH",
+    "spriteName": "graphics/toaster/hp/ships/pinnacle/pinnacle_drone.png",
+    "height": 32,
+    "width": 32,
+    "center": [
+        16, 16
+    ],
+    "collisionRadius": 16,
+    "coversColor": "",
+    "shieldCenter": [
+        0, 0
+    ],
+    "shieldRadius": 32,
+    "viewOffset": 0,
+    "builtInMods": [
+        "insulatedengine"
+    ],
+    "builtInWeapons": {
+        "WS 001": "targetinglaser1"
+    },
+    "builtInWings": [],
+    "builtInModules": null,
+    "weaponSlots": [
+        {
+            "id": "WS 001",
+            "size": "SMALL",
+            "type": "BUILT_IN",
+            "mount": "HIDDEN",
+            "arc": 15,
+            "angle": 0,
+            "locations": [
+                    12.5,        0
+            ]
+        }
+    ],
+    "engineSlots": [
+        {
+            "location": [
+                -10, 0
+            ],
+            "length": 24,
+            "width": 8,
+            "angle": 180,
+            "contrailSize": 64,
+            "style": "MIDLINE"
+        }
+    ],
+    "bounds": [
+             -10,       -4,
+              -4,      -12,
+               3,      -12,
+              13,       -3,
+              13,        3,
+        
+               3,       12,
+              -4,       12,
+             -10,        4
+    ]
+}

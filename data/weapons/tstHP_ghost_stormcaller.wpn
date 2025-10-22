@@ -1,0 +1,21 @@
+{
+	"id":"tstHP_ghost_stormcaller",  # this id must match what's in the spreadsheet
+	"specClass":"projectile",
+	"everyFrameEffect":"toaster.hp.weapons.stormcaller.StormcallerEffect",
+	"type":"ENERGY",
+	"size":"MEDIUM",
+	"turretSprite":"",
+	"turretGlowSprite":"",
+	"hardpointSprite":"",
+	"hardpointGlowSprite":"",
+	"glowColor":[80,55,200,255],  # Hyperspace storm cell colour
+	"turretOffsets":[0, 0],
+	"turretAngleOffsets":[0],
+	"hardpointOffsets":[0, 0],
+	"hardpointAngleOffsets":[0],
+	"barrelMode":"ALTERNATING", # or LINKED.  whether barrels fire at the same time or alternate.
+	"animationType":"GLOW",
+	"autocharge":true,  # whether the weapon will continue charging and fire if the LMB is tapped instead of held
+	"projectileSpecId":"tstHP_stormcaller_shot",  # projectile that will be fired
+	"fireSoundTwo":"rift_lightning_fire"
+}

@@ -1,0 +1,45 @@
+{
+    "displayName": "Prototype",
+    "fluxCapacitors": 16,
+    "fluxVents": 25,
+    "goalVariant": true,
+    "hullId": "tstHP_pinnacle_mk1",
+    "hullMods": [
+        "hardenedshieldemitter",
+        "magazines",
+        "targetingunit"
+    ],
+    "variantId": "tstHP_pinnacle_mk1_Prototype",
+    "weaponGroups": [
+        {
+            "autofire": false,
+            "mode": "LINKED",
+            "weapons": {
+                "WS 009": "squall"
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS 000": "heavyblaster"
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS 002": "heavyburst",
+                "WS 001": "heavyburst"
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "LINKED",
+            "weapons": {
+                "WS 004": "pdburst",
+                "WS 003": "pdburst"
+            }
+        }
+    ],
+}

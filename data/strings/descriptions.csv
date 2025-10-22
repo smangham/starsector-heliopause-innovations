@@ -1,3 +1,78 @@
-id,type,text1,text2,text3,text4,notes
+id,type,text1,text2,text3,text4,text5,notes
 # Types: WEAPON,SHIP,RESOURCE,CUSTOM,ACTION_TOOLTIP,ASTEROID,PLANET,SHIP_SYSTEM,FACTION,TERRAIN
 #astral,SHIP,"Text goes here",,,,
+tstHP_heliopause_faction,FACTION,"A survey-oriented megacorporation mostly serving scavengers and explorers, Heliopause Innovations' original business was manual follow-up observations for the Domain Explorarium. As part of their contract, they were granted license to trial hyperspace technologies in the frontier systems where the gate network was yet to be established.
+
+Though in theory well-placed to capitalise on the Collapse, the expiry of their Explorarium cryptokeys led to a series of disastrous encounters with survey drones that cost the corporation much of its fleet assets and prototypes. Every cycle of conflict and contraction in the sector has further winnowed their holdings.
+
+In the modern sector, the corporation is a hardscrabble curiosity, a combination exotic shipmaker/data broker. Some believe it is a 'feeder' for Tri-Tachyon, luring in idealists with dreams of exploration and burning them out until they compromise their morals and leave for better pay. Others assume its origin as a Domain public-private partnership means it must be feeding data back to Hegemony Intelligence. The corporation itself claims to be too focused on day-to-day survival to involve itself in sector politics."
+
+# ================================ SHIPS ================================
+tstHP_pinnacle,SHIP,"A licensed modification of the Apogee-class, the Pinnacle acts as a lightning rod that protects exploration fleets from hyperspace storm strikes by attracting then intercepting them with ablative drones.
+
+As part of the redesign, the Apogee-class' forward section is replaced with a battery of compute cores and high-powered field projectors. In hyperspace, this allows the ship to monitor and modify the drive bubble on the fly, whilst in N-space the ship can use the same arrays to redirect high-energy projectiles.
+
+The ship is a relatively uncommon sight, at least in part due to difficulties recruiting sufficient sensor and field technicians. With the forward section repurposed, crews are relegated to what were originally shift quarters in the engine block and converted cargo bays, facing greater risks than Apogee-class crews in worse conditions.
+
+These can include, due to fundamental design flaws, the sudden overload and failure of the projectors if the ship enters sufficiently deep hyperspace. Though a non-issue in abyssal hyperspace where no storm protection is needed, crews occasionally find themselves scrambling to reset systems during regular storms."
+tstHP_pinnacle_mk1,SHIP,"A licensed modification of the Apogee-class, the Pinnacle acts as a lightning rod that protects exploration fleets from hyperspace storm strikes by attracting then intercepting them with ablative drones.
+
+As part of the redesign, the Apogee-class' forward section is replaced with a battery of compute cores and high-powered field projectors. In hyperspace, this allows the ship to monitor and modify the drive bubble on the fly, whilst in N-space the ship can use the same arrays to redirect high-energy projectiles.
+
+The ship is a relatively uncommon sight, at least in part due to difficulties recruiting sufficient sensor and field technicians. With the forward section repurposed, crews are relegated to what were originally shift quarters in the engine block and converted cargo bays, facing greater risks than Apogee-class crews in worse conditions.
+
+These can include, due to fundamental design flaws, the sudden overload and failure of the projectors if the ship enters sufficiently deep hyperspace. Though a non-issue in abyssal hyperspace where no storm protection is needed, crews occasionally find themselves scrambling to reset systems during regular storms.
+
+This early prototype does not use ablative drones to intercept storm strikes, instead using its field projectors to displace the ship into P-space to avoid them."
+tstHP_pinnacle_drone,SHIP,"A simplistic design in contrast to their parent vessel, ablative drones are little more than an armour plate with an engine attached, and a basic shield generator to protect against disruption by charged particle bursts. Despite their sturdy construction, they are not expected to survive deployment in a storm."
+tstHP_possessed_tarsus,SHIP,"Many ships are lost in hyperspace throughout the sector, thanks to conflict, malfunction, or disaster. In rare cases, some have been sighted once again, but with unusual self-perpetuating electromagnetic phenomena in their flux conduits. Theories have been suggested based on the effects of long exposure to hyperspace outside of the stable lower-dimensional space imposed by a drive bubble, but with few observations they have largely been written off.
+
+Sometimes referred to as 'ghost' ships, these derelict vessels are comparatively slow and unwieldy, as they lack conventional propulsion and appear to drift on hyperspatial currents. In combat, they are substantially tougher than their hulls might suggest. Only sufficient damage to comprehensively shatter their multiply-redundant flux grids appears to stop the associated electromagnetic activity."
+tstHP_possessed_shepherd,SHIP,"Many ships are lost in hyperspace throughout the sector, thanks to conflict, malfunction, or disaster. In rare cases, some have been sighted once again, but with unusual self-perpetuating electromagnetic phenomena in their flux conduits. Theories have been suggested based on the effects of long exposure to hyperspace outside of the stable lower-dimensional space imposed by a drive bubble, but with few observations they have largely been written off.
+
+Sometimes referred to as 'ghost' ships, these derelict vessels are comparatively slow and unwieldy, as they lack conventional propulsion and appear to drift on hyperspatial currents. In combat, they are substantially tougher than their hulls might suggest. Only sufficient damage to comprehensively shatter their multiply-redundant flux grids appears to stop the associated electromagnetic activity."
+tstHP_possessed_starliner,SHIP,"Many ships are lost in hyperspace throughout the sector, thanks to conflict, malfunction, or disaster. In rare cases, some have been sighted once again, but with unusual self-perpetuating electromagnetic phenomena in their flux conduits. Theories have been suggested based on the effects of long exposure to hyperspace outside of the stable lower-dimensional space imposed by a drive bubble, but with few observations they have largely been written off.
+
+Sometimes referred to as 'ghost' ships, these derelict vessels are comparatively slow and unwieldy, as they lack conventional propulsion and appear to drift on hyperspatial currents. In combat, they are substantially tougher than their hulls might suggest. Only sufficient damage to comprehensively shatter their multiply-redundant flux grids appears to stop the associated electromagnetic activity."
+
+# ================================ SHIP SYSTEMS ================================
+tstHP_attractor_field,SHIP_SYSTEM,"Projects a field capable of attracting both hyperspace storm strikes and high-energy projectiles.
+
+Using esoteric high-energy physics and an array of sub-AI compute cores, the ship forms a local sink in at least seven different fields. Litigation over the precise number was not yet settled by the time of the Collapse.",Special,Projects a field that attracts projectiles.,,"Redirects projectiles within {{1600}} units towards the ship by {{120}} degrees per second, and slows them by {{33%}} per second."
+tstHP_attractor_field_mk1,SHIP_SYSTEM,"Projects a field capable of attracting both hyperspace storm strikes and high-energy projectiles whilst partially phasing the ship.
+
+Using esoteric high-energy physics and an array of sub-AI compute cores, the ship forms a local sink in at least seven different fields. Litigation over the precise number was not yet settled by the time of the Collapse.
+
+This prototype version uses a shallow displacement into P-Space to evade attracted strikes, instead of intercepting them with drones. This feature was removed from the production model due to persistent safety concerns.",Special,"Phases the ship whilst projecting a field that attracts projectiles.",,"Redirects projectiles within {{1600}} units towards the ship by {{120}} degrees per second, and slows them by {{33%}} per second. The ship is phased during the system's activation."
+tstHP_possessed_damper_system,SHIP_SYSTEM,"Highly-charged hull plating dramatically reduces damage.
+
+The presence of significant concentrations of energy, including kinetic or chemical potential, induces an extreme polarisation in the hull charge. The resulting electromagnetic field gradients shred matter and disrupt coherent energy weapons. The process by which this hyper-polarisation is induced is not yet known.",Special,"Highly-charged hull plating dramatically reduces damage.",,"Reduces incoming damage by {{75%}}, and reduces accumulated charge on the hull."
+tstHP_possessed_mote_controller,SHIP_SYSTEM,"Energy motes deal heavy EMP damage to ships and obliterate fighters and missiles. Using the system creates a temporary attractor point for the motes. The motes automatically target nearby missiles and fighters unless an attractor point is set on an enemy ship.",Special,"Energy motes deal heavy EMP damage to ships and obliterate fighters and missiles.",,"Motes deal {{1000 damage}} and {{1000 EMP}} damage. Activation reduces accumulated charge on the hull."
+
+# ================================ WEAPONS ================================
+tstHP_pinnacle_stormcaller,WEAPON,"""...one of the guys from R&D started talking about 'false vacuum scenarios' and you don't want to know what colour Compliance went. We can't put it in the manual, even if everyone's going to try it anyway.""","- Minutes, HI Product Development Review",,,
+tstHP_ghost_stormcaller,WEAPON,"""I swear, we were responding to a distress call and a storm just whisked up out of nowhere. Breached straight through the drive field, we were lucky even half the fleet made it back.""","- Call logs, Tri-Tachyon Venture Investments, default handling division",,,
+tstHP_ghost_thunderbolt,WEAPON,"""Colloquially referred to as 'lightning' <r#1ac> the phenomenon is more accurately fluorescence of drive-field pseudovacuum under hyperspatial agitation <r#991>. It is unknown if 'true' vacuum exhibits this response; it should under no circumstances be tested <r#9c1, r#1fc, r#bc3, …""","- Explorarium Index of Hyperspatial Phenomenology",,,
+tstHP_ghost_static,WEAPON,"""Tellin' tales of followin' a ghostie to a jackpot? I did once, to a beaut of a hulk. Near-pristine. We closed... arcs o' light, shuttles were gone, an' it slipped off. Follow 'em to their graves an' they'll be yours too.""","- overheard in spacer bar, Arcadia",,,
+
+# ================================ ABILITIES ================================
+tstHP_stormcaller_ability,CUSTOM,"Slows* the fleet and uses the storm dampner to agitate nearby hyperspace, inducing a storm in the local area.
+
+The CR of one ship with the Storm Dampner hullmod will be reduced as if it had been deployed.","Storm Dampner","Base range of %s* units, increased by half your fleet's sensor strength, for a total of %s units.",,
+
+# ================================ EVENT SERIES ================================
+tstHP_heliopause_event_stage_MAX,CUSTOM,"Rewards you with 50,000 credits as consulting fees.","50,000"
+tstHP_heliopause_event_stage_STORMCALLER,CUSTOM,"Allows ships with a Storm Dampner system to run it in reverse, inducing storms in local hyperspace.",Storm Dampner
+tstHP_heliopause_event_stage_MISSIONS,CUSTOM,"Enough data has been gathered to enhance standard sensor algorithms for Persean hyperspace. Visit Heliopause Innovations to install them.",Heliopause Innovations,
+tstHP_heliopause_event_stage_START,CUSTOM,"Heliopause Innovations, originally a Domain-era survey organisation, is looking for detailed surveys of both planets and hyperspace.
+
+Their research and development department will share the results of any work that your contributions enable.",,,
+tstHP_heliopause_event_factor_bulk,CUSTOM,Sold survey data,,"Standard sensor data from observations of planets and hyperspace.",,
+tstHP_heliopause_event_factor_unique,CUSTOM,Sold unique sensor data,,"Unique sensor data obtained from %s.",,,
+# ================================ MISSIONS ================================
+tstHP_mPinnacle_stage_FIND,CUSTOM,"Search for the lost prototype near the coordinates provided.
+
+The ship appears to be highlighted during hyperspace storms. ",hyperspace storms,,,
+tstHP_mPinnacle_stage_FIGHT,CUSTOM,"Engage the lost prototype.",,,,
+tstHP_mPinnacle_stage_RECOVER,CUSTOM,"Recover the wreck of the prototype ship.",,,,
+tstHP_mPinnacle_stage_RETURN,CUSTOM,"Return to {{market}} and deliver the prototype ship to {{person}}.",{{person}},,,

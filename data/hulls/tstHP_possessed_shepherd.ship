@@ -1,0 +1,56 @@
+{
+    "bounds": [
+        34,
+        28,
+        32,
+        -28,
+        -31,
+        -27,
+        -32,
+        26
+    ],
+    "builtInMods": [
+        "tstHP_possessed_hullmod"
+    ],
+    "builtInWings": [],
+    "center": [
+        39,
+        45
+    ],
+    "collisionRadius": 70,
+    "coversColor": "",
+    "engineSlots": [],
+    "height": 92,
+    "hullId": "tstHP_possessed_shepherd",
+    "hullName": "Shepherd (G)",
+    "hullSize": "FRIGATE",
+    "shieldCenter": [
+        1,
+        0
+    ],
+    "shieldRadius": 70,
+    "spriteName": "graphics/ships/drone_tender.png",
+    "style": "LOW_TECH",
+    "viewOffset": 0,
+    "weaponSlots": [
+        {
+            "angle": 0,
+            "arc": 360,
+            "id": "WS 007",
+            "locations": [-4, 0],
+            "mount": "HIDDEN",
+            "size": "SMALL",
+            "type": "UNIVERSAL"
+        },
+        {
+            "angle": 0,
+            "arc": 360,
+            "id": "WS 008",
+            "locations": [4, 0],
+            "mount": "HIDDEN",
+            "size": "MEDIUM",
+            "type": "UNIVERSAL"
+        }
+    ],
+    "width": 78
+}

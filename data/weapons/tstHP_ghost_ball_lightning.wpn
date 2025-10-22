@@ -1,0 +1,27 @@
+{
+	"id":"tstHP_ghost_mote_launcher",
+	"specClass":"projectile",
+	"type":"SYSTEM",
+	"size":"SMALL",
+	"turretSprite":"",
+	"hardpointSprite":"",
+	"hardpointOffsets":[0, 0],
+	"turretOffsets":[0, 0],
+	"hardpointAngleOffsets":[0],
+	"turretAngleOffsets":[0],
+	"barrelMode":"ALTERNATING",
+	"noShieldImpactSounds":true,
+	"noNonShieldImpactSounds":true,
+	"interruptibleBurst":false,
+	"animationType":"MUZZLE_FLASH",
+	"muzzleFlashSpec":{
+        "length":30.0,   # only used if animationType = MUZZLE_FLASH
+        "spread":5.0,
+        "particleSizeMin":18.0,
+        "particleSizeRange":24.0,
+        "particleDuration":0.4,
+        "particleCount":16,
+        "particleColor":[138,250,240,25],
+    },
+	"projectileSpecId":"tstHP_ghost_mote_missile"
+}

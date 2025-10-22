@@ -1,0 +1,16 @@
+{
+	"displayName":"Wing",
+	"hullId":"tstHP_pinnacle_drone",
+	"variantId":"tstHP_pinnacle_drone_Standard",
+	"fluxVents":0,
+	"fluxCapacitors":0,
+	"mods":[],
+    "weaponGroups":[
+        {
+            "mode":"LINKED",
+            "weapons":{
+                "WS 001":"targetinglaser1"
+            }
+        }
+    ]
+}

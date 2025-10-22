@@ -1,3 +1,292 @@
 id,trigger,conditions,script,text,options,notes
-# This file is not required by the game and can be deleted if you aren't using it, but doesn't hurt to keep either.
-# Official rules.csv guide: https://fractalsoftworks.com/2023/11/13/you-merely-adopted-rules-csv-i-was-born-into-it/
+# ================ Faction relationship entries ================
+tstHPHeliopauseRepGood_4,RelationshipLevelDesc,"$faction.rel == COOPERATIVE
+$faction.id == tstHP_heliopause_faction",,"Tales of wondrous planets and exotic phenomena explored by your fleet are a cornerstone of $faction marketing efforts. Directors offer you hospitality whenever your $shipOrFleet docks, and multiple R&D projects hinge on data you gather.",,1
+tstHPHeliopauseRepGood_3,RelationshipLevelDesc,"$faction.rel == FRIENDLY
+$faction.id == tstHP_heliopause_faction",,"Guides on data acquisition and frontier-friendly behaviour included with new $faction ships include examples taken from your $shipOrFleet. Senior staff plan ways to leverage their connections to you for advancement.",,1
+tstHPHeliopauseRepGood_2,RelationshipLevelDesc,"$faction.rel == WELCOMING
+ $faction.id == tstHP_heliopause_faction",,"$faction staff welcome your $shipOrFleet's arrival in-system, and your data quality and reliability is highly-rated.",,1
+tstHPHeliopauseRepGood_1,RelationshipLevelDesc,"$faction.rel == FAVORABLE
+$faction.id == tstHP_heliopause_faction",,"You are considered a reliable customer by $faction. Your $shipOrFleet is registered on a mailing list for updated brochures.",,1
+tstHPHeliopauseRepNone,RelationshipLevelDesc,"$faction.rel == NEUTRAL
+$faction.id == tstHP_heliopause_faction",,"$faction is not particularly aware of your actions, for good or ill. You are just another prospective customer.",,1
+tstHPHeliopauseRepBad_1,RelationshipLevelDesc,"$faction.rel == SUSPICIOUS
+$faction.id == tstHP_heliopause_faction",,"Though nothing has been proven (yet), $faction officials tend to view you with distrust. Affiliated fleets keep their guard around you, and site security tracks your fleet when you are in-system.",,1
+tstHPHeliopauseRepBad_2,RelationshipLevelDesc,"$faction.rel == INHOSPITABLE
+$faction.id == tstHP_heliopause_faction",,"Though $faction is not in a financial position to turn away customers, in your case they have made an exception.",,1
+tstHPHeliopauseRepBad_3,RelationshipLevelDesc,"$faction.rel == HOSTILE
+$faction.id == tstHP_heliopause_faction",,"$faction actively expends its limited resources gathering documentation and evidence on your crimes, to submit to the Domain once the gate network is restored. Their fleets consider you hostile.",,1
+tstHPHeliopauseRepBad_4,RelationshipLevelDesc,"$faction.rel == VENGEFUL
+$faction.id == tstHP_heliopause_faction",,"Every $faction ship sold has transponder codes associated with your $shipOrFleet in its database, automatically IFF-flagged as hostile.",,1
+
+# ================ Starting the Heliopause data gathering event ================
+tstHPCEOGreetFirst,PickGreeting,"$id == tstHP_heliopause_ceo score:1000
+!$HeliopauseCEOGreet","$HeliopauseCEOGreet = true
+BeginConversation tstHP_heliopause_ceo
+ShowPersonVisual
+","There is no secretary or pseudo-AI call-handling; instead, a lazily-rotating corporate logo quickly resolves.
+
+The office revealed resembles an Academician's more than a typical CEOs. The desk, whilst genuine wood, is clearly well-worn. Its grooved surface is covered in assorted cables and datapads, most of which are themselves obscured by a clutter of holoprojections. A few appear to flicker and fuzz, auto-obscured by the feed's privacy algorithms. Behind the forest of data is wide window to the stormy Ailmar sky, itself half-blocked by cabinets and shelving units. ",tstHPCEOGreetFirst1:Continue,Introduction to Heliopause on visiting Ailmar.
+tstHPCEOGreetFirst1,DialogOptionSelected,$option == tstHPCEOGreetFirst1,FireAll tstHPCEOGreetOptions,"Swiping assorted holos out of the way, $name reveals themselves.
+
+""Ah $playerName, it's you! I'd asked them to let me know if your $shipOrFleet entered the system.""
+
+""You know, we heard about the jump point disruption in Galatia - our R&D were racking their brains, trying to figure out what Kallichore had done to break the place. They'd love to get their hands on a copy of the sensor data, but the Hegemony are keeping very quiet and Anahita is curt as ever.""
+
+$HeOrShe pauses to take a deeper breath, before continuing, ""An old friend at the Academy said it looked like your fleet was deputised to deal with the situation. Sounds like you must have taken some fascinating readings!"" ",,1
+tstHPCEOGreetReturn,PickGreeting,"$id == tstHP_heliopause_ceo score:1000
+$HeliopauseCEOGreetReturn","BeginConversation tstHP_heliopause_ceo
+ShowPersonVisual
+FireAll tstHPCEOGreetOptions","The comm link reconnects. $name's office is still just as cluttered, and they seem just as enthusiastic.
+
+""Marvellous, you're back! Things have calmed down a little, I hope - at least enough that you're happy to turn over those sensor readings?""",,1
+tstHPCEOGreetBaird,tstHPCEOGreetOptions,!$askedBaird,,,"tstHPCEOGreetBaird1:""Sorry, Anahita?""",1
+tstHPCEOGreetBaird1Met,DialogOptionSelected,"$option == tstHPCEOGreetBaird1
+$player.metBaird","RemoveOption tstHPCEOGreetBaird1
+$askedBaird = true 1","""Of course, I meant Provost Baird - the new head of Galatia Academy, after Kallichore's defenestration. We were contemporaries as junior faculty, before I left for Heliopause. Not friends, per se, but I would've hoped for a little more consideration, especially given how many alumni work here. Does she resent us for poaching? Or perhaps she's angry at us for turning down Cornelius' request?  Honestly, I didn't think she liked him either...""
+
+$personFirstName's attention drifts from the conversation, as $heOrShe muses about which event past or present could have so displeased Provost Baird.
+
+Even from your limited interactions with her, the personality clash between the two is obvious. $name's obliviousness to it could only have grated further.",,1
+tstHPCEOGreetBaird1Unmet,DialogOptionSelected,"$option == tstHPCEOGreetBaird1
+","RemoveOption tstHPCEOGreetBaird1
+$askedBaird = true 1","""Of course, I meant Provost Baird - the new head of Galatia Academy, after Kallichore's defenestration. We were contemporaries as junior faculty, before I left for Heliopause. Not friends, per se, but I would've hoped for a little more consideration, especially given how many alumni work here. Does she resent us for poaching? Or perhaps she's angry at us for turning down Cornelius' request?  Honestly, I didn't think she liked him either...""
+
+$personFirstName's attention drifts from the conversation, as $heOrShe muses about which event past or present could have so displeased Provost Baird.",,1
+tstHPCEOGreetWhy,tstHPCEOGreetOptions,!$askedWhy,,,"tstHPCEOGreetWhy1:""Why do you want the data?""",1
+tstHPCEOGreetWhy1,DialogOptionSelected,$option == tstHPCEOGreetWhy1,"$tstHPCEOGreetPrototypes = true
+RemoveOption tstHPCEOGreetWhy
+$askedWhy = true 1
+","$personFirstName looks slightly taken aback, but resumes, ""Perhaps I've over-estimated our marketing department's success, or at least how well history is taught these days.""
+
+They rifle through the clutter on their desk for a few seconds, then wave a datapad with a look of success. You assume it is marketing material or a brochure of some kind. After a brief glance at it, they continue on.
+
+""We specialise in exploration and surveying - sensors, hyperspace technology, fascinating stuff. Originally, Heliopause was a sort of corporate spinoff of the Explorarium. Supposed to collect drone survey results, follow up on interesting phenomena, and prototype and trial exploration technologies based on the data. Must have been a marvellous place to work in its heyday - the joy of exploration, cutting edge science, public service of a kind...""",tstHPCEOGreetWhy2:Continue,1
+tstHPCEOGreetWhy2,DialogOptionSelected,$option == tstHPCEOGreetWhy2,FireAll tstHPCEOGreetOptions,"There is a pause as $personFirstName sighs and shrugs $hisOrHer shoulders.
+
+""Since the Collapse, well, the company's done what it could with what remains. Brokering survey data, ship sales. The odd survey of some interesting phenomena, but without the Explorarium around to cover it we simply don't have the resources to do it at scale. And without that data, we can't develop any of the new products we need to survive.""
+
+""It's a vicious cycle. The only way to break it is to jump-start our R&D with fascinating new data like the readings your $shipOrFleet has.""",
+tstHPCEOGreetConcern,tstHPCEOGreetOptions,!$askedConcern,,,"tstHPCEOGreetConcern1:""How do I know you'll use the data responsibly?""",1
+tstHPCEOGreetConcern1,DialogOptionSelected,$option == tstHPCEOGreetConcern1,"AdjustRepActivePerson VENGEFUL -2
+RemoveOption tstHPCEOGreetConcern1
+$askedConcern = true 1","$HeOrShe frowns, ""I'm disappointed. We're not reckless lunatics like Tri-Tachyon. Heliopause has a history of strong civic links to the Explorarium - it's not like the company would've survived for long if it'd been violating Technology Standards left right and centre! For our part, we like to think we carry that ethos forwards.""",,1
+tstHPCEOGreetPrototypes,tstHPCEOGreetOptions,"$tstHPCEOGreetPrototypes
+!$askedPrototypes",,,"tstHPCEOGreetPrototypes1:""You mentioned prototypes earlier.""",1
+tstHPCEOGreetPrototypes1,DialogOptionSelected,$option == tstHPCEOGreetPrototypes1,"RemoveOption tstHPCEOGreetPrototypes1
+$askedPrototypes = true 1","""Yes, prototypes! Lots of fascinating experimental hyperspace tech, hostile environment survey equipment, all sorts of things. Best tested out on the frontier, where there's nobody but drones to get in the way. Or, ah, experience any unexpected side effects. That was rather the problem, though, as it turned out. The company's MINEX cryptokeys expired not long after the Collapse, and you can imagine the outcome for the fleets out decommissioning drones...""
+
+$HeOrShe sighs, with a slight shake of the head.
+
+""What a waste. My predecessors salvaged things somewhat, and turned a few prototypes into production models - the Pinnacle is our most popular. If only less had been lost! But isn't that just the story of our age.""
+
+$HeOrShe briefly slips into reverie for the sector that could have been. ",,1
+tstHPCEOGreetAccept,tstHPCEOGreetOptions,,,,"tstHPCEOGreetAccept1:""I'm interested. How much?""",1
+tstHPCEOGreetAccept1,DialogOptionSelected,$option == tstHPCEOGreetAccept1,"SetTextHighlights ""50,000""","$personFirstName lights up. ""Excellent! For something this exotic, I'm thinking a good 50,000 credits.""
+
+""The standard was originally a 60-40 split of the Explorarium rates, and when the gates re-open we'll pay you whatever the remainder of your share turns out to be. Or your next of kin. Or theirs.""
+
+$HisOrHer demeanour becomes slightly more serious. ""Now, I assure you, you will have absolute commercial confidentiality over this. The Hegemony might not be particularly keen for these readings to spread, but if they consider themselves to be the continuity Domain then they really ought to respect they're within our Domain-assigned purview.""","tstHPCEOGreetAcceptYes:""It's a deal.""
+tstHPCEOGreetAcceptNo:""I'd rather wait until the situation is calmer.""",1
+tstHPCEOGreetDev,tstHPCEOGreetOptions,,,,"tstHPCEOGreetDev1:>> (dev) Start event",1
+tstHPCEOGreetDev1,DialogOptionSelected,$option == tstHPCEOGreetDev1,"$HeliopauseCEOAccepted = true
+tstHP_Heliopause addData 100 ""jump point collapse in Galatia system"";
+unset $HeliopauseCEOGreetReturn
+EndConversation",">> Started event",cutCommLink:Close the comm link,1
+tstHPCEOGreetAcceptYes,DialogOptionSelected,$option == tstHPCEOGreetAcceptYes,"AdjustRepActivePerson FRIENDLY 5
+$HeliopauseCEOAccepted = true","""Wonderful, wonderful. I'll send you over a cryptokey, and have you set up on our systems as a subcontractor. If you find any more hyperspace readings or survey data, be sure to return. We'll give you access to any new prototypes or upgrades your data helps us develop.""
+",tstHPCEOGreetAcceptYes1:Continue,1
+tstHPCEOGreetAcceptYes1,DialogOptionSelected,$option == tstHPCEOGreetAcceptYes1,"AddCredits 50000
+tstHP_Heliopause addData 100 ""jump point collapse in Galatia system"";
+unset $HeliopauseCEOGreetReturn
+unset $askedPrototypes
+unset $askedBaird
+unset $askedConcern
+unset $askedWhy
+EndConversation","You conclude the call, handing over to your respective staff to handle the logistics.
+
+Sensors and Tech collate the data from the window of interest; long-range scans during the jump-point collapse, several days of background readings, and the window leading up to and just after the restabilisation. Some minor edits are required to remove the tell-tale signs of AI cores. Though $personFirstName would almost certainly overlook them, discretion is unlikely to hurt. Transmitting the sheer volume of data takes time, but even before you have finished your comm pings to inform you the credits have been recieved. $HeOrShe is clearly enthusiastic to do business with you.",cutCommLink:Continue
+tstHPCEOGreetAcceptNo,DialogOptionSelected,$option == tstHPCEOGreetAcceptNo,$HeliopauseCEOGreetReturn = true,"""Ah, alas. A shame, but not unreasonable - I can understand being concerned that sharing the data might put you in hot water with the parties involved. Once the situation has cooled down a little, as it were, you're more than welcome to return. We'll still be interested in those readings - unless, of course, someone else has already sold us them!""
+
+$personFirstName signs off, seemingly confident of your return.",cutCommLink:Close the comm link,1
+
+# ================ Donating data to progress Heliopause event ================
+tstHPCEOSellDataNo,PopulateOptions,"$id == tstHP_heliopause_ceo
+!tstHP_Heliopause canSellData","SetEnabled tstHPCEOSellData1 false
+SetTooltip tstHPCEOSellData1 ""You do not have any Survey Data or Hyperspace Topology to trade.""",,"tstHPCEOSellData1:""I have some data to trade.""",1
+tstHPCEOSellData,PopulateOptions,"$id == tstHP_heliopause_ceo
+tstHP_Heliopause canSellData",,,"tstHPCEOSellData1:""I have some data to trade""",1
+tstHPCEOSellData1,DialogOptionSelected,$option == tstHPCEOSellData1,tstHP_Heliopause sellData,,,1
+tstHPCEOSoldDataNo,tstHPCEOSoldData,$bountyValue == 0 score:1000,,"""Unfortunate, but let us know if you change your mind""",,Fired from script
+tstHPCEOSoldDataYes,tstHPCEOSoldData,$bountyValue > 0 score:1000,"RemoveOption tstHPCEOSellData
+FireAll PopulateOptions","$personFirstName smiles, ""Excellent! Let's see what wonders you've uncovered out there...""",,"Fired from script.
+Needs to rerun fireall to remove give if player gave everything."
+
+# ================ Mission 1: Recover the prototype Pinnacle ================
+# ---------------- Stage 1: Talk to CEO ----------------
+tstHPMissionPinnacleOption,tstHP_mPinnacle_option,,,,tstHPMissionPinnacleText:Ask about the lost prototype.,1
+tstHPMissionPinnacleOptionDev,tstHP_mPinnacle_option,$global.isDevMode,,,tstHPMissionPinnacleDev:>> (dev) Accept mission.,1
+tstHPMissionPinnacleBlurb,tstHP_mPinnacle_blurb,,,"$HeOrShe gestures enthusiastically at one of the privacy-blurred holos on $hisOrHer desk. ""R&D used your readings to complete some triangulation - they think they've tracked down one of our missing prototypes.""",,1
+tstHPMissionPinnacleText,DialogOptionSelected,$option == tstHPMissionPinnacleText,$missionId = tstHP_mPinnacle,"The smile on $hisOrHer face broadens.
+
+""Wonderful! Now, Heliopause has done its best to hold things together since the Collapse - we were never really intended to be self-sufficient, but then nothing here was.""
+
+""Anyway, my predecessors had to pivot some of our prototypes to production quite fast. In some cases, perhaps too fast.""
+
+You notice $hisOrHer hands start to fidget with one of the assorted gadgets on the desk.",tstHPMissionPinnacleText1:Continue,1
+tstHPMissionPinnacleText1,DialogOptionSelected,$option == tstHPMissionPinnacleText1,,"""Er, anyway, I'm sure you've seen the Pinnacle - our stormproof stalwart of exploration expeditions!""
+
+""Well, some of the earlier models were slightly more ambitious. After some teething problems, and a few missing fleets that the company couldn't afford, the concept was simplified for production.""
+
+""But, but, but!"" $heOrShe jabs a finger to the sky as $heOrShe repeats $himOrHerself, enthusiasm surging back.","tstHPMissionPinnacleText2:""Do go on.""",1
+tstHPMissionPinnacleText2,DialogOptionSelected,$option == tstHPMissionPinnacleText2,"SetTextHighlights ""Pinnacle Mark 1""","""R&D have found one! A lost prototype, state-of-the-art Domain technology - the Pinnacle Mark 1. We'd seen glimpses, from time to time, but it was lost in deep hyperspace and the sensor profile was simply too low to trace reliably.""
+
+""However it looks like, and bear with me if this isn't your field, that H-field excitations appear to end up coupling to the phase inductor coils in a way that results in a subtle polarisations to their associated tachyon flares!""","tstHPMissionPinnacleText3Know:""I understand.""
+tstHPMissionPinnacleText3Lie:""I understand."" (lie)
+tstHPMissionPinnacleText3Dont:""I don't understand.""",1
+tstHPMissionPinnacleText3Know,DialogOptionSelected,$option == tstHPMissionPinnacleText3Know,FireAll tstHPMissionPinnacleText3Actual,,,1
+tstHPMissionPinnacleText3Lie,DialogOptionSelected,$option == tstHPMissionPinnacleText3Lie,"FireAll tstHPMissionPinnacleText3Actual
+$player.ethosLiar++",,,1
+tstHPMissionPinnacleText3Dont,DialogOptionSelected,$option == tstHPMissionPinnacleText3Dont,FireAll tstHPMissionPinnacleText3Actual,,,1
+tstHPMissionPinnacleText3,tstHPMissionPinnacleText3Actual,,,"Beaming with triumph, $heOrShe is clearly too caught up in the telling of the tale to hear.
+
+""Anyway, what that means is that they've triangulated the prototype using, ah, the 'reflected glow' of the storm, or close enough. Which means it is within our grasp once again! So to get to the point, we're offering to commission you and your $shipOrFleet to recover and and return it.""","tstHP_mPinnacle_briefing4:""Where should I look?""",1
+tstHPMissionPinnacleText4,DialogOptionSelected,$option == tstHP_mPinnacle_briefing4,"SetTextHighlights $tstHP_mPinnacle_reward
+Call $global.tstHP_mPinnacle_ref showMap ""Target: Deep Hyperspace""","""Excellent! It's, ah, somewhere around here-ish"". $HeOrShe waves $hisOrHer hand towards one of the privacy-blurred holos on their desk, before remembering to approve transmission. The fuzzy shapes resolve into a point on a hyperspace chart of the sector.
+
+""Excellent! Even with the new sensor routines, the signal is only really visible during storms, so you might be waiting a little while. But we'll certainly make it worth your while - if the black box kept running, there'll be almost 200 years of data in it, let alone the value our engineering department will get from recovery! Let's say $tstHP_mPinnacle_reward credits.""","tstHP_mPinnacle_briefing5:""I'll be back with your missing ship.""",1
+tstHPMissionPinnacleText5,DialogOptionSelected,$option == tstHP_mPinnacle_briefing5,"AddTextSmall ""Received enhanced hyperspace sensor protocols"" highlight
+Call $mHub accept $missionId
+Call $mHub returnToList","""Marvellous! Then burn bright, as they say.""
+A ping on your communications officer's terminal indicates the approximate location of your target has been transferred.",cutCommLink:Close the comm link,1
+tstHPMissionPinnacleDev,DialogOptionSelected,$option == tstHPMissionPinnacleDev,"$missionId = tstHP_mPinnacle
+Call $mHub accept $missionId",>> Accepted mission,cutCommLink:Close the comm link,1
+# ---------------- Stage 2: Found the fleet, fighting ----------------
+tstHPMissionPinnacleFleetFind,BeginFleetEncounter,"$tstHP_mPinnacle_fleet score:1000
+!$foundFleet",$fidpi_addContinue = true 0,"After hours of tedious tuning and retuning, your sensor officer eventually brings the prototype into focus ""$PlayerSirOrMadam, we're seeing some unusual readings around the vessel. Lots of broad-spectrum EM noise, but also neutrino spikes that resemble reactor flux, and it looks like the storm dampner is still running.""
+ 
+There is a quiet pause, as your bridge crew search their brains for possible reasons that a nearly 200-year-old derelict could still have an active reactor.
+
+Your tech officer volunteers. ""It's speculation, but if the signal's coupling between the storm's phase-space component and the ship's coils, it could be running them in reverse - inducing a charge in the coils that feeds back into the reactor, like a kind of phase-space dynamo. Fascinating if that's happened! Though, uh, it wouldn't explain the dampner. $PlayerSirOrMadam.""",,1
+tstHPMissionPinnacleFleetFind1,BeginFleetEncounter2,"$tstHP_mPinnacle_fleet score:1000
+!$foundFleet","unset $global.tstHP_mPinnacle_stage_FIND
+$global.tstHP_mPinnacle_stage_FIGHT = true
+Call $global.tstHP_mPinnacle_ref updateStage
+$foundFleet = true 1","As you approach, tactical issues their report. A few other derelicts drift in the bubble of calm hyperspace around the prototype, showing unusual high-energy signals. False-colour visualisations on the viewscreen shows an eerie glow surrounding them.
+
+It could be residual charge from the storm, or it could be a trap. Without approaching, there is no way to find out.",,1
+tstHPMissionPinnacleFleetFight,BeginFleetEncounter,"$tstHP_mPinnacle_fleet score:1000
+$foundFleet",,"The prototype vessel is still there, along with the flotsam of derelicts surrounding it. All still show unusual energy readings, with too much sensor noise to make them out in more detail from this distance.",,1
+tstHPMissionPinnacleFleetDefeated,tstHPMissionPinnacleFleetDefeated,,"unset $global.tstHP_mPinnacle_stage_FIGHT
+$global.tstHP_mPinnacle_stage_RECOVER = true
+Call $global.tstHP_mPinnacle_ref updateStage
+$foundWreck = true","After the final derelict ship sparks its last, there is a short but tense wait, before your sensors officer confirms EM noise has returned to background levels.",tstHPMissionPinnacleFleetDefeated1:Continue,1
+# ---------------- Stage 3: Fought the fleet, recovering ----------------
+tstHPMissionPinnacleFleetDefeated1,DialogOptionSelected,"$option == tstHPMissionPinnacleFleetDefeated1",FireBest OpenInteractionDialog,,,1
+tstHPMissionPinnacleRecover,ShowSalvageEntityDetails,"$tstHP_pinnacle_mk1_Prototype score:1000
+$customType == wreck",ShowDefaultVisual,"This time, the prototype is quiet.",,1
+tstHPMissionPinnacleRecoverSpecialReturn,CheckSalvageSpecial,"$tstHP_pinnacle_mk1_Prototype score:1000
+$customType == wreck
+$salvageSpecialData != null
+$doneExplore",,"Thankfully, the ship is still quiet. No anomalous EM emissions are detected.""",,1
+tstHPMissionPinnacleRecoverSpecialFirst,CheckSalvageSpecial,"$tstHP_pinnacle_mk1_Prototype score:1000
+$customType == wreck
+$salvageSpecialData != null
+!$doneExplore","FireAll tstHPMissionPinnacleLuddOpts
+!$doneExplore","Your operations chief presents you with their plan of approach. A quick scan reveals that in addition to the standard range of plasma cutters, vac-foam guns and portable shields, the equipment section includes several copies of the Book of Ludd.
+
+""$PlayerSirOrMadam. It's spacer supersition, but... some of the salvors are convinced that the target was a 'ghost ship'. The deviation from protocol is worth it for the morale benefit.""",,1
+tstHPMissionPinnacleLuddNo,tstHPMissionPinnacleLuddOpts,,,,"tstHPMissionPinnacleLuddNo1:""No, now is not the time for supersition.""",1
+tstHPMissionPinnacleLuddNo1,DialogOptionSelected,$option == tstHPMissionPinnacleLuddNo1,"$player.luddicAttitudeCynical++
+FireBest tstHPMissionPinnacleSalvage","Your ops chief keeps a stony face. ""As you say, $playerSirOrMadam.""
+
+Hazard pay for the mission will probably need to be increased. It is the the principle that is more important.",,1
+tstHPMissionPinnacleLuddYes,tstHPMissionPinnacleLuddOpts,,,,"tstHPMissionPinnacleLuddYes1:""That seems reasonable. Approved.""",1
+tstHPMissionPinnacleLuddYes1,DialogOptionSelected,$option == tstHPMissionPinnacleLuddYes1,"$player.luddicAttitudeAgnostic++
+FireBest tstHPMissionPinnacleSalvage","""$PlayerSirOrMadam."" Your ops chief gives a quick salute and heads off to finalise the preparations.",,1
+tstHPMissionPinnacleLuddPriest,tstHPMissionPinnacleLuddOpts,$would_have_priest,,,"tstHPMissionPinnacleLuddPriest1:""Let's go further. Send a priest too.""",1
+tstHPMissionPinnacleLuddPriestBlocked,tstHPMissionPinnacleLuddOpts,!$would_have_priest,"SetEnabled tstHPMissionPinnacleLuddPriest1 false
+SetTooltip tstHPMissionPinnacleLuddPriest1 ""You have no (open) Luddic priests in your fleet.""",,"tstHPMissionPinnacleLuddPriest1:""Let's go further. Send a priest too.""",1
+tstHPMissionPinnacleLuddPriest1,DialogOptionSelected,$option == tstHPMissionPinnacleLuddPriest1,"$player.luddicAttitudeFaithful++
+FireBest tstHPMissionPinnacleSalvage","Your ops chief appears relieved. ""Aye, $playerSirOrMadam. We'll have someone who knows how to give a sermon in vac, they should help steady nerves.""",,1
+tstHPMissionPinnacleSalvage,tstHPMissionPinnacleSalvage,,,"The shuttles head out, and reports arrive not long after. The ship is a wreck, but in surprisingly good shape for almost 200 years of drifting in hyperspace without a drive field. Structural damage is minimal, but radiation has bleached every surface visible through an open window or hull tear, leaving stark white patches clicking rad-hot.
+
+All escape pods present, all shuttles accounted for. No bodies are reported, but almost all organic material has perished under the intense radiation flux. It is impossible to tell whether the fine dust kicked up by the salvor's footsteps was once furnishings, or crew.",tstHPMissionPinnacleSalvage1:Continue,1
+tstHPMissionPinnacleSalvage1,DialogOptionSelected,$option == tstHPMissionPinnacleSalvage1,$recordingLoops=1,"After the vessel is confirmed safe repair teams arrive to replace the salvors, returning with the bulky, radiation-shielded black box. After an unusually long wait, you debrief the results.
+
+""As expected, everything else was fried. But..."" your ops chief pauses, ""...the contents are odd. Like an alpha core's idea of a joke.""
+
+A recording is forwarded to your personal screen. A grainy view from the bridge's backup camera, the crew in position as the hyperspace storm signals sound. Warnings indicate a strike has been attracted, and is imminent; the captain confidently gives the order to dive to phase space to avoid it, and there is a brief white-out.
+
+When the image returns, the bridge is empty.
+
+""That's the latest recording. There's more, although...""","tstHPMissionPinnacleLoopNext:Check the next recording
+tstHPMissionPinnacleLoopRandom:Check a random recording
+tstHPMissionPinnacleLoopContinue:Continue",1
+tstHPMissionPinnacleLoopRandomStop,DialogOptionSelected,"$option == tstHPMissionPinnacleLoopNext
+$recordingLoops >= 5 score:1000",,"You snap back into awareness as your ops chief shakes your shoulder. ""$PlayerSirOrMadam?""",tstHPMissionPinnacleLoopContinue:Continue,1
+tstHPMissionPinnacleLoopNextStop,DialogOptionSelected,"$option == tstHPMissionPinnacleLoopRandom
+$recordingLoops >= 5 score:1000",,"You snap back into awareness as your ops chief shakes your shoulder. ""$PlayerSirOrMadam?""",tstHPMissionPinnacleLoopContinue:Continue,1
+tstHPMissionPinnacleLoopNext,DialogOptionSelected,"$option == tstHPMissionPinnacleLoopNext
+$recordingLoops < 5","FireBest tstHPMissionPinnacleLoopEntry
+FireAll tstHPMissionPinnacleLoopOptions",,,1
+tstHPMissionPinnacleLoopRandom,DialogOptionSelected,"$option == tstHPMissionPinnacleLoopRandom
+$recordingLoops < 5","FireBest tstHPMissionPinnacleLoopEntry
+FireAll tstHPMissionPinnacleLoopOptions",,,1
+tstHPMissionPinnacleLoopOptions,tstHPMissionPinnacleLoopOptions,,,,"tstHPMissionPinnacleLoopNext:Check the next recording
+tstHPMissionPinnacleLoopRandom:Check a random recording
+tstHPMissionPinnacleLoopContinue:Continue",1
+tstHPMissionPinnacleLoopEntry1,tstHPMissionPinnacleLoopEntry,,"$recordingLoops++","Another grainy video of the bridge of the prototype. All the same crew are present, but at different stations, wearing different uniforms. One thing is the same; the sequence of events. A warning, a dive, then an empty bridge.
+OR
+This recording is similar to the first. Though the snow of radiation obscures details, it seems to be same crew, though wearing a different set of uniforms, in different positions. Once again, the strike warning flares on the viewscreen, the phase coils engage, and after the whiteout nobody remains.
+OR
+Once again, you see the ship's bridge. The crew stand at their stations, mid-storm, though different ones from the last recording. Their uniforms are distinctly different. The one thing that remains the same is the sequence of events; an alert, a confidence dive to phase-space, then nothing.",,1
+tstHPMissionPinnacleLoopContinue,DialogOptionSelected,$option == tstHPMissionPinnacleLoopContinue,"$doneExplore = true 1
+SalvageSpecialInteraction","""Disconcerting, isn't it?"" ventures your technology officer. ""It's all there is. Overwritten all the black-box storage, down to the drivers. It could be a weaponised cognitohazard? Set as a trap by Tri-Tachyon, perhaps? Illegal under Domain law, but so were AI warfleets.""
+
+Heliopause will be disappointed by the lack of data, but the recording from your encounter with the prototype should more than make that up. All that remains is to make it spaceworthy for the return trip.",,1
+tstHPMissionPinnacleSalvageFinished,PostShipRecoverySpecial,"$tstHP_pinnacle_mk1_Prototype
+$global.tstHP_mPinnacle_inProgress","unset $global.tstHP_mPinnacle_stage_RECOVER
+$global.tstHP_mPinnacle_stage_RETURN = true
+unset $foundWreck
+$doneExplore = true 1
+Call $global.tstHP_mPinnacle_ref updateStage","The prototype Pinnacle has been patched up, ready for return to Heliopause Innovations.",,1
+# ---------------- Stage 4: Recovered the fleet, returning ----------------
+tstHPMissionPinnacleReturn,PickGreeting,"$id == tstHP_heliopause_ceo score:2000
+$global.tstHP_mPinnacle_stage_RETURN ",FireAll tstHPMissionPinnacleNews,"After a short delay, your comms officer informs you the call is ready to connect, and $name springs onto the viewscreen.
+
+""Ah, you're back! Marvellous, marvellous. How was your jaunt to the depths of hyperspace?""",,1
+tstHPMissionPinnacleNewsGood,tstHPMissionPinnacleNews,!$newsGood,,,"tstHPMissionPinnacleNewsGood1:Give $himOrHer the good news",1
+tstHPMissionPinnacleNewsGood1,DialogOptionSelected,$option == tstHPMissionPinnacleNewsGood1,"RemoveOption tstHPMissionPinnacleNewsGood
+FireAll tstHPMissionPinnacleNews
+$newsGood = true 1","You forward engineering's report on the salvaged ship. Minimal structural damage and almost all systems have been fully repaired, and the remainder could be with a short stay in dry dock.",,1
+tstHPMissionPinnacleNewsBad,tstHPMissionPinnacleNews,!$newsBad,,,"tstHPMissionPinnacleNewsBad1:Give $himOrHer the bad news",1
+tstHPMissionPinnacleNewsBad1,DialogOptionSelected,$option == tstHPMissionPinnacleNewsBad1,"RemoveOption tstHPMissionPinnacleNewsBad
+FireAll tstHPMissionPinnacleNews
+$newsBad = true 1","You forward your copy of the black-box data archives. $personFirstName eagerly opens up the bridge logs, and you can see them focus intently on a holoscreen, before switching to an expression of confusion and playing the next log. Then the next.
+
+A polite cough jolts them out of the loop.
+
+""Ah. Rather unnerving. I must say, this isn't exactly what we were hoping for. I suppose R&D will see what they can do with the physical black box, but it does seem a bit unsettling. A shame, though - imagine what we could have done with all that data!""",,1
+tstHPMissionPinnacleNewsOdd,tstHPMissionPinnacleNews,"$newsBad
+$newsGood",,,"tstHPMissionPinnacleNewsOdd1:Continue",1
+tstHPMissionPinnacleNewsOdd1,DialogOptionSelected,$option == tstHPMissionPinnacleNewsOdd1,,"You recount your interaction with the electromagnetic phenomena surrounding the prototype, and forward the sensor readings and combat logs. $personFirstName's surprise and disappointment from earlier quickly turns into a wide-eyed fascination.
+
+""Incredible! A truly fascinating account, and such rigorous data gathering. R&D will be positively giddy with this discovery. Please, do give my thanks to the relevant crew!""
+
+$personFirstName wrestles to contain $hisOrHer excitement and display an appropriate level of contrition. ""Though, um, I must also congratulate your cool head in such unprecedented circumstances. I must admit, the records of my predecessors did not quite cover the, ah, complications of the prototype program in sufficient depth. Rest assured, we will vet future prospective commissions with somewhat more vigor.""",tstHPMissionPinnacleReward:Continue,1
+tstHPMissionPinnacleReward,DialogOptionSelected,$option == tstHPMissionPinnacleReward,"unset $global.tstHP_mPinnacle_stage_RETURN
+$global.tstHP_mPinnacle_stage_COMPLETE = true
+Call $global.tstHP_mPinnacle_ref updateStage
+AddTextSmall ""Received updated Pinnacle Mk 1 Storm Dampner algorithms""","""In any case, your help here has been invaluable, and well-deserving of your compensation.""
+
+As $heOrShe begins processing the transfer, they start. ""Aha! Of course, the matter of the prototype itself. You may be pleased to learn we uncovered the last set of refinements to the dampner algorithm in the archives, that were never rolled out as all prototypes had been lost. I'll have R&D install them for you. By all means, please keep hold of the prototype and put it to good use collecting data - after all, you are clearly more prepared than most for any, ah, teething troubles that might pop up.""
+
+Your business concluded, $PersonFirstName signs off.",cutCommLink:Close the comm link,1
+
+# ================ Comms with possessed ships ================
+tstHPFactionPossessedComms,OpenCommLink,$faction.id == tstHP_possessed_faction score:1000,EndConversation,"Your comms officer bravely attempts to wrestle a signal out of the broad-spectrum EM emissions from the derelicts, but is eventually forced to admit defeat.
+
+""Sorry $playerSirOrMadam, I can't get anything but noise.""
+
+Their speculative transforms and postprocesses of the signal flicker and dance on the viewscreen.",,1

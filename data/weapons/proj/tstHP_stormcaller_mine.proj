@@ -1,0 +1,53 @@
+{
+	"id":"tstHP_stormcaller_minelayer_mine",
+	"specClass":"missile",	
+	"missileType":"PHASE_MINE",
+    "sprite":"",
+    # "sprite":"graphics/toaster/hp/missiles/stormcaller/deep_hyperspace.png",
+	# "glowSprite":"graphics/toaster/hp/missiles/stormcaller/deep_hyperspace_blue_glow.png",
+    "glowSprite":"",
+	"glowColor":[115,248,240,64], # also used for the NegativeExplosionVisual effect color
+	"size":[192,192],
+	"center":[96,96],
+	"collisionRadius":20,
+	"collisionClass":"NONE",
+	"collisionClassAfterFlameout":"NONE",
+	"flameoutTime":0.1, # total time from flameout to full fadeout
+	"fadeTime":0.1, # fadeout duration
+	"noEngineGlowTime":0.05, # time spent without the engine glow being rendered
+	"explosionColor":[115,248,240,255],  # unused
+	"explosionRadius": 192, # purely visual
+	"renderTargetIndicator":false, # no target diamond in combat view, not targeted by flares
+	"engineSpec": {
+        "turnAcc": 500,
+        "turnRate": 0,
+        "acc": 500,
+        "dec": 500
+    },
+	"behaviorSpec":{
+        "behavior":"PROXIMITY_FUSE",
+        "onExplosionEffect":"toaster.hp.weapons.stormcaller.StormcallerMineExplosion",
+        "range":0,
+        "delay":0,
+        "slowToMaxSpeed":true,
+        "pingSound":"rift_lightning_fire",
+        "pingColor":[115,248,240,32],  # Deep hyperspace colour
+        "flashRateMult":1,
+        "pingRadius":192,
+        "pingDuration":0.1,
+        "windupSound":"terrain_hyperspace_storm_signal",
+        "windupDelay":0,
+        "explosionSpec":{
+            "duration":0.1f,
+            "radius":192,
+            "coreRadius":128, # full damage within core radius
+            "collisionClass":MISSILE_FF,
+            "collisionClassByFighter":MISSILE_FF,
+            "particleDuration":1,
+            "particleCount":0,
+            "particleColor":[0,0,0,0],
+            "explosionColor":[115,248,240,255],
+            "sound":"terrain_hyperspace_lightning"
+        }
+    }
+}

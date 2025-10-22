@@ -1,0 +1,90 @@
+{
+    "bounds": [
+        14,
+        39,
+        86,
+        41,
+        112,
+        21,
+        42,
+        10,
+        42,
+        -10,
+        111,
+        -20,
+        88,
+        -37,
+        6,
+        -41,
+        -14,
+        -34,
+        -44,
+        -50,
+        -71,
+        -24,
+        -70,
+        32,
+        -46,
+        51,
+        -29,
+        46
+    ],
+    "builtInMods": ["tstHP_possessed_hullmod"],
+    "center": [
+        53,
+        80
+    ],
+    "collisionRadius": 140,
+    "engineSlots": [],
+    "height": 204,
+    "hullId": "tstHP_possessed_tarsus",
+    "hullName": "Tarsus (G)",
+    "hullSize": "DESTROYER",
+    "shieldCenter": [
+        18,
+        1
+    ],
+    "shieldRadius": 120,
+    "spriteName": "graphics/ships/tarsus/tarsus_base.png",
+    "style": "LOW_TECH",
+    "viewOffset": 0,
+    "weaponSlots": [
+        {
+            "angle": 0,
+            "arc": 360,
+            "id": "WS 001",
+            "locations": [4, 4],
+            "mount": "HIDDEN",
+            "size": "SMALL",
+            "type": "UNIVERSAL"
+        },
+        {
+            "angle": 0,
+            "arc": 360,
+            "id": "WS 002",
+            "locations": [-4, -4],
+            "mount": "HIDDEN",
+            "size": "SMALL",
+            "type": "UNIVERSAL"
+        },
+        {
+            "angle": 0,
+            "arc": 360,
+            "id": "WS 003",
+            "locations": [-4, 4],
+            "mount": "HIDDEN",
+            "size": "MEDIUM",
+            "type": "UNIVERSAL"
+        },
+        {
+            "angle": 0,
+            "arc": 360,
+            "id": "WS 004",
+            "locations": [4, -4],
+            "mount": "HIDDEN",
+            "size": "MEDIUM",
+            "type": "UNIVERSAL"
+        }
+    ],
+    "width": 106
+}

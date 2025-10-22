@@ -1,0 +1,37 @@
+{
+	"id":"tstHP_attractor_field",
+	"type":"PHASE_CLOAK",
+	"aiType":"CUSTOM",
+    "aiScript":"toaster.hp.shipsystems.AttractorFieldAI",
+	"statsScript":"toaster.hp.shipsystems.AttractorField",
+
+    "engineGlowColor":[80, 55, 200, 128],
+    "engineGlowContrailColor":[80, 55, 200, 128],
+    "engineGlowGlowMult":1.0,
+
+    "phaseHighlight":"_glow1",
+    "phaseDiffuse":"_glow2",
+    "effectColor1":[80, 55, 200, 128],
+    "effectColor2":[80, 55, 200, 64],
+
+    "jitterUnderColor":[80, 55, 200,128],
+    "jitterUnderCopies":8,
+    "jitterUnderMinRange":0,
+    "jitterUnderRange":12,
+    "jitterUnderRangeRadiusFraction":0,
+
+    "jitterColor":[80, 55, 200, 128],
+    "jitterCopies":2,
+    "jitterMinRange":0,
+    "jitterRange":2,
+    "jitterRangeRadiusFraction":0,
+
+    "useSound":"ui_reverse_polarity_on",
+    "loopSound":"terrain_slipstream",
+    "deactivateSound":"ui_reverse_polarity_off",
+    "outOfUsesSound":"gun_out_of_ammo",
+
+    #"soundFilterType":"LOWPASS",
+    #"soundFilterGain":0.75,
+    #"soundFilterGainHF":0.25,
+}
