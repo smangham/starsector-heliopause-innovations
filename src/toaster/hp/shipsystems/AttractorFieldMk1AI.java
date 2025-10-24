@@ -12,21 +12,21 @@ public class AttractorFieldMk1AI extends AttractorFieldAI {
     /**
      * Pulses on intervals, triggers the system if the ship or an ally needs help and is in range.
      *
-     * @param amount                The amount of time elapsed since last call.
-     * @param missileDangerDir      ???
-     * @param collisionDangerDir    ???
-     * @param target                The ship's current AI target.
+     * @param amount             The amount of time elapsed since last call.
+     * @param missileDangerDir   ???
+     * @param collisionDangerDir ???
+     * @param target             The ship's current AI target.
      */
-	@Override
+    @Override
     public void advance(float amount, Vector2f missileDangerDir, Vector2f collisionDangerDir, ShipAPI target) {
         this.tracker.advance(amount);
         this.sinceLast += amount;
-		
-		if (this.tracker.intervalElapsed()) {
+
+        if (this.tracker.intervalElapsed()) {
             // Don't bother checking if the system is on cooldown.
-			if (this.system.getCooldownRemaining() > 0) return;
-			if (this.system.isOutOfAmmo()) return;
-			if (this.system.isActive()) return;
+            if (this.system.getCooldownRemaining() > 0) return;
+            if (this.system.isOutOfAmmo()) return;
+            if (this.system.isActive()) return;
             // Don't trigger the system if the flux is too high.
             if (this.ship.getHardFluxLevel() > 0.7) return;
             if (this.ship.getFluxLevel() > 0.7) return;
@@ -40,11 +40,11 @@ public class AttractorFieldMk1AI extends AttractorFieldAI {
             if (hasThreatenedAllies()) this.shouldTrigger = true;
 
             // If the AI has evaluated that it should call the system.
-			if (this.shouldTrigger) {
-				this.ship.useSystem();
-				this.sinceLast = 0f;
+            if (this.shouldTrigger) {
+                this.ship.useSystem();
+                this.sinceLast = 0f;
                 this.shouldTrigger = false;
-			}
-		}
-	}
+            }
+        }
+    }
 }

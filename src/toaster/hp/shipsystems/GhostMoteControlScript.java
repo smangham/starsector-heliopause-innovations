@@ -30,7 +30,8 @@ import toaster.hp.hullmods.GhostPossessed;
 public class GhostMoteControlScript extends MoteControlScript {
     public static final String ID = ShipSystems.POSSESSED_MOTE_CONTROLLER;
 
-    public static final float CHARGE_COST = 1f;  /// The charge reduction on usage
+    public static final float CHARGE_COST = 1f;
+    /// The charge reduction on usage
 
     // --------------------------------
     // Settings for the attractor behaviour
@@ -112,7 +113,7 @@ public class GhostMoteControlScript extends MoteControlScript {
 
             float emp = 0;
             float dam = 0;
-            EmpArcEntityAPI arc = (EmpArcEntityAPI)engine.spawnEmpArc(ship, slotLoc, ship, target,
+            EmpArcEntityAPI arc = (EmpArcEntityAPI) engine.spawnEmpArc(ship, slotLoc, ship, target,
                     DamageType.ENERGY,
                     dam,
                     emp, // emp
@@ -120,7 +121,7 @@ public class GhostMoteControlScript extends MoteControlScript {
                     "mote_attractor_targeted_ship",
                     40f, // thickness
                     ATTRACTOR_ARC_COLOUR,
-                    new Color(255,255,255,255),
+                    new Color(255, 255, 255, 255),
                     params
             );
             if (data.attractorLock != null) {
@@ -181,7 +182,7 @@ public class GhostMoteControlScript extends MoteControlScript {
     /**
      * Updates the shared data for the ship with the new target.
      *
-     * @param ship              The ship to get the target data for.
+     * @param ship The ship to get the target data for.
      */
     @Override
     public void calculateTargetData(ShipAPI ship) {
@@ -280,8 +281,13 @@ public class GhostMoteControlScript extends MoteControlScript {
     }
 
     // Probably needed for the AI?
-    public static boolean isHighFrequency(ShipAPI ship) { return true; }
-    public static int getMaxMotes(ShipAPI ship) { return GhostPossessed.getSharedData(ship).maxMotes; }
+    public static boolean isHighFrequency(ShipAPI ship) {
+        return true;
+    }
+
+    public static int getMaxMotes(ShipAPI ship) {
+        return GhostPossessed.getSharedData(ship).maxMotes;
+    }
 
 
     protected EveryFrameCombatPlugin createTargetJitterPlugin(final ShipAPI target,
@@ -290,6 +296,7 @@ public class GhostMoteControlScript extends MoteControlScript {
                                                               final Color jitterColor) {
         return new BaseEveryFrameCombatPlugin() {
             float elapsed = 0f;
+
             @Override
             public void advance(float amount, List<InputEventAPI> events) {
                 if (Global.getCombatEngine().isPaused()) return;

@@ -19,9 +19,11 @@ public class HyperspaceTiledSpriteSamplers {
     public static SpriteAPI getHyperspaceSprite() {
         return deepHyperspace.getSprite();
     }
+
     public static SpriteAPI getHyperspaceDarkSprite() {
         return deepHyperspaceDark.getSprite();
     }
+
     public static SpriteAPI getHyperspaceGlowSprite() {
         return deepHyperspaceGlow.getSprite();
     }

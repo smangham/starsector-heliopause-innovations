@@ -2,7 +2,7 @@ package org.hyperlib.util;
 
 /**
  * Based on FlickerUtilV2, but with scaling maximum wait.
- *
+ * <p>
  * The waits can either increase with burst, or decrease.
  * Can't extend as maxWait is private.
  */
@@ -33,8 +33,8 @@ public class ScalingFlickerUtil {
     /**
      * Constructs a new scaling flicker util.
      *
-     * @param maxWait   The maximum wait time in cycle 0.
-     * @param waitMult  The multiplier applied to the maximum wait time each cycle.
+     * @param maxWait  The maximum wait time in cycle 0.
+     * @param waitMult The multiplier applied to the maximum wait time each cycle.
      */
     public ScalingFlickerUtil(float maxWait, float waitMult) {
         this.maxWait = maxWait;
@@ -60,20 +60,35 @@ public class ScalingFlickerUtil {
 
     public void newWait() {
         this.maxWait *= this.waitMult;
-        this.wait = (float) (0.75f + Math.random()/4f) * this.maxWait;
+        this.wait = (float) (0.75f + Math.random() / 4f) * this.maxWait;
         this.numBursts = 0;
         this.stopBursts = false;
         this.angle = (float) Math.random() * 360f;
     }
 
-    public void setMaxWait(float maxWait) { this.maxWait = maxWait; }
-    public void setWait(float wait) { this.wait = wait; }
-    public void setNumBursts(int numBursts) { this.numBursts = numBursts; }
-    public boolean isPeakFrame() { return this.peakFrame; }
+    public void setMaxWait(float maxWait) {
+        this.maxWait = maxWait;
+    }
 
-    public int getNumBursts() { return this.numBursts; }
+    public void setWait(float wait) {
+        this.wait = wait;
+    }
 
-    public float getWait() { return this.wait; }
+    public void setNumBursts(int numBursts) {
+        this.numBursts = numBursts;
+    }
+
+    public boolean isPeakFrame() {
+        return this.peakFrame;
+    }
+
+    public int getNumBursts() {
+        return this.numBursts;
+    }
+
+    public float getWait() {
+        return this.wait;
+    }
 
     public void advance(float amount) {
         this.peakFrame = false;
@@ -117,6 +132,7 @@ public class ScalingFlickerUtil {
     public void stop() {
         stopAll = true;
     }
+
     public float getBrightness() {
         return brightness;
     }

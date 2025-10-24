@@ -21,7 +21,7 @@ public class ShipPointSampler {
     /**
      * Declares the sampler for a specific ship.
      *
-     * @param shipAPI   The entity to use the bounds of.
+     * @param shipAPI The entity to use the bounds of.
      */
     public ShipPointSampler(ShipAPI shipAPI) {
         float x_min = 9999f, x_max = -9999f, y_min = 9999f, y_max = -9999f;
@@ -46,7 +46,7 @@ public class ShipPointSampler {
     /**
      * Gets a point within the collision bounds.
      *
-     * @return  A point within the ship's bounds, or its centre if sampling fails.
+     * @return A point within the ship's bounds, or its centre if sampling fails.
      */
     protected Vector2f getInternalPoint() {
         Vector2f point = new Vector2f();
@@ -74,9 +74,9 @@ public class ShipPointSampler {
     /**
      * Gets a point in the bounds, but not within a given distance of another point.
      *
-     * @param point     The point to not be near.
-     * @param radius    The radius away from the point the sample must be.
-     * @return  The location if successful, or the ship's centre if not.
+     * @param point  The point to not be near.
+     * @param radius The radius away from the point the sample must be.
+     * @return The location if successful, or the ship's centre if not.
      */
     protected Vector2f getInternalPointDistantFrom(Vector2f point, float radius) {
         Vector2f pointOut = new Vector2f();
@@ -100,7 +100,7 @@ public class ShipPointSampler {
             if (distance > radius) {
                 if (CollisionUtils.isPointWithinBounds(pointOut, ship)) return pointOut;
             } else {
-                Global.getLogger(ShipPointSampler.class).info("Point "+i+" failed, distance "+distance+" vs ship scale "+getMinDimension());
+                Global.getLogger(ShipPointSampler.class).info("Point " + i + " failed, distance " + distance + " vs ship scale " + getMinDimension());
             }
         }
 
@@ -110,7 +110,7 @@ public class ShipPointSampler {
     /**
      * Gets one of the bounding box points.
      *
-     * @return  One of the bounds points.
+     * @return One of the bounds points.
      */
     protected Vector2f getBoundsPoint() {
         List<BoundsAPI.SegmentAPI> segments = ship.getExactBounds().getSegments();
@@ -120,7 +120,7 @@ public class ShipPointSampler {
     /**
      * Gets a point on the edge of the ship's bounding box.
      *
-     * @return  A point somewhere along one of the bounding box segments.
+     * @return A point somewhere along one of the bounding box segments.
      */
     protected Vector2f getEdgePoint() {
         List<BoundsAPI.SegmentAPI> segments = ship.getExactBounds().getSegments();
@@ -135,7 +135,7 @@ public class ShipPointSampler {
     }
 
     /**
-     * @return  The minimum of the X and Y dimensions.
+     * @return The minimum of the X and Y dimensions.
      */
     protected float getMinDimension() {
         return Math.min(

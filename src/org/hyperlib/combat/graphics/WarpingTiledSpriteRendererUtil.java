@@ -46,33 +46,33 @@ public class WarpingTiledSpriteRendererUtil {
         }
 
         Object writeReplace() {
-            theta.setMax((int)theta.getMax());
-            theta.setMin((int)theta.getMin());
-            theta.setRate((int)theta.getRate());
-            theta.setValue((int)theta.getValue());
+            theta.setMax((int) theta.getMax());
+            theta.setMin((int) theta.getMin());
+            theta.setRate((int) theta.getRate());
+            theta.setValue((int) theta.getValue());
 
-            radius.setMax((int)radius.getMax());
-            radius.setMin((int)radius.getMin());
-            radius.setRate((int)radius.getRate());
-            radius.setValue((int)radius.getValue());
+            radius.setMax((int) radius.getMax());
+            radius.setMin((int) radius.getMin());
+            radius.setRate((int) radius.getRate());
+            radius.setValue((int) radius.getValue());
             return this;
         }
     }
 
     protected int verticesWide, verticesTall;
-    protected WarpingVertex[] [] vertices;
+    protected WarpingVertex[][] vertices;
     protected SpriteAPI sprite;
     protected boolean mirror = false;
 
     /**
      * Constructor for the warping sprite.
      *
-     * @param sprite            The sprite to render.
-     * @param verticesWide      How many moving points across the sprite.
-     * @param verticesTall      How many moving points up the sprite.
-     * @param minWarpRadius     The minimum radius each point moves through.
-     * @param maxWarpRadius     The maximum radius each point moves through.
-     * @param warpRateMult      The rate at which those points move.
+     * @param sprite        The sprite to render.
+     * @param verticesWide  How many moving points across the sprite.
+     * @param verticesTall  How many moving points up the sprite.
+     * @param minWarpRadius The minimum radius each point moves through.
+     * @param maxWarpRadius The maximum radius each point moves through.
+     * @param warpRateMult  The rate at which those points move.
      */
     public WarpingTiledSpriteRendererUtil(
             SpriteAPI sprite, int verticesWide, int verticesTall,
@@ -96,6 +96,7 @@ public class WarpingTiledSpriteRendererUtil {
 
     /**
      * Only works once, if the original mult was 1f - original rate values are not retained.
+     *
      * @param mult
      */
     public void setWarpRateMult(float mult) {
@@ -119,8 +120,8 @@ public class WarpingTiledSpriteRendererUtil {
         float w = sprite.getWidth();
         float h = sprite.getHeight();
 
-        x -= w/2f;
-        y -= h/2f;
+        x -= w / 2f;
+        y -= h / 2f;
 
         sprite.bindTexture();
         GL11.glPushMatrix();
@@ -128,7 +129,7 @@ public class WarpingTiledSpriteRendererUtil {
         Color color = sprite.getColor();
         GL11.glColor4ub(
                 (byte) color.getRed(), (byte) color.getGreen(), (byte) color.getBlue(),
-                (byte)(color.getAlpha() * sprite.getAlphaMult())
+                (byte) (color.getAlpha() * sprite.getAlphaMult())
         );
 
         // translate to the right location and prepare to draw
@@ -141,7 +142,7 @@ public class WarpingTiledSpriteRendererUtil {
         if (centerX != -1 && centerY != -1) {
             GL11.glTranslatef(w / 2, h / 2, 0);
             GL11.glRotatef(angle, 0, 0, 1);
-            GL11.glTranslatef(- centerX, - centerY, 0);
+            GL11.glTranslatef(-centerX, -centerY, 0);
         } else {
             GL11.glTranslatef(w / 2, h / 2, 0);
             GL11.glRotatef(angle, 0, 0, 1);
@@ -163,7 +164,7 @@ public class WarpingTiledSpriteRendererUtil {
         float cw = w / (float) (verticesWide - 1);
         float ch = h / (float) (verticesTall - 1);
         float ctw = tex_width / (float) (verticesWide - 1);
-        float cth = tex_height / (float) (verticesTall- 1);
+        float cth = tex_height / (float) (verticesTall - 1);
 
         for (float i = 0; i < verticesWide - 1; i++) {
             GL11.glBegin(GL11.GL_QUAD_STRIP);
@@ -184,16 +185,16 @@ public class WarpingTiledSpriteRendererUtil {
                         tx2 = tex_height - tx2;
                     }
 
-                    float theta1 = (float) Math.toRadians(vertices[(int)i][(int)j].theta.getValue());
-                    float radius1 = vertices[(int)i][(int)j].radius.getValue();
+                    float theta1 = (float) Math.toRadians(vertices[(int) i][(int) j].theta.getValue());
+                    float radius1 = vertices[(int) i][(int) j].radius.getValue();
                     float sin1 = (float) Math.sin(theta1);
                     float cos1 = (float) Math.cos(theta1);
 
                     x1 += cos1 * radius1;
                     y1 += sin1 * radius1;
 
-                    float theta2 = (float) Math.toRadians(vertices[(int)i + 1][(int)j].theta.getValue());
-                    float radius2 = vertices[(int)i + 1][(int)j].radius.getValue();
+                    float theta2 = (float) Math.toRadians(vertices[(int) i + 1][(int) j].theta.getValue());
+                    float radius2 = vertices[(int) i + 1][(int) j].radius.getValue();
                     float sin2 = (float) Math.sin(theta2);
                     float cos2 = (float) Math.cos(theta2);
 
@@ -214,13 +215,25 @@ public class WarpingTiledSpriteRendererUtil {
         GL11.glPopMatrix();
     }
 
-    public int getVerticesWide() { return this.verticesWide; }
-    public int getVerticesTall() { return this.verticesTall; }
+    public int getVerticesWide() {
+        return this.verticesWide;
+    }
 
-    public SpriteAPI getSprite() { return this.sprite; }
+    public int getVerticesTall() {
+        return this.verticesTall;
+    }
 
-    public boolean isMirror() { return this.mirror; }
-    public void setMirror(boolean mirror) { this.mirror = mirror; }
+    public SpriteAPI getSprite() {
+        return this.sprite;
+    }
+
+    public boolean isMirror() {
+        return this.mirror;
+    }
+
+    public void setMirror(boolean mirror) {
+        this.mirror = mirror;
+    }
 
 }
 

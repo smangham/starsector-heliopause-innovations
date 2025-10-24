@@ -22,9 +22,10 @@ import toaster.hp.weapons.stormcaller.StormcallerParams;
  * Ability that generates a pulse of storms across nearby hyperspace
  */
 public class StormcallerAbility extends BaseDurationAbility {
-    public static final float BASE_RANGE = 500f;  /// The range at which storms are triggered.
-
-    protected boolean triggered = false;  /// Whether the stormcalling pulse has triggered.
+    public static final float BASE_RANGE = 500f;
+    /// The range at which storms are triggered.
+    protected boolean triggered = false;
+    /// Whether the stormcalling pulse has triggered.
 
     /**
      * Gets the range the storm should cover.
@@ -40,7 +41,7 @@ public class StormcallerAbility extends BaseDurationAbility {
     /**
      * Shows the activation text for the ability.
      *
-     * @return  The constant.
+     * @return The constant.
      */
     @Override
     protected String getActivationText() {
@@ -61,8 +62,8 @@ public class StormcallerAbility extends BaseDurationAbility {
     /**
      * Every frame script applying the stormcaller effect.
      *
-     * @param amount    Time passed, in days?
-     * @param level     The level of the ability, goes up to 1 during ramp-up, then 1 during active phase.
+     * @param amount Time passed, in days?
+     * @param level  The level of the ability, goes up to 1 during ramp-up, then 1 during active phase.
      */
     @Override
     protected void applyEffect(
@@ -169,8 +170,8 @@ public class StormcallerAbility extends BaseDurationAbility {
     /**
      * Creates the tooltip for a stage.
      *
-     * @param tooltip           The tooltip to add fields to.
-     * @param expanded          Whether it's expanded?
+     * @param tooltip  The tooltip to add fields to.
+     * @param expanded Whether it's expanded?
      */
     @Override
     public void createTooltip(TooltipMakerAPI tooltip, boolean expanded) {
@@ -207,8 +208,8 @@ public class StormcallerAbility extends BaseDurationAbility {
     /**
      * Called when the fleet engages in battle; the disruption should stop.
      *
-     * @param battle                The battle the fleet approached.
-     * @param engagedInHostilities  If the fleet engaged, or left.
+     * @param battle               The battle the fleet approached.
+     * @param engagedInHostilities If the fleet engaged, or left.
      */
     @Override
     public void fleetLeftBattle(BattleAPI battle, boolean engagedInHostilities) {
@@ -218,8 +219,10 @@ public class StormcallerAbility extends BaseDurationAbility {
     /**
      * Called when the fleet activates a market; the disruption should stop.
      *
-    * @param market            The market the fleet interacted with.
+     * @param market The market the fleet interacted with.
      */
     @Override
-    public void fleetOpenedMarket(MarketAPI market) { deactivate(); }
+    public void fleetOpenedMarket(MarketAPI market) {
+        deactivate();
+    }
 }

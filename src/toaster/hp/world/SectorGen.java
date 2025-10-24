@@ -1,4 +1,5 @@
 package toaster.hp.world;
+
 import com.fs.starfarer.api.campaign.SectorAPI;
 import toaster.hp.world.systems.HeliopauseWesternesse;
 
@@ -11,7 +12,7 @@ public class SectorGen {
     /**
      * Generates the mod content.
      *
-     * @param sector    The active sector.
+     * @param sector The active sector.
      */
     public void generate(SectorAPI sector) {
         new HeliopauseWesternesse().generate(sector);

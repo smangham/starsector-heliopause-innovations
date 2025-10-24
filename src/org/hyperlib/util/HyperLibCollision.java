@@ -50,5 +50,7 @@ public class HyperLibCollision {
         return getShipSampler(ship).getEdgePoint();
     }
 
-    public static float getMinDimension(ShipAPI ship) { return getShipSampler(ship).getMinDimension(); }
+    public static float getMinDimension(ShipAPI ship) {
+        return getShipSampler(ship).getMinDimension();
+    }
 }

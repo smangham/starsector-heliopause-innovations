@@ -86,7 +86,7 @@ public class GhostRoilingSwarmEffect extends BaseCombatLayeredRenderingPlugin {
         public float preFlashDelay = 0f;
         public float flashProbability = 0f;
         public boolean renderFlashOnSameLayer = false;
-        public Color flashFringeColor = new Color(255,0,0,255);
+        public Color flashFringeColor = new Color(255, 0, 0, 255);
         public Color flashCoreColor = Color.white;
 
         public float alphaMult = 1f;
@@ -223,7 +223,7 @@ public class GhostRoilingSwarmEffect extends BaseCombatLayeredRenderingPlugin {
                 float max = min + params.maxOffset;
                 min += params.minOffset;
 
-                float f = min/(Math.max(1f, max));
+                float f = min / (Math.max(1f, max));
                 f = Math.max(0.1f, f * 0.75f);
 
                 // there's definitely a smarter way than this to get a uniform distribution -am
@@ -326,12 +326,15 @@ public class GhostRoilingSwarmEffect extends BaseCombatLayeredRenderingPlugin {
         }
         return map;
     }
+
     public static ListMap<GhostRoilingSwarmEffect> getFlockingMap() {
         return getStringToSwarmMap(KEY_FLOCKING_MAP);
     }
+
     public static ListMap<GhostRoilingSwarmEffect> getExchangeMap() {
         return getStringToSwarmMap(KEY_EXCHANGE_MAP);
     }
+
     @SuppressWarnings("unchecked")
     public static ListMap<GhostRoilingSwarmEffect> getStringToSwarmMap(String key) {
         ListMap<GhostRoilingSwarmEffect> map =
@@ -432,6 +435,7 @@ public class GhostRoilingSwarmEffect extends BaseCombatLayeredRenderingPlugin {
 
     protected EnumSet<CombatEngineLayers> layers = EnumSet.of(CombatEngineLayers.FIGHTERS_LAYER,
             CombatEngineLayers.ABOVE_PARTICLES_LOWER);
+
     @Override
     public EnumSet<CombatEngineLayers> getActiveLayers() {
         return layers;
@@ -442,24 +446,30 @@ public class GhostRoilingSwarmEffect extends BaseCombatLayeredRenderingPlugin {
         addMember(sm);
         return sm;
     }
+
     public void addMember(SwarmMember sm) {
         members.add(sm);
     }
+
     public void removeMember(SwarmMember sm) {
         members.remove(sm);
     }
+
     public void addMembers(int num) {
         for (int i = 0; i < num; i++) {
             addMember();
         }
     }
+
     public void transferMembersTo(GhostRoilingSwarmEffect other, float fraction) {
         int num = (int) (members.size() * fraction);
         transferMembersTo(other, num);
     }
+
     public void transferMembersTo(GhostRoilingSwarmEffect other, int num) {
         transferMembersTo(other, num, null, 0f);
     }
+
     public void transferMembersTo(GhostRoilingSwarmEffect other, int num, Vector2f point, float maxRangeFromPoint) {
         if (num <= 0) return;
         WeightedRandomPicker<SwarmMember> picker = getPicker(true, true);
@@ -479,6 +489,7 @@ public class GhostRoilingSwarmEffect extends BaseCombatLayeredRenderingPlugin {
     public void despawnMembers(int num) {
         despawnMembers(num, true);
     }
+
     public void despawnMembers(int num, boolean allowFirst) {
         WeightedRandomPicker<SwarmMember> picker = getPicker(false, false);
         if (!allowFirst && !members.isEmpty()) {
@@ -500,7 +511,7 @@ public class GhostRoilingSwarmEffect extends BaseCombatLayeredRenderingPlugin {
     }
 
     public WeightedRandomPicker<SwarmMember> getPicker(boolean preferNonFlashing, boolean preferNonPicked,
-                                                                                                                  Vector2f towards) {
+                                                       Vector2f towards) {
         WeightedRandomPicker<SwarmMember> picker = new WeightedRandomPicker<>();
         float angle = Misc.getAngleInDegrees(attachedTo.getLocation(), towards);
         for (GhostRoilingSwarmEffect.SwarmMember p : members) {
@@ -522,8 +533,9 @@ public class GhostRoilingSwarmEffect extends BaseCombatLayeredRenderingPlugin {
         }
         return picker;
     }
+
     public WeightedRandomPicker<SwarmMember> getPicker(boolean preferNonFlashing, boolean preferNonPicked,
-                                                                                                                  Vector2f point, float preferMaxRangeFromPoint) {
+                                                       Vector2f point, float preferMaxRangeFromPoint) {
         WeightedRandomPicker<SwarmMember> picker = new WeightedRandomPicker<>();
         for (SwarmMember p : members) {
             if (p.fader.isFadingOut() || p.fader.isFadedOut()) continue;
@@ -544,6 +556,7 @@ public class GhostRoilingSwarmEffect extends BaseCombatLayeredRenderingPlugin {
         }
         return picker;
     }
+
     public WeightedRandomPicker<SwarmMember> getPicker(boolean preferNonFlashing, boolean preferNonPicked) {
         WeightedRandomPicker<SwarmMember> picker = new WeightedRandomPicker<>();
         for (SwarmMember p : members) {
@@ -725,7 +738,6 @@ public class GhostRoilingSwarmEffect extends BaseCombatLayeredRenderingPlugin {
                 }
 
 
-
                 float speed = p.vel.length();
                 if (speed > maxSpeed) {
                     p.vel.scale(maxSpeed / speed);
@@ -768,7 +780,7 @@ public class GhostRoilingSwarmEffect extends BaseCombatLayeredRenderingPlugin {
 //			getShipMap().remove(attachedTo);
 //			getFlockingMap().remove(params.flockingClass, this);
 //			getExchangeMap().remove(params.memberExchangeClass, this);
-        } else if (!despawnAll && !despawning){
+        } else if (!despawnAll && !despawning) {
             exchangeWithNearbySwarms(amount);
         }
 
@@ -1036,18 +1048,23 @@ public class GhostRoilingSwarmEffect extends BaseCombatLayeredRenderingPlugin {
     public GhostRoilingSwarmParams getParams() {
         return params;
     }
+
     public List<GhostRoilingSwarmEffect.SwarmMember> getMembers() {
         return members;
     }
+
     public CombatEntityAPI getAttachedTo() {
         return attachedTo;
     }
+
     public boolean isDespawning() {
         return despawning;
     }
+
     public boolean isForceDespawn() {
         return forceDespawn;
     }
+
     public void setForceDespawn(boolean forceDespawn) {
         this.forceDespawn = forceDespawn;
     }

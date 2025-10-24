@@ -27,11 +27,16 @@ public class AttractorField extends BaseShipSystemScript {
     // --------------------------------
     // Static values for effect
     // --------------------------------
-    public static float DAMAGE_PER_CHARGE = 1000f;  /// How much damage it takes to charge
-    public static final float PULSE_INTERVAL_SECONDS = 0.05f;  /// Time between redirections when system is active.
-    public static final float PULSE_RANGE = 1600f;  /// Maximum range at which projectiles are affected.
-    public static final float ATTRACTOR_TURN_RATE = 120.0f;  /// Maximum projectile turn rate, in degrees per second.
-    public static final float ATTRACTOR_SLOW_RATE = 0.67f;  /// What fraction of projectile speed the attractor reduces per second.
+    public static float DAMAGE_PER_CHARGE = 1000f;
+    /// How much damage it takes to charge
+    public static final float PULSE_INTERVAL_SECONDS = 0.05f;
+    /// Time between redirections when system is active.
+    public static final float PULSE_RANGE = 1600f;
+    /// Maximum range at which projectiles are affected.
+    public static final float ATTRACTOR_TURN_RATE = 120.0f;
+    /// Maximum projectile turn rate, in degrees per second.
+    public static final float ATTRACTOR_SLOW_RATE = 0.67f;
+    /// What fraction of projectile speed the attractor reduces per second.
 
     // --------------------------------
     // Static values for visuals
@@ -63,10 +68,14 @@ public class AttractorField extends BaseShipSystemScript {
     // --------------------------------
     // Save local copies of the variables that persist over loops
     // --------------------------------
-    protected boolean inited = false;  /// If the system has been initialised this combat.
-    protected ShipAPI ship = null;  /// This ship.
-    protected WeaponAPI weapon  = null;  /// The lightning gun
-    protected SpriteAPI glowParticleSprite = null;  /// The glow sprite
+    protected boolean inited = false;
+    /// If the system has been initialised this combat.
+    protected ShipAPI ship = null;
+    /// This ship.
+    protected WeaponAPI weapon = null;
+    /// The lightning gun
+    protected SpriteAPI glowParticleSprite = null;
+    /// The glow sprite
 
     protected float glowWhirlFadeIn;
     protected float glowWhirlFull;
@@ -75,10 +84,14 @@ public class AttractorField extends BaseShipSystemScript {
     // --------------------------------
     // Variables that change during run
     // --------------------------------
-    protected State lastState = null;  /// Used to tracks if the system is transitioning from off to on.
-    protected float pulseCountdown = 0.0f;  /// Timer for the pulse effect, pulse triggers when it's zero.
-    protected float damageTotal = 0.0f;  /// Used to count up total damage of projectiles affected
-    protected boolean awardedAmmo = false;  /// Set true once ammo has been awarded after the system runs.
+    protected State lastState = null;
+    /// Used to tracks if the system is transitioning from off to on.
+    protected float pulseCountdown = 0.0f;
+    /// Timer for the pulse effect, pulse triggers when it's zero.
+    protected float damageTotal = 0.0f;
+    /// Used to count up total damage of projectiles affected
+    protected boolean awardedAmmo = false;
+    /// Set true once ammo has been awarded after the system runs.
     protected float durationRemaining = 0.0f;  /// How long is left in the activation.
 
     /**
@@ -86,8 +99,8 @@ public class AttractorField extends BaseShipSystemScript {
      * <p>
      * More convenient than getUnitVectorAtDirection.
      *
-     * @param angleDeg  The angle to create the vector at, in degrees.
-     * @param length    The length of the vector.
+     * @param angleDeg The angle to create the vector at, in degrees.
+     * @param length   The length of the vector.
      * @return A vector of the given r and theta.
      */
     public static Vector2f getVectorForAngle(float angleDeg, float length) {
@@ -102,7 +115,7 @@ public class AttractorField extends BaseShipSystemScript {
      * <p>
      * Used for 'centering' VFX.
      *
-     * @param ship  The ship to check.
+     * @param ship The ship to check.
      * @return The offset, as a vector.
      */
     public static Vector2f getShieldOffset(ShipAPI ship) {
@@ -116,7 +129,7 @@ public class AttractorField extends BaseShipSystemScript {
     /**
      * Initialises the system by setting local variables.
      *
-     * @param ship  The ship the system belongs to.
+     * @param ship The ship the system belongs to.
      */
     protected void init(ShipAPI ship) {
         if (this.inited) return;
@@ -127,7 +140,7 @@ public class AttractorField extends BaseShipSystemScript {
         this.glowWhirlFull = ship.getSystem().getChargeActiveDur() - this.glowWhirlFadeOut - this.glowWhirlFadeIn;
         this.durationRemaining = glowWhirlFadeIn + glowWhirlFull + glowWhirlFadeOut;
         this.glowParticleSprite = Global.getSettings().getSprite(ShipSystems.ATTRACTOR_FIELD, GLOW_PARTICLE_SPRITE_KEY);
-        for (WeaponAPI weapon: this.ship.getAllWeapons()) {
+        for (WeaponAPI weapon : this.ship.getAllWeapons()) {
             if (weapon.getSpec().hasTag(Tags.CHARGED_SYSTEM)) this.weapon = weapon;
         }
     }
@@ -144,10 +157,10 @@ public class AttractorField extends BaseShipSystemScript {
     /**
      * Attracts a projectile towards the ship, and plays a glow visual on it.
      *
-     * @param ship_location         The ship's current location. Passed to avoid repeated ship.getLocation() calls.
-     * @param projectile            The projectile to attract, may be a missile.
-     * @param bearing_change_limit  How much the bearing can change by this pulse.
-     * @param speed_change          How much the speed should be reduced by this pulse.
+     * @param ship_location        The ship's current location. Passed to avoid repeated ship.getLocation() calls.
+     * @param projectile           The projectile to attract, may be a missile.
+     * @param bearing_change_limit How much the bearing can change by this pulse.
+     * @param speed_change         How much the speed should be reduced by this pulse.
      */
     protected void attractProjectile(
             Vector2f ship_location,
@@ -174,7 +187,7 @@ public class AttractorField extends BaseShipSystemScript {
         // Tweak the projectile's heading and velocity
         VectorUtils.rotate(projectile_velocity, bearing_change);
         projectile_velocity.scale(speed_change);
-        projectile.setFacing(MathUtils.clampAngle(projectile.getFacing()+bearing_change));
+        projectile.setFacing(MathUtils.clampAngle(projectile.getFacing() + bearing_change));
 
         // Add this projectile to the damage count if we haven't already
         if (!projectile.getCustomData().containsKey(ShipSystems.ATTRACTOR_FIELD)) {
@@ -214,10 +227,10 @@ public class AttractorField extends BaseShipSystemScript {
     /**
      * Called every frame to apply the system effects.
      *
-     * @param stats         The stats of the ship this system is installed on.
-     * @param id            ???
-     * @param state         Whether the system is charging up (IN), down (OUT) or fully active (ACTIVE).
-     * @param effectLevel   The normalised effect level; scales from 0-1 over charge-up/charge-down time.
+     * @param stats       The stats of the ship this system is installed on.
+     * @param id          ???
+     * @param state       Whether the system is charging up (IN), down (OUT) or fully active (ACTIVE).
+     * @param effectLevel The normalised effect level; scales from 0-1 over charge-up/charge-down time.
      */
     public void apply(MutableShipStatsAPI stats, String id, State state, float effectLevel) {
         if (state == State.IDLE || state == State.COOLDOWN) return;
@@ -265,12 +278,12 @@ public class AttractorField extends BaseShipSystemScript {
             int owner = this.ship.getOwner();
 
             pulseCountdown += PULSE_INTERVAL_SECONDS;
-            for (DamagingProjectileAPI projectile: CombatUtils.getProjectilesWithinRange(ship_location, PULSE_RANGE)) {
+            for (DamagingProjectileAPI projectile : CombatUtils.getProjectilesWithinRange(ship_location, PULSE_RANGE)) {
                 if (projectile != null && projectile.getOwner() != owner) {
                     this.attractProjectile(ship_location, projectile, bearing_change_limit, speed_change);
                 }
             }
-            for (DamagingProjectileAPI projectile: CombatUtils.getMissilesWithinRange(ship_location, PULSE_RANGE)) {
+            for (DamagingProjectileAPI projectile : CombatUtils.getMissilesWithinRange(ship_location, PULSE_RANGE)) {
                 if (projectile != null && projectile.getOwner() != owner) {
                     this.attractProjectile(ship_location, projectile, bearing_change_limit, speed_change);
                 }
@@ -287,8 +300,8 @@ public class AttractorField extends BaseShipSystemScript {
                 this.ship,
                 getShieldOffset(ship), new Vector2f(),
                 new Vector2f(GLOW_WHIRL_OUTER_RADIUS, GLOW_WHIRL_OUTER_RADIUS), new Vector2f(),
-                0.0f, GLOW_WHIRL_OUTER_TURN_RATE,true,
-                GLOW_WHIRL_OUTER_COLOUR,false,0f, 0f,
+                0.0f, GLOW_WHIRL_OUTER_TURN_RATE, true,
+                GLOW_WHIRL_OUTER_COLOUR, false, 0f, 0f,
                 0f, 0f, 0f,
                 glowWhirlFadeIn, glowWhirlFull, glowWhirlFadeOut, true, CombatEngineLayers.BELOW_SHIPS_LAYER
         );
@@ -297,8 +310,8 @@ public class AttractorField extends BaseShipSystemScript {
                 this.ship,
                 getShieldOffset(ship), new Vector2f(),
                 new Vector2f(GLOW_WHIRL_INNER_RADIUS, GLOW_WHIRL_INNER_RADIUS), new Vector2f(),
-                0.0f, GLOW_WHIRL_INNER_TURN_RATE,true,
-                GLOW_WHIRL_INNER_COLOUR,false,0f, 0f,
+                0.0f, GLOW_WHIRL_INNER_TURN_RATE, true,
+                GLOW_WHIRL_INNER_COLOUR, false, 0f, 0f,
                 0f, 0f, 0f,
                 glowWhirlFadeIn, glowWhirlFull, glowWhirlFadeOut, true, CombatEngineLayers.BELOW_SHIPS_LAYER
         );
@@ -307,7 +320,7 @@ public class AttractorField extends BaseShipSystemScript {
     /**
      * Particles spawn around the edge of the AoE.
      *
-     * @return      A random value in the valid range.
+     * @return A random value in the valid range.
      */
     public static float getParticleSpawnRadius() {
         return MathUtils.getRandomNumberInRange(
@@ -318,8 +331,8 @@ public class AttractorField extends BaseShipSystemScript {
     /**
      * Particles spawn facing clockwise, with a small range of offsets.
      *
-     * @param spawnAngle        The angle the particle is spawned at, from the source.
-     * @return                  A random value in the valid range.
+     * @param spawnAngle The angle the particle is spawned at, from the source.
+     * @return A random value in the valid range.
      */
     public static float getParticleVelocityAngle(float spawnAngle) {
         return Misc.normalizeAngle(
@@ -332,8 +345,8 @@ public class AttractorField extends BaseShipSystemScript {
     /**
      * Particles spawn with velocities in a small range.
      *
-     * @param velocityAngle     The angle the particle is travelling.
-     * @return                  A random value in the valid range.
+     * @param velocityAngle The angle the particle is travelling.
+     * @return A random value in the valid range.
      */
     public static Vector2f getParticleVelocity(float velocityAngle) {
         return getVectorForAngle(
@@ -373,13 +386,13 @@ public class AttractorField extends BaseShipSystemScript {
      * <p>
      * Charges up the built-in weapon based on the damage taken.
      *
-     * @param stats         The stats API for the ship the system is installed on.
-     * @param id            ???
+     * @param stats The stats API for the ship the system is installed on.
+     * @param id    ???
      */
     public void unapply(MutableShipStatsAPI stats, String id) {
-        if(this.ship == null) return;
-        if(this.weapon == null) return;
-        if(this.awardedAmmo) return;
+        if (this.ship == null) return;
+        if (this.weapon == null) return;
+        if (this.awardedAmmo) return;
 
         this.weapon.getAmmoTracker().setAmmo(
                 Math.min(
@@ -393,15 +406,15 @@ public class AttractorField extends BaseShipSystemScript {
     /**
      * Shown in the active effects UI.
      *
-     * @param index         ???
-     * @param state         Whether the system is charging up (State.IN),
-     *                      down (State.OUT) or fully active (State.ACTIVE).
-     * @param effectLevel   The normalised effect level; scales from 0-1 over charge-up/charge-down time.
-     * @return              ???
+     * @param index       ???
+     * @param state       Whether the system is charging up (State.IN),
+     *                    down (State.OUT) or fully active (State.ACTIVE).
+     * @param effectLevel The normalised effect level; scales from 0-1 over charge-up/charge-down time.
+     * @return ???
      */
     public StatusData getStatusData(int index, State state, float effectLevel) {
         if (index == 0) {
-            return new StatusData("Attracting projectiles within "+PULSE_RANGE, false);
+            return new StatusData("Attracting projectiles within " + PULSE_RANGE, false);
         }
         return null;
     }

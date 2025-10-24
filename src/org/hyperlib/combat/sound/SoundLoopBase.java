@@ -14,7 +14,8 @@ import java.util.List;
  * Plays a looping sound of a hyperspace storm
  */
 public class SoundLoopBase extends BaseEveryFrameCombatPlugin {
-    protected static float SOUND_FADE_TIME = 0.2f;  /// This is the 'natural' fade
+    protected static float SOUND_FADE_TIME = 0.2f;
+    /// This is the 'natural' fade
 
     // Set during initialisation
     private final String soundId;
@@ -33,14 +34,14 @@ public class SoundLoopBase extends BaseEveryFrameCombatPlugin {
     /**
      * Initialises the sound
      *
-     * @param soundId           The ID of the looping sound.
-     * @param soundAnchor       CombatEntity this sound is (conceptually) coming from.
-     * @param volume            The volume to play the sound at.
-     * @param duration          How long this lasts for.
-     * @param fadeInDuration    How long it takes for it to fade in.
-     * @param fadeOutDuration   How long it takes for it to fade out.
-     * @param removeWithAnchor  Whether the sound should stop if the anchor is removed.
-     * @param expireWithAnchor  Whether the sound should stop if the anchor expires.
+     * @param soundId          The ID of the looping sound.
+     * @param soundAnchor      CombatEntity this sound is (conceptually) coming from.
+     * @param volume           The volume to play the sound at.
+     * @param duration         How long this lasts for.
+     * @param fadeInDuration   How long it takes for it to fade in.
+     * @param fadeOutDuration  How long it takes for it to fade out.
+     * @param removeWithAnchor Whether the sound should stop if the anchor is removed.
+     * @param expireWithAnchor Whether the sound should stop if the anchor expires.
      */
     public SoundLoopBase(
             String soundId,

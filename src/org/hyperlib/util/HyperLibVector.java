@@ -25,9 +25,9 @@ public class HyperLibVector {
     public static final Random RANDOM = new Random();
 
     /**
-     * @param entity    The combat entity to calculate the offsets for.
-     * @param offsets   The sprite offsets, e.g. from a ship bounds.
-     * @return  The offsets translated into worldspace coords for that ship.
+     * @param entity  The combat entity to calculate the offsets for.
+     * @param offsets The sprite offsets, e.g. from a ship bounds.
+     * @return The offsets translated into worldspace coords for that ship.
      */
     public static Vector2f getWorldspaceForEntitySpriteOffsets(
             CombatEntityAPI entity, Vector2f offsets
@@ -42,13 +42,13 @@ public class HyperLibVector {
     /**
      * Picks a point within an entity's bounds.
      *
-     * @param entity    The entity to pick a point within.
-     * @return  A point within the ship's bounds. Its centre if the random selection fails.
+     * @param entity The entity to pick a point within.
+     * @return A point within the ship's bounds. Its centre if the random selection fails.
      */
     public static Vector2f getRandomPointInBounds(CombatEntityAPI entity) {
         Vector2f point;
 
-        for (int i=0; i<RANDOM_POINT_MAX_TRIES; i++) {
+        for (int i = 0; i < RANDOM_POINT_MAX_TRIES; i++) {
             point = Misc.getPointWithinRadiusUniform(entity.getLocation(), entity.getCollisionRadius(), RANDOM);
             if (CollisionUtils.isPointWithinBounds(point, entity)) return point;
         }
@@ -61,15 +61,15 @@ public class HyperLibVector {
      * @param entity        The entity to pick a point within.
      * @param excludePoint  The point not to pick near.
      * @param excludeRadius The radius to exclude around that point.
-     * @return  A point within the ship's bounds, but not within the exclusion zone.
-     *          Its centre if the random selection fails.
+     * @return A point within the ship's bounds, but not within the exclusion zone.
+     * Its centre if the random selection fails.
      */
     public static Vector2f getRandomPointInBoundsExclusionZone(
             CombatEntityAPI entity, Vector2f excludePoint, float excludeRadius
     ) {
         Vector2f point;
 
-        for (int i=0; i<RANDOM_POINT_MAX_TRIES; i++) {
+        for (int i = 0; i < RANDOM_POINT_MAX_TRIES; i++) {
             point = Misc.getPointWithinRadiusUniform(entity.getLocation(), entity.getCollisionRadius(), RANDOM);
             if (Misc.getDistance(point, excludePoint) < excludeRadius
                     && CollisionUtils.isPointWithinBounds(point, entity)) return point;
@@ -83,15 +83,15 @@ public class HyperLibVector {
      * @param entity        The entity to pick a point within.
      * @param includePoint  The point to pick near.
      * @param includeRadius The radius around that point to pick.
-     * @return  A point within the ship's bounds and within that radius.
-     *          The point if selection fails.
+     * @return A point within the ship's bounds and within that radius.
+     * The point if selection fails.
      */
     public static Vector2f getRandomPointInBoundsInclusionZone(
             CombatEntityAPI entity, Vector2f includePoint, float includeRadius
     ) {
         Vector2f point;
 
-        for (int i=0; i<RANDOM_POINT_MAX_TRIES; i++) {
+        for (int i = 0; i < RANDOM_POINT_MAX_TRIES; i++) {
             point = Misc.getPointWithinRadiusUniform(includePoint, includeRadius, RANDOM);
             if (CollisionUtils.isPointWithinBounds(point, entity)) return point;
         }
@@ -103,9 +103,9 @@ public class HyperLibVector {
      * <p>
      * More convenient than getUnitVectorAtDirection.
      *
-     * @param angleDeg  The angle to create the vector at, in degrees.
-     * @param length    The length of the vector.
-     * @return  A vector of the given r and theta.
+     * @param angleDeg The angle to create the vector at, in degrees.
+     * @param length   The length of the vector.
+     * @return A vector of the given r and theta.
      */
     public static Vector2f getVectorForAngle(float angleDeg, float length) {
         return new Vector2f(
@@ -120,11 +120,11 @@ public class HyperLibVector {
      * @param location_end The point to which the arc is going.
      * @param entity       The entity from which the arc is coming.
      * @param offset       The distance into the entity to go.
-     * @return  A point just inside the entity's physical edge, where the arc can begin.
+     * @return A point just inside the entity's physical edge, where the arc can begin.
      */
     public static Vector2f getEdgeLocation(Vector2f location_end, CombatEntityAPI entity, float offset) {
         Vector2f location_edge = CollisionUtils.getNearestPointOnBounds(location_end, entity);
-        Vector2f direction =(Vector2f) VectorUtils.getDirectionalVector(location_end, location_edge).scale(offset);
+        Vector2f direction = (Vector2f) VectorUtils.getDirectionalVector(location_end, location_edge).scale(offset);
         return getRandomPointInBoundsInclusionZone(
                 entity, Vector2f.add(location_edge, direction, new Vector2f()), offset
         );

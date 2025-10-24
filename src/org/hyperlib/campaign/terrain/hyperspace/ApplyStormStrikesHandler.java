@@ -20,7 +20,10 @@ public class ApplyStormStrikesHandler {
      * Registered by mods on start. They need to reregister each startup, as static is implicitly transient.
      */
     protected static List<BaseApplyStormStrikesPlugin> applyStormStrikesPlugins = new ArrayList<>();
-    public static List<BaseApplyStormStrikesPlugin> getPlugins() { return applyStormStrikesPlugins; }
+
+    public static List<BaseApplyStormStrikesPlugin> getPlugins() {
+        return applyStormStrikesPlugins;
+    }
 
     /**
      * Registers a new plugin with the storm strike handler.
@@ -28,7 +31,7 @@ public class ApplyStormStrikesHandler {
      * Checks to prevent double-adding, though since the list is transient it shouldn't matter.
      * Plugins are cleared and must be re-added every launch.
      *
-     * @param plugin    An implementation of the plugin to register.
+     * @param plugin An implementation of the plugin to register.
      * @return True if the plugin was added, false if it already existed.
      */
     public static boolean registerStormStrikesPlugin(
@@ -50,10 +53,10 @@ public class ApplyStormStrikesHandler {
     /**
      * Searches the list of plugins and calls the most appropriate one.
      *
-     * @param hyperspace    The calling hyperspace object.
-     * @param cell          The cell the fleet is in.
-     * @param fleet         The fleet to check.
-     * @param days          Days passed since hyperspace was last advanced.
+     * @param hyperspace The calling hyperspace object.
+     * @param cell       The cell the fleet is in.
+     * @param fleet      The fleet to check.
+     * @param days       Days passed since hyperspace was last advanced.
      * @return True if a plugin was found and called successfully, false it it should fall back to vanilla behaviour.
      */
     public static boolean fireBestPlugin(

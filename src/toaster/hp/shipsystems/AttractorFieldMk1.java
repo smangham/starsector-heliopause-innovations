@@ -25,13 +25,14 @@ public class AttractorFieldMk1 extends AttractorField {
     public static final float GLOW_WHIRL_CORE_TURN_RATE = -30f;
 
     // Save local copies of the variables that persist over loops
-    protected boolean isBoss = false;  /// Whether this is the NPC Boss Ship
+    protected boolean isBoss = false;
+    /// Whether this is the NPC Boss Ship
     protected boolean awardedAmmoBoss = false;  /// Whether we've done the bonus ammo top-up
 
     /**
      * Init that tags if the ship is a 'boss ship'.
      *
-     * @param ship  The ship.
+     * @param ship The ship.
      */
     @Override
     protected void init(ShipAPI ship) {
@@ -52,8 +53,8 @@ public class AttractorFieldMk1 extends AttractorField {
                 this.ship,
                 getShieldOffset(this.ship), new Vector2f(),
                 new Vector2f(GLOW_WHIRL_CORE_RADIUS, GLOW_WHIRL_CORE_RADIUS), new Vector2f(),
-                0.0f, GLOW_WHIRL_CORE_TURN_RATE,true,
-                GLOW_WHIRL_CORE_COLOUR,false,0f, 0f,
+                0.0f, GLOW_WHIRL_CORE_TURN_RATE, true,
+                GLOW_WHIRL_CORE_COLOUR, false, 0f, 0f,
                 0f, 0f, 0f,
                 glowWhirlFadeIn, glowWhirlFull, glowWhirlFadeOut, true,
                 CombatEngineLayers.BELOW_SHIPS_LAYER
@@ -110,10 +111,10 @@ public class AttractorFieldMk1 extends AttractorField {
      * <p>
      * Just calls the super apply, then
      *
-     * @param stats         The stats of the ship this system is installed on.
-     * @param id            ???
-     * @param state         Whether the system is charging up (IN), down (OUT) or fully active (ACTIVE).
-     * @param effectLevel   The normalised effect level; scales from 0-1 over charge-up/charge-down time.
+     * @param stats       The stats of the ship this system is installed on.
+     * @param id          ???
+     * @param state       Whether the system is charging up (IN), down (OUT) or fully active (ACTIVE).
+     * @param effectLevel The normalised effect level; scales from 0-1 over charge-up/charge-down time.
      */
     @Override
     public void apply(MutableShipStatsAPI stats, String id, State state, float effectLevel) {
@@ -148,7 +149,7 @@ public class AttractorFieldMk1 extends AttractorField {
                 } else {
                     stats.getMaxSpeed().unmodifyMult(id + "_2");
                 }
-                ((PhaseCloakSystemAPI)cloak).setMinCoilJitterLevel(getDisruptionLevel(ship));
+                ((PhaseCloakSystemAPI) cloak).setMinCoilJitterLevel(getDisruptionLevel(ship));
             }
         }
 
@@ -240,7 +241,7 @@ public class AttractorFieldMk1 extends AttractorField {
         ShipSystemAPI cloak = ship.getPhaseCloak();
         if (cloak == null) cloak = ship.getSystem();
         if (cloak != null) {
-            ((PhaseCloakSystemAPI)cloak).setMinCoilJitterLevel(0f);
+            ((PhaseCloakSystemAPI) cloak).setMinCoilJitterLevel(0f);
         }
 
         ship.setPhased(false);
@@ -250,7 +251,7 @@ public class AttractorFieldMk1 extends AttractorField {
     // --------------------------------
     // Copied from PhaseCloakStats
     // --------------------------------
-    public static Color JITTER_COLOR = new Color(255,175,255,255);
+    public static Color JITTER_COLOR = new Color(255, 175, 255, 255);
     public static float JITTER_FADE_TIME = 0.5f;
 
     public static float SHIP_ALPHA_MULT = 0.25f;
@@ -308,9 +309,9 @@ public class AttractorFieldMk1 extends AttractorField {
 //    }
 
     /**
-     * @param ship          The ship.
-     * @param effectLevel   The system's effect level.
-     * @return              The multiplier arising from the ship's disruption.
+     * @param ship        The ship.
+     * @param effectLevel The system's effect level.
+     * @return The multiplier arising from the ship's disruption.
      */
     public float getSpeedMult(ShipAPI ship, float effectLevel) {
         if (getDisruptionLevel(ship) <= 0f) return 1f;
@@ -320,11 +321,11 @@ public class AttractorFieldMk1 extends AttractorField {
     /**
      * Tweak that only shows status when the system is running.
      *
-     * @param index         ???
-     * @param state         Whether the system is charging up (State.IN),
-     *                      down (State.OUT) or fully active (State.ACTIVE).
-     * @param effectLevel   The normalised effect level; scales from 0-1 over charge-up/charge-down time.
-     * @return              The displayed status data.
+     * @param index       ???
+     * @param state       Whether the system is charging up (State.IN),
+     *                    down (State.OUT) or fully active (State.ACTIVE).
+     * @param effectLevel The normalised effect level; scales from 0-1 over charge-up/charge-down time.
+     * @return The displayed status data.
      */
     @Override
     public StatusData getStatusData(int index, State state, float effectLevel) {

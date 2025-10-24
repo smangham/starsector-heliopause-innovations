@@ -24,18 +24,11 @@ import com.fs.starfarer.api.graphics.SpriteAPI;
  * A hyperspace storm cloud.
  */
 public class HyperspaceStormRenderingPlugin extends BaseCombatLayeredRenderingPlugin {
-    public static String CLOUD_UNDER_SPRITE = "deep_hyperspace_dark";
     public static float CLOUD_UNDER_SIZE_MULT = 1.0f;
-
-    public static String CLOUD_OVER_SPRITE = "deep_hyperspace";
     public static float CLOUD_OVER_SIZE_MULT = 0.9f;
     public static float CLOUD_OVER_ALPHA_MULT = 0.75f;
-
-    public static String CLOUD_GLOW_SPRITE = "deep_hyperspace_glow";
     public static float CLOUD_GLOW_SIZE_MULT = 1.1f;
-
     public static float WARP_RATE_MULT = 0.5f;
-    public static int SPRITE_TILES = 4;
     public static Color COLOUR = Color.white;
 
     /**
@@ -54,13 +47,13 @@ public class HyperspaceStormRenderingPlugin extends BaseCombatLayeredRenderingPl
          * <p>
          * Constructs a layered cell consisting of background, glow layer, and top layer.
          *
-         * @param size          Side size.
-         * @param vertices      The number of wiggling vertices across the sprite texture.
-         * @param warpMult      Multiplier on the size of the wiggle.
-         * @param glowWaitMax   If it storm flashes, how long is the maximum window between flashes..
-         * @param glowWaitMult  How much that interval is multiplied by each flash.
-         * @param fadeIn        How long it takes for the cloud to fade in.
-         * @param fadeOut       How long it takes for the cloud to fade out.
+         * @param size         Side size.
+         * @param vertices     The number of wiggling vertices across the sprite texture.
+         * @param warpMult     Multiplier on the size of the wiggle.
+         * @param glowWaitMax  If it storm flashes, how long is the maximum window between flashes..
+         * @param glowWaitMult How much that interval is multiplied by each flash.
+         * @param fadeIn       How long it takes for the cloud to fade in.
+         * @param fadeOut      How long it takes for the cloud to fade out.
          */
         public StormCell(
                 float size, int vertices, float warpMult,
@@ -79,23 +72,9 @@ public class HyperspaceStormRenderingPlugin extends BaseCombatLayeredRenderingPl
             SpriteAPI sprite_over = HyperspaceTiledSpriteSamplers.getHyperspaceSprite();
             SpriteAPI sprite_glow = HyperspaceTiledSpriteSamplers.getHyperspaceGlowSprite();
 
-            Global.getLogger(StormCell.class).info("Dims: "+sprite_glow.getTexHeight()+" , "+sprite_glow.getTexWidth());
-
-//            for (SpriteAPI sprite: List.of(sprite_under, sprite_over, sprite_glow)) {
-////                sprite.setWidth(size);
-////                sprite.setHeight(size);
-////                sprite.setCenterX(size/2f);
-////                sprite.setCenterY(size/2f);
-//
-////                sprite.setTexX(spriteIndexX * tex_panel_x);
-////                sprite.setTexY(spriteIndexY * tex_panel_y);
-////                sprite.setTexWidth(tex_panel_x);
-////                sprite.setTexHeight(tex_panel_y);
-//            }
-
             float sprite_under_size = size * CLOUD_UNDER_SIZE_MULT;
             sprite_under.setSize(sprite_under_size, sprite_under_size);
-            sprite_under.setCenter(sprite_under_size/2f, sprite_under_size/2f);
+            sprite_under.setCenter(sprite_under_size / 2f, sprite_under_size / 2f);
             rendererUnder = new WarpingTiledSpriteRendererUtil(
                     sprite_under, vertices, vertices,
                     sprite_under_size * 0.05f * warpMult,
@@ -105,7 +84,7 @@ public class HyperspaceStormRenderingPlugin extends BaseCombatLayeredRenderingPl
 
             float sprite_glow_size = size * CLOUD_GLOW_SIZE_MULT;
             sprite_glow.setSize(sprite_glow_size, sprite_glow_size);
-            sprite_glow.setCenter(sprite_glow_size/2f, sprite_glow_size/2f);
+            sprite_glow.setCenter(sprite_glow_size / 2f, sprite_glow_size / 2f);
             rendererGlow = new WarpingTiledSpriteRendererUtil(
                     sprite_glow, vertices, vertices,
                     sprite_glow_size * 0.05f * warpMult,
@@ -115,7 +94,7 @@ public class HyperspaceStormRenderingPlugin extends BaseCombatLayeredRenderingPl
 
             float sprite_over_size = size * CLOUD_OVER_SIZE_MULT;
             sprite_over.setSize(sprite_over_size, sprite_over_size);
-            sprite_over.setCenter(sprite_over_size/2f, sprite_over_size/2f);
+            sprite_over.setCenter(sprite_over_size / 2f, sprite_over_size / 2f);
             rendererOver = new WarpingTiledSpriteRendererUtil(
                     sprite_over, vertices, vertices,
                     sprite_over_size * 0.05f * warpMult,
@@ -126,43 +105,93 @@ public class HyperspaceStormRenderingPlugin extends BaseCombatLayeredRenderingPl
         }
 
         public Set<String> tags = new LinkedHashSet<>();
-        public Set<String> getTags() { return this.tags; }
-        public void addTag(String tag) { this.tags.add(tag); }
-        public void removeTag(String tag) { this.tags.remove(tag); }
-        public boolean hasTag(String tag) { return tags.contains(tag); }
+
+        public Set<String> getTags() {
+            return this.tags;
+        }
+
+        public void addTag(String tag) {
+            this.tags.add(tag);
+        }
+
+        public void removeTag(String tag) {
+            this.tags.remove(tag);
+        }
+
+        public boolean hasTag(String tag) {
+            return tags.contains(tag);
+        }
 
         public float angle = 0f;
-        public float getAngle() { return this.angle; }
-        public void setAngle(float angle) { this.angle = angle; }
+
+        public float getAngle() {
+            return this.angle;
+        }
+
+        public void setAngle(float angle) {
+            this.angle = angle;
+        }
 
         public MutatingValueUtil spin;
-        public MutatingValueUtil getSpin() { return this.spin; }
-        public void setSpin(float min, float max, float rate) { spin = new MutatingValueUtil(min, max, rate); }
+
+        public MutatingValueUtil getSpin() {
+            return this.spin;
+        }
+
+        public void setSpin(float min, float max, float rate) {
+            spin = new MutatingValueUtil(min, max, rate);
+        }
 
         public FaderUtil fader;
-        public FaderUtil getFader() { return this.fader; }
-        public void fadeOut() { this.fader.fadeOut(); }
-        public void fadeIn() { this.fader.fadeIn(); }
+
+        public FaderUtil getFader() {
+            return this.fader;
+        }
+
+        public void fadeOut() {
+            this.fader.fadeOut();
+        }
+
+        public void fadeIn() {
+            this.fader.fadeIn();
+        }
 
         public float alphaMult;
-        public float getAlphaMult() { return this.alphaMult; }
-        public void setAlphaMult(float alphaMult) { this.alphaMult = alphaMult; }
+
+        public float getAlphaMult() {
+            return this.alphaMult;
+        }
+
+        public void setAlphaMult(float alphaMult) {
+            this.alphaMult = alphaMult;
+        }
 
         public String id;
-        public String getId() { return this.id; }
-        public void setId(String id) { this.id = id; }
 
-        public void startStormBurst() { this.glowFlicker.newBurst(); }
+        public String getId() {
+            return this.id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public void startStormBurst() {
+            this.glowFlicker.newBurst();
+        }
 
         public ValueShifterUtil brightness;
-        public ValueShifterUtil getBrightness() { return brightness; }
+
+        public ValueShifterUtil getBrightness() {
+            return brightness;
+        }
 
         /**
          * Tick along timers, adjusting ongoing faders e.t.c.
          * <p>
          * Adjusts continually-varying glow, brightness, flicker e.t.c..
          *
-         * @param amount    Time that has passed this frame.
+         * @param amount Time that has passed this frame.
          */
         public void advance(float amount) {
             this.fader.advance(amount);
@@ -250,7 +279,9 @@ public class HyperspaceStormRenderingPlugin extends BaseCombatLayeredRenderingPl
         );
     }
 
-    public void init(CombatEntityAPI entity) { super.init(entity); }
+    public void init(CombatEntityAPI entity) {
+        super.init(entity);
+    }
 
     public float getRenderRadius() {
         float extra = 300f;
@@ -260,25 +291,33 @@ public class HyperspaceStormRenderingPlugin extends BaseCombatLayeredRenderingPl
     protected EnumSet<CombatEngineLayers> layers = EnumSet.of(
             CombatEngineLayers.CLOUD_LAYER, CombatEngineLayers.ABOVE_SHIPS_LAYER, CombatEngineLayers.ASTEROIDS_LAYER
     );
+
     @Override
-    public EnumSet<CombatEngineLayers> getActiveLayers() { return this.layers; }
+    public EnumSet<CombatEngineLayers> getActiveLayers() {
+        return this.layers;
+    }
 
     public void advance(float amount) {
         if (Global.getCombatEngine().isPaused() || entity == null || isExpired()) return;
         this.entity.getLocation().set(this.attachedTo.getLocation());
         this.elapsed += amount;
 
-        if( this.lifetime > 0 && this.elapsed > this.lifetime) {
+        if (this.lifetime > 0 && this.elapsed > this.lifetime) {
             this.lifetime = 0f;
             this.startStormBurst();
         }
 
-        if (isExpired()) {}
+        if (isExpired()) {
+        }
         if (shouldDespawn()) {
-            for (StormCell stormCell : this.stormCells) { stormCell.fadeOut(); }
+            for (StormCell stormCell : this.stormCells) {
+                stormCell.fadeOut();
+            }
         }
 
-        for (StormCell stormCell : stormCells) { stormCell.advance(amount); }
+        for (StormCell stormCell : stormCells) {
+            stormCell.advance(amount);
+        }
     }
 
 
@@ -314,8 +353,13 @@ public class HyperspaceStormRenderingPlugin extends BaseCombatLayeredRenderingPl
         }
     }
 
-    public CombatEntityAPI getAttachedTo() { return attachedTo; }
-    public List<StormCell> getStormCells() { return this.stormCells; }
+    public CombatEntityAPI getAttachedTo() {
+        return attachedTo;
+    }
+
+    public List<StormCell> getStormCells() {
+        return this.stormCells;
+    }
 
     public StormCell getCell(String id) {
         for (StormCell stormCell : this.stormCells) {
@@ -324,22 +368,25 @@ public class HyperspaceStormRenderingPlugin extends BaseCombatLayeredRenderingPl
         return null;
     }
 
-    public void fadeIn(String ... tags) {
+    public void fadeIn(String... tags) {
         for (StormCell stormCell : getStormCells(tags)) {
             stormCell.fadeIn();
         }
     }
-    public void fadeOut(String ... tags) {
+
+    public void fadeOut(String... tags) {
         for (StormCell stormCell : getStormCells(tags)) {
             stormCell.fadeOut();
         }
     }
-    public void setAlphaMult(float alphaMult, String ... tags) {
+
+    public void setAlphaMult(float alphaMult, String... tags) {
         for (StormCell stormCell : getStormCells(tags)) {
             stormCell.setAlphaMult(alphaMult);
         }
     }
-    public void setBrightness(float b, String ... tags) {
+
+    public void setBrightness(float b, String... tags) {
         String key = "";
         for (String tag : tags) key += tag + "_";
         if (tags.length == 1) key = tags[0];
@@ -358,13 +405,14 @@ public class HyperspaceStormRenderingPlugin extends BaseCombatLayeredRenderingPl
     /**
      * Returns all cells matching a set of tags.
      *
-     * @param tags  Select only those cells with these tags.
-     * @return      A list of the storm cells with the specified tags.
+     * @param tags Select only those cells with these tags.
+     * @return A list of the storm cells with the specified tags.
      */
-    public List<StormCell> getStormCells(String ... tags) {
+    public List<StormCell> getStormCells(String... tags) {
         List<StormCell> result = new ArrayList<>();
 
-        OUTER: for (StormCell stormCell : this.stormCells) {
+        OUTER:
+        for (StormCell stormCell : this.stormCells) {
             for (String tag : tags) {
                 if (stormCell.hasTag(tag)) {
                     result.add(stormCell);

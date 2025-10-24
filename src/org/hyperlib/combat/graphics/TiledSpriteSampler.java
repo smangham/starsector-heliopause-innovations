@@ -8,20 +8,25 @@ import org.lazywizard.lazylib.MathUtils;
  * Samples a single sprite from a tilesheet of multiple symbols.
  */
 public class TiledSpriteSampler {
-    protected final String category;  /// The category in the graphics section.
-    protected final String key;  /// The key for the sprite in that category.
-    protected final int tilesX;  /// Number of horizontal tiles on the sprite. Adjusted to 0-index internally.
-    protected final int tilesY;  /// Number of vertical tiles on the sprite. Adjusted to 0-index internally.
-    protected final float texWidth;  /// The width fraction of 1 tile.
+    protected final String category;
+    /// The category in the graphics section.
+    protected final String key;
+    /// The key for the sprite in that category.
+    protected final int tilesX;
+    /// Number of horizontal tiles on the sprite. Adjusted to 0-index internally.
+    protected final int tilesY;
+    /// Number of vertical tiles on the sprite. Adjusted to 0-index internally.
+    protected final float texWidth;
+    /// The width fraction of 1 tile.
     protected final float texHeight;  /// The height fraction of 1 tile.
 
     /**
      * Creates a new sprite sampler for a sprite sheet.
      *
-     * @param category  The graphics subcategory in settings.json.
-     * @param key       The key for the sprite.
-     * @param tilesX    How many tiles in the X direction.
-     * @param tilesY    How many tiles in the Y direction.
+     * @param category The graphics subcategory in settings.json.
+     * @param key      The key for the sprite.
+     * @param tilesX   How many tiles in the X direction.
+     * @param tilesY   How many tiles in the Y direction.
      */
     public TiledSpriteSampler(
             String category, String key, int tilesX, int tilesY
@@ -37,7 +42,7 @@ public class TiledSpriteSampler {
     /**
      * Returns a random sprite from the tiles.
      *
-     * @return  A sample from a tiled sprite.
+     * @return A sample from a tiled sprite.
      */
     public SpriteAPI getSprite() {
         SpriteAPI sprite = Global.getSettings().getSprite(this.category, this.key);

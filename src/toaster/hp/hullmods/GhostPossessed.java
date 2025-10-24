@@ -37,8 +37,9 @@ public class GhostPossessed extends BaseHullMod {
     // --------------------------------
     // ID strings
     // --------------------------------
-    public static final String ID = HullMods.GHOST_POSSESSED;  /// Used for storing this script
-    public static final String KEY_SHIP_MAP = ID+"_shipMap";
+    public static final String ID = HullMods.GHOST_POSSESSED;
+    /// Used for storing this script
+    public static final String KEY_SHIP_MAP = ID + "_shipMap";
     public static final String WEAPON = Weapons.MOTE_LAUNCHER;
 
     // --------------------------------
@@ -72,8 +73,10 @@ public class GhostPossessed extends BaseHullMod {
     // --------------------------------
     // Glow trail VFX
     // --------------------------------
-    public static final float JITTER_FLICKER_WAIT_MAX = 3.0f;  /// Maximum time between fluctuating jitter peaks
-    public static final float CHARGE_JITTER_RADIUS_MULT = 0.1f;  /// The multiplier to the collision radius for the jitter range
+    public static final float JITTER_FLICKER_WAIT_MAX = 3.0f;
+    /// Maximum time between fluctuating jitter peaks
+    public static final float CHARGE_JITTER_RADIUS_MULT = 0.1f;
+    /// The multiplier to the collision radius for the jitter range
     public static final float JITTER_INTENSITY_MIN = 0;
     public static final float JITTER_INTENSITY_MAX = 1.0f;
     public static final Color JITTER_COLOUR = new Color(138, 250, 244, 175);
@@ -81,7 +84,8 @@ public class GhostPossessed extends BaseHullMod {
     // --------------------------------
     // Target arc
     // --------------------------------
-    public static final float LOCK_TARGET_LEEWAY = 50f;  /// The radius around the target point to check for ships.
+    public static final float LOCK_TARGET_LEEWAY = 50f;
+    /// The radius around the target point to check for ships.
     public static final Color EMP_COLOUR = HyperLibColours.DEEP_HYPERSPACE_STRIKE;
     public static final Map<HullSize, Integer> MOTES_BY_SIZE = Map.of(
             HullSize.FRIGATE, 4,
@@ -96,43 +100,61 @@ public class GhostPossessed extends BaseHullMod {
     // --------------------------------
     // Variables that are set during initialisation
     // --------------------------------
-    protected Vector2f cloudSize;  /// The size of the clouds.
-    protected List<WeaponAPI> chargedWeapons;  /// The weapons that use charges.
-    protected ScalingFlickerUtil jitterFlicker;  /// Lightning flicker effect for the jitter.
-    protected float jitterRange;  /// Pre-calculated jitter max range.
-    protected ShipAPI ship;  /// This ship.
-    protected boolean spawnMotes = true;  /// Whether the ship should auto-spawn motes.
-    protected float arcWidth;  /// The width of the lightning arcs.
-    protected float arcExclusionRadius;  /// How far apart arc points should be spaced.
-    protected int shipSize;  /// Cache the modified size.
+    protected Vector2f cloudSize;
+    /// The size of the clouds.
+    protected List<WeaponAPI> chargedWeapons;
+    /// The weapons that use charges.
+    protected ScalingFlickerUtil jitterFlicker;
+    /// Lightning flicker effect for the jitter.
+    protected float jitterRange;
+    /// Pre-calculated jitter max range.
+    protected ShipAPI ship;
+    /// This ship.
+    protected boolean spawnMotes = true;
+    /// Whether the ship should auto-spawn motes.
+    protected float arcWidth;
+    /// The width of the lightning arcs.
+    protected float arcExclusionRadius;
+    /// How far apart arc points should be spaced.
+    protected int shipSize;
+    /// Cache the modified size.
 
     // --------------------------------
     // Variables that change during run
     // --------------------------------
-    protected IntervalUtil cloudInterval = new IntervalUtil(0.05f, 0.1f);  /// FX interval for trailing clouds.
+    protected IntervalUtil cloudInterval = new IntervalUtil(0.05f, 0.1f);
+    /// FX interval for trailing clouds.
 
-    protected float arcElapsed = 0f;  /// Used to ensure arcs only trigger once per lightning pulse.
-    protected float charge = 0f;  /// Charges up when motes are killed, used by systems and defences.
+    protected float arcElapsed = 0f;
+    /// Used to ensure arcs only trigger once per lightning pulse.
+    protected float charge = 0f;
+    /// Charges up when motes are killed, used by systems and defences.
     protected boolean handledDeath = false;  /// Have we caught and handled the death?
 
     /**
      * Modifies the charge level on the ship.
      *
-     * @param amount    How much to modify the value by.
+     * @param amount How much to modify the value by.
      */
     public void modifyCharge(float amount) {
         this.charge = MathUtils.clamp(
                 this.charge + amount, 1f, CHARGE_MAX
         );
     }
-    public float getCharge() { return this.charge; }
-    public float getNormalisedCharge() { return (this.charge - 1f) / (CHARGE_MAX - 1f); }
+
+    public float getCharge() {
+        return this.charge;
+    }
+
+    public float getNormalisedCharge() {
+        return (this.charge - 1f) / (CHARGE_MAX - 1f);
+    }
 
     /**
      * Gets the copy of this script for a specific gship.
      *
-     * @param ship  The possessed ship to look up.
-     * @return  That ship's copy of this script, or null if that ship isn't registered.
+     * @param ship The possessed ship to look up.
+     * @return That ship's copy of this script, or null if that ship isn't registered.
      */
     @SuppressWarnings("unused")
     public static GhostPossessed getGhostPossessedScriptFor(ShipAPI ship) {
@@ -143,7 +165,7 @@ public class GhostPossessed extends BaseHullMod {
     /**
      * Gets, or creates, the map storing possessed ship scripts.
      *
-     * @return  The hashmap to look up the ship in. Creates if not present.
+     * @return The hashmap to look up the ship in. Creates if not present.
      */
     @SuppressWarnings("unchecked")
     public static LinkedHashMap<CombatEntityAPI, GhostPossessed> getShipMap() {
@@ -161,9 +183,9 @@ public class GhostPossessed extends BaseHullMod {
      * <p>
      * Eliminates CR and EMP damage, zeroes crew requirements, and makes the hull slower but tougher.
      *
-     * @param hullSize  The size of the hull.
-     * @param stats     The ship's stat entity.
-     * @param id        The ship's ID.
+     * @param hullSize The size of the hull.
+     * @param stats    The ship's stat entity.
+     * @param id       The ship's ID.
      */
     @Override
     public void applyEffectsBeforeShipCreation(HullSize hullSize, MutableShipStatsAPI stats, String id) {
@@ -197,10 +219,10 @@ public class GhostPossessed extends BaseHullMod {
     /**
      * Returns the highlighted entries for hullmod descriptions.
      *
-     * @param index     The index of the parameter.
-     * @param hullSize  The hull size of the ship.
-     * @param ship      The ship that's being described.
-     * @return  The description param to be highlighted.
+     * @param index    The index of the parameter.
+     * @param hullSize The hull size of the ship.
+     * @param ship     The ship that's being described.
+     * @return The description param to be highlighted.
      */
     @Override
     public String getDescriptionParam(int index, HullSize hullSize, ShipAPI ship) {
@@ -219,8 +241,8 @@ public class GhostPossessed extends BaseHullMod {
     /**
      * Applies the ghost ship effects once a ship spawns.
      *
-     * @param ship  The ship.
-     * @param id    The ship's ID.
+     * @param ship The ship.
+     * @param id   The ship's ID.
      */
     @Override
     public void applyEffectsAfterShipCreation(ShipAPI ship, String id) {
@@ -241,7 +263,7 @@ public class GhostPossessed extends BaseHullMod {
             ship.setRenderEngines(false);
             ship.setDoNotRenderVentingAnimation(true);
         } else {
-            Global.getLogger(GhostPossessed.class).info(" Ship "+ship+" is keeping its glow and venting.");
+            Global.getLogger(GhostPossessed.class).info(" Ship " + ship + " is keeping its glow and venting.");
         }
 
         this.cloudSize = new Vector2f(
@@ -256,7 +278,7 @@ public class GhostPossessed extends BaseHullMod {
         this.arcElapsed = 0;
         this.shipSize = ship.getHullSize().ordinal() - 1;
 
-        Global.getLogger(GhostPossessed.class).info("Ship: "+ship+", arc exclusion radius: "+arcExclusionRadius);
+        Global.getLogger(GhostPossessed.class).info("Ship: " + ship + ", arc exclusion radius: " + arcExclusionRadius);
 
         this.charge = 1f;
         this.chargedWeapons = GhostUtil.getChargedWeapons(ship);
@@ -280,8 +302,8 @@ public class GhostPossessed extends BaseHullMod {
     /**
      * During combat, applies arc effects to the ship.
      *
-     * @param ship      The ship.
-     * @param amount    The ship's ID.
+     * @param ship   The ship.
+     * @param amount The ship's ID.
      */
     @Override
     public void advanceInCombat(ShipAPI ship, float amount) {
@@ -295,9 +317,9 @@ public class GhostPossessed extends BaseHullMod {
         // Check if dead, and clear motes
         // --------------------------------
         if (ship.isHulk()) {
-            if (!this.handledDeath){
+            if (!this.handledDeath) {
                 SharedGhostMoteAIData data = getSharedData(ship);
-                Global.getLogger(GhostPossessed.class).info("Ship "+ship+" has died, killing "+data.motes.size()+" motes");
+                Global.getLogger(GhostPossessed.class).info("Ship " + ship + " has died, killing " + data.motes.size() + " motes");
                 this.handledDeath = true;
 
                 for (int i = 0; i < data.motes.size(); i++) {
@@ -321,13 +343,13 @@ public class GhostPossessed extends BaseHullMod {
 
         if (Global.getCombatEngine().getPlayerShip() == ship) {
             MagicUI.drawInterfaceStatusBar(
-                ship,
-                getNormalisedCharge(),
-                null,
-                null,
-                getNormalisedCharge(),
-                "Charge",
-                3
+                    ship,
+                    getNormalisedCharge(),
+                    null,
+                    null,
+                    getNormalisedCharge(),
+                    "Charge",
+                    3
             );
         }
 
@@ -400,7 +422,7 @@ public class GhostPossessed extends BaseHullMod {
             int numArcs = Math.max(
                     1,
                     MathUtils.getRandomNumberInRange(
-                        1, (int) (this.shipSize * (1+jitterMag))
+                            1, (int) (this.shipSize * (1 + jitterMag))
                     )
             );
             for (int i = 0; i < numArcs; i++) {
@@ -519,29 +541,43 @@ public class GhostPossessed extends BaseHullMod {
         MOTE_DATA.put(WEAPON, mote_data);
     }
 
-    public static String getWeaponId(ShipAPI ship) { return WEAPON; }
-    public static float getAntiFighterDamage(ShipAPI ship) { return MOTE_DATA.get(getWeaponId(ship)).antiFighterDamage; }
+    public static String getWeaponId(ShipAPI ship) {
+        return WEAPON;
+    }
+
+    public static float getAntiFighterDamage(ShipAPI ship) {
+        return MOTE_DATA.get(getWeaponId(ship)).antiFighterDamage;
+    }
+
     public static String getImpactSoundId(ShipAPI ship) {
         return MOTE_DATA.get(getWeaponId(ship)).impactSound;
     }
+
     public static Color getJitterColor(ShipAPI ship) {
         return MOTE_DATA.get(getWeaponId(ship)).jitterColor;
     }
+
     public static Color getEMPColor(ShipAPI ship) {
         return MOTE_DATA.get(getWeaponId(ship)).empColor;
     }
-    public static int getMaxMotes(ShipAPI ship) { return MOTES_BY_SIZE.get(ship.getHullSize()); }
-    public static String getLoopSound(ShipAPI ship) { return MOTE_DATA.get(getWeaponId(ship)).loopSound; }
+
+    public static int getMaxMotes(ShipAPI ship) {
+        return MOTES_BY_SIZE.get(ship.getHullSize());
+    }
+
+    public static String getLoopSound(ShipAPI ship) {
+        return MOTE_DATA.get(getWeaponId(ship)).loopSound;
+    }
 
     /**
      *
      */
-    public static class SharedGhostMoteAIData extends MoteControlScript.SharedMoteAIData{
+    public static class SharedGhostMoteAIData extends MoteControlScript.SharedMoteAIData {
         public int maxMotes = 0;
 //        public float elapsed = 0f;
 //        public List<MissileAPI> motes = new ArrayList<MissileAPI>();
 
-//        public float attractorRemaining = 0f;
+        //        public float attractorRemaining = 0f;
 //        public Vector2f attractorTarget = null;
 //        public ShipAPI attractorLock = null;
 //
@@ -553,8 +589,8 @@ public class GhostPossessed extends BaseHullMod {
     /**
      * Gets the shared AI data object used by all of this ship's motes.
      *
-     * @param ship  The ship.
-     * @return  The shared AI data object.
+     * @param ship The ship.
+     * @return The shared AI data object.
      */
     public static SharedGhostMoteAIData getSharedData(ShipAPI ship) {
         String key = ship + "_mote_AI_shared";
@@ -571,8 +607,8 @@ public class GhostPossessed extends BaseHullMod {
      * <p>
      * Clears out inactive motes.
      *
-     * @param ship  The ship to query.
-     * @return  The number of motes killed.
+     * @param ship The ship to query.
+     * @return The number of motes killed.
      */
     public static int getKilledMoteCount(ShipAPI ship) {
         SharedGhostMoteAIData data = getSharedData(ship);
@@ -590,7 +626,7 @@ public class GhostPossessed extends BaseHullMod {
             mote = iter.next();
             if (!engine.isMissileAlive(mote)) {
                 iter.remove();
-                if (mote.getHitpoints() <= 0 ) motes_killed++;
+                if (mote.getHitpoints() <= 0) motes_killed++;
             }
         }
         return motes_killed;
@@ -601,8 +637,8 @@ public class GhostPossessed extends BaseHullMod {
      * <p>
      * Clears out inactive motes.
      *
-     * @param ship  The ship to query.
-     * @return  The total mote capacity - the active motes.
+     * @param ship The ship to query.
+     * @return The total mote capacity - the active motes.
      */
     public static int getFreeMoteCapacity(ShipAPI ship) {
         if (ship.isHulk()) return 0;
@@ -614,12 +650,12 @@ public class GhostPossessed extends BaseHullMod {
     /**
      * Gets a reasonable batch of motes to spawn.
      *
-     * @param ship  The ship to calculate for.
-     * @return  A reasonable fraction of the total motes.
+     * @param ship The ship to calculate for.
+     * @return A reasonable fraction of the total motes.
      */
     protected int getMoteSpawnBatch(ShipAPI ship) {
         int free_capacity = getFreeMoteCapacity(ship);
-        if (free_capacity <= 0 ) return 0;
+        if (free_capacity <= 0) return 0;
 
         return Math.min(
                 free_capacity,
@@ -633,9 +669,9 @@ public class GhostPossessed extends BaseHullMod {
     /**
      * Adds a mote spawned elsewhere (e.g. by a ship system) to a ship's roster.
      *
-     * @param ship          The ship to add the mote to.
-     * @param missile       The mote's missile entity.
-     * @param timeOverride  How long the mote should ignore flocking for and just seek the ship.
+     * @param ship         The ship to add the mote to.
+     * @param missile      The mote's missile entity.
+     * @param timeOverride How long the mote should ignore flocking for and just seek the ship.
      */
     public static void associateMote(ShipAPI ship, MissileAPI missile, float timeOverride) {
         missile.getActiveLayers().remove(CombatEngineLayers.FF_INDICATORS_LAYER);
