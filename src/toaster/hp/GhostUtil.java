@@ -38,7 +38,6 @@ public class GhostUtil {
         person.getStats().setSkillLevel(Skills.COMBAT_ENDURANCE, 2);
         person.getStats().setSkillLevel(Skills.POLARIZED_ARMOR, 2);
         person.getStats().setSkillLevel(Skills.MISSILE_SPECIALIZATION, 2);
-        person.getStats().setSkillLevel(Skills.GUNNERY_IMPLANTS, 2);
         person.getStats().setSkillLevel(Skills.FIELD_MODULATION, 2);
         person.getStats().setSkillLevel(Skills.DAMAGE_CONTROL, 2);
         person.getStats().setSkillLevel(Skills.DERELICT_CONTINGENT, 2);
@@ -49,12 +48,12 @@ public class GhostUtil {
     /**
      * Returns all weapons on the ship that are charge-based.
      *
-     * @param ship      The ship to check.
-     * @return          A list of weapons that use mote charges.
+     * @param ship The ship to check.
+     * @return A list of weapons that use mote charges.
      */
     public static List<WeaponAPI> getChargedWeapons(ShipAPI ship) {
         ArrayList<WeaponAPI> found = new ArrayList<>();
-        for (WeaponAPI weapon: ship.getAllWeapons()) {
+        for (WeaponAPI weapon : ship.getAllWeapons()) {
             if (weapon.getSpec().hasTag(Tags.CHARGED_SYSTEM)) found.add(weapon);
         }
         return found;

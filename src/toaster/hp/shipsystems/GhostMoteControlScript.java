@@ -4,9 +4,8 @@ import java.util.List;
 
 import java.awt.Color;
 
-import com.fs.starfarer.api.impl.campaign.ids.HullMods;
 import com.fs.starfarer.api.impl.combat.MoteControlScript;
-import org.hyperlib.FXColours;
+import org.hyperlib.HyperLibColours;
 import org.lwjgl.util.vector.Vector2f;
 
 import com.fs.starfarer.api.Global;
@@ -39,7 +38,7 @@ public class GhostMoteControlScript extends MoteControlScript {
     protected static float MAX_ATTRACTOR_RANGE = 3000f;
     public static float ATTRACTOR_DURATION_LOCK = 20f;
     public static float ATTRACTOR_DURATION = 10f;
-    public static Color ATTRACTOR_ARC_COLOUR = FXColours.DEEP_HYPERSPACE_STORMY;
+    public static Color ATTRACTOR_ARC_COLOUR = HyperLibColours.DEEP_HYPERSPACE_STORMY;
 
     // --------------------------------
     // Variables that change during run

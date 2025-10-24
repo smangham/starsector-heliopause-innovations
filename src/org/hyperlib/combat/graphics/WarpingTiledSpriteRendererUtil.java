@@ -2,7 +2,6 @@ package org.hyperlib.combat.graphics;
 
 import java.awt.Color;
 
-import org.apache.log4j.Logger;
 import org.lwjgl.opengl.GL11;
 
 import com.fs.starfarer.api.graphics.SpriteAPI;
@@ -19,8 +18,6 @@ import com.fs.starfarer.api.util.WarpingSpriteRendererUtil.MutatingValue;
  * @author Toaster minor modifications.
  */
 public class WarpingTiledSpriteRendererUtil {
-//    private static Logger log = Logger.getLogger(WarpingTiledSpriteRendererUtil.class);   /// The logger.
-
     /**
      * Shivering sprite vertex
      * <p>
@@ -65,15 +62,12 @@ public class WarpingTiledSpriteRendererUtil {
     protected int verticesWide, verticesTall;
     protected WarpingVertex[] [] vertices;
     protected SpriteAPI sprite;
-    protected int tilesWide, tilesTall;
     protected boolean mirror = false;
 
     /**
      * Constructor for the warping sprite.
      *
      * @param sprite            The sprite to render.
-     * @param tilesWide         How many tiles across the sprite is.
-     * @param tilesTall         How many tiles high the sprite is.
      * @param verticesWide      How many moving points across the sprite.
      * @param verticesTall      How many moving points up the sprite.
      * @param minWarpRadius     The minimum radius each point moves through.
@@ -81,15 +75,12 @@ public class WarpingTiledSpriteRendererUtil {
      * @param warpRateMult      The rate at which those points move.
      */
     public WarpingTiledSpriteRendererUtil(
-            SpriteAPI sprite, int tilesWide, int tilesTall,
-            int verticesWide, int verticesTall,
+            SpriteAPI sprite, int verticesWide, int verticesTall,
             float minWarpRadius, float maxWarpRadius, float warpRateMult
     ) {
         this.sprite = sprite;
         this.verticesWide = verticesWide;
         this.verticesTall = verticesTall;
-        this.tilesWide = tilesWide;
-        this.tilesTall = tilesTall;
 
         vertices = new WarpingVertex[verticesWide][verticesTall];
         for (int i = 0; i < verticesWide; i++) {
@@ -163,8 +154,9 @@ public class WarpingTiledSpriteRendererUtil {
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(blendSrc, blendDest);
 
-        float tex_width = (1f/tilesWide) - 0.001f;
-        float tex_height = (1f/tilesTall) - 0.001f;
+        float tex_width = sprite.getTexWidth() - 0.001f;
+        float tex_height = sprite.getTexWidth() - 0.001f;
+
         float tex_x = sprite.getTexX();
         float tex_y = sprite.getTexY();
 
@@ -225,8 +217,6 @@ public class WarpingTiledSpriteRendererUtil {
     public int getVerticesWide() { return this.verticesWide; }
     public int getVerticesTall() { return this.verticesTall; }
 
-    public int getTilesWide() { return this.tilesWide; }
-    public int getTilesTall() { return this.tilesTall; }
     public SpriteAPI getSprite() { return this.sprite; }
 
     public boolean isMirror() { return this.mirror; }

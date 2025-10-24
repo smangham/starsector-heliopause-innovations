@@ -1,5 +1,5 @@
 package org.hyperlib;
 
-public class SoundIDs {
+public class HyperLibSoundIds {
     public static final String HYPERSPACE_LIGHTNING = "terrain_hyperspace_lightning";
 }

@@ -37,7 +37,7 @@ public class TiledSpriteSampler {
     /**
      * Returns a random sprite from the tiles.
      *
-     * @return A sample from a tiled sprite.
+     * @return  A sample from a tiled sprite.
      */
     public SpriteAPI getSprite() {
         SpriteAPI sprite = Global.getSettings().getSprite(this.category, this.key);

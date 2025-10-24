@@ -6,22 +6,19 @@ import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.combat.EmpArcEntityAPI;
 import com.fs.starfarer.api.combat.EmpArcEntityAPI.EmpArcParams;
 import com.fs.starfarer.api.util.WeightedRandomPicker;
-import org.apache.log4j.Logger;
 import org.hyperlib.HyperLibTags;
-import org.hyperlib.SoundIDs;
+import org.hyperlib.HyperLibSoundIds;
 import org.lazywizard.lazylib.MathUtils;
 import org.lazywizard.lazylib.VectorUtils;
 import org.lazywizard.lazylib.combat.CombatUtils;
 import org.lwjgl.util.vector.Vector2f;
 
-import org.hyperlib.FXColours;
+import org.hyperlib.HyperLibColours;
 import toaster.hp.campaign.ids.Projectiles;
 
 import java.awt.*;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Random;
-import java.util.Set;
 
 
 /**
@@ -39,15 +36,15 @@ public class StormcallerMineExplosion implements ProximityExplosionEffect {
     public static int PARTICLE_COUNT = 8;
     public static float PARTICLE_SIZE_MIN = 64f;
     public static float PARTICLE_SIZE_MAX = 96f;
-    public static Color PARTICLE_COLOUR = FXColours.DEEP_HYPERSPACE_QUIET;
+    public static Color PARTICLE_COLOUR = HyperLibColours.DEEP_HYPERSPACE_QUIET;
 
     /**
      * Plays the particle visuals and applies knockback
      *
-     * @param explosion             The 'explosion' entity created
-     * @param originalProjectile    The mine that just exploded
+     * @param explosion          The 'explosion' entity created
+     * @param originalProjectile The mine that just exploded
      */
-	public void onExplosion(
+    public void onExplosion(
             DamagingProjectileAPI explosion,
             DamagingProjectileAPI originalProjectile
     ) {
@@ -92,11 +89,11 @@ public class StormcallerMineExplosion implements ProximityExplosionEffect {
         // Iterate over ships caught in the explosion, pushing them away and playing a lightning strike visual.
         WeightedRandomPicker<ShipAPI> picker = new WeightedRandomPicker<>();
 
-        for (ShipAPI ship: CombatUtils.getShipsWithinRange(explosionPoint, explosionRadius)) {
+        for (ShipAPI ship : CombatUtils.getShipsWithinRange(explosionPoint, explosionRadius)) {
             if (
                     !ship.isFighter() && ship.isTargetable() && !ship.isPhased() &&
-                    !ship.getVariant().getTags().contains(HyperLibTags.HYPERSPACE_STORM_STRIKE_IMMUNE) &&
-                    !ship.getHullSpec().getTags().contains(HyperLibTags.HYPERSPACE_STORM_STRIKE_IMMUNE)
+                            !ship.getVariant().getTags().contains(HyperLibTags.HYPERSPACE_STORM_STRIKE_IMMUNE) &&
+                            !ship.getHullSpec().getTags().contains(HyperLibTags.HYPERSPACE_STORM_STRIKE_IMMUNE)
             ) {
                 picker.add(ship, ship.getHullSize().ordinal());
             }
@@ -133,7 +130,7 @@ public class StormcallerMineExplosion implements ProximityExplosionEffect {
                 explosionForceScaling = 1.0f;
             } else {
                 // Scale smoothly between
-                explosionForceScaling = 1.0f -  ((ship_distance - explosionRadiusCore) / explosionRadiusEdge) / 2f;
+                explosionForceScaling = 1.0f - ((ship_distance - explosionRadiusCore) / explosionRadiusEdge) / 2f;
             }
 
             // Now push the ship away from the strike
@@ -147,8 +144,8 @@ public class StormcallerMineExplosion implements ProximityExplosionEffect {
             EmpArcEntityAPI arc = engine.spawnEmpArc(
                     originalProjectile.getSource(),
                     new Vector2f(
-                            (shipPoint.x + explosionPoint.x*2f) / 3f,
-                            (shipPoint.y + explosionPoint.y*2f) / 3f
+                            (shipPoint.x + explosionPoint.x * 2f) / 3f,
+                            (shipPoint.y + explosionPoint.y * 2f) / 3f
                     ),
                     explosion,
                     ship,
@@ -156,7 +153,7 @@ public class StormcallerMineExplosion implements ProximityExplosionEffect {
                     originalProjectile.getDamageAmount(),
                     originalProjectile.getEmpAmount(),
                     100000f,  // If they were hit by the blast, they're in range!
-                    SoundIDs.HYPERSPACE_LIGHTNING,
+                    HyperLibSoundIds.HYPERSPACE_LIGHTNING,
                     StormcallerParams.STRIKE_ARC_WIDTH,
                     StormcallerParams.STRIKE_COLOUR,
                     Color.white,
@@ -172,8 +169,8 @@ public class StormcallerMineExplosion implements ProximityExplosionEffect {
             WeightedRandomPicker<MissileAPI> minePicker = new WeightedRandomPicker<>();
             for (
                     MissileAPI mine : CombatUtils.getMissilesWithinRange(
-                        explosionPoint, explosionRadius * StormcallerParams.STRIKE_TO_CLOUD_RADIUS_MULT
-                    )
+                    explosionPoint, explosionRadius * StormcallerParams.STRIKE_TO_CLOUD_RADIUS_MULT
+            )
             ) {
                 if (Objects.equals(mine.getProjectileSpecId(), Projectiles.STORMCALLER_MINELAYER)) minePicker.add(mine);
             }
@@ -197,8 +194,8 @@ public class StormcallerMineExplosion implements ProximityExplosionEffect {
             );
             arc.setFadedOutAtStart(true);
             Global.getSoundPlayer().playSound(
-                    SoundIDs.HYPERSPACE_LIGHTNING, 1f, 1f, explosionPoint, new Vector2f()
+                    HyperLibSoundIds.HYPERSPACE_LIGHTNING, 1f, 1f, explosionPoint, new Vector2f()
             );
         }
-	}
+    }
 }

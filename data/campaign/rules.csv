@@ -54,7 +54,7 @@ $askedBaird = true 1","""Of course, I meant Provost Baird - the new head of Gala
 
 $personFirstName's attention drifts from the conversation, as $heOrShe muses about which event past or present could have so displeased Provost Baird.",,1
 tstHPCEOGreetWhy,tstHPCEOGreetOptions,!$askedWhy,,,"tstHPCEOGreetWhy1:""Why do you want the data?""",1
-tstHPCEOGreetWhy1,DialogOptionSelected,$option == tstHPCEOGreetWhy1,"$tstHPCEOGreetPrototypes = true
+tstHPCEOGreetWhy1,DialogOptionSelected,$option == tstHPCEOGreetWhy1,"$canAskPrototypes = true
 RemoveOption tstHPCEOGreetWhy
 $askedWhy = true 1
 ","$personFirstName looks slightly taken aback, but resumes, ""Perhaps I've over-estimated our marketing department's success, or at least how well history is taught these days.""
@@ -71,9 +71,10 @@ tstHPCEOGreetConcern,tstHPCEOGreetOptions,!$askedConcern,,,"tstHPCEOGreetConcern
 tstHPCEOGreetConcern1,DialogOptionSelected,$option == tstHPCEOGreetConcern1,"AdjustRepActivePerson VENGEFUL -2
 RemoveOption tstHPCEOGreetConcern1
 $askedConcern = true 1","$HeOrShe frowns, ""I'm disappointed. We're not reckless lunatics like Tri-Tachyon. Heliopause has a history of strong civic links to the Explorarium - it's not like the company would've survived for long if it'd been violating Technology Standards left right and centre! For our part, we like to think we carry that ethos forwards.""",,1
-tstHPCEOGreetPrototypes,tstHPCEOGreetOptions,"$tstHPCEOGreetPrototypes
+tstHPCEOGreetPrototypes,tstHPCEOGreetOptions,"$canAskPrototypes
 !$askedPrototypes",,,"tstHPCEOGreetPrototypes1:""You mentioned prototypes earlier.""",1
 tstHPCEOGreetPrototypes1,DialogOptionSelected,$option == tstHPCEOGreetPrototypes1,"RemoveOption tstHPCEOGreetPrototypes1
+unset $canAskPrototypes
 $askedPrototypes = true 1","""Yes, prototypes! Lots of fascinating experimental hyperspace tech, hostile environment survey equipment, all sorts of things. Best tested out on the frontier, where there's nobody but drones to get in the way. Or, ah, experience any unexpected side effects. That was rather the problem, though, as it turned out. The company's MINEX cryptokeys expired not long after the Collapse, and you can imagine the outcome for the fleets out decommissioning drones...""
 
 $HeOrShe sighs, with a slight shake of the head.
@@ -154,7 +155,7 @@ tstHPMissionPinnacleText3,tstHPMissionPinnacleText3Actual,,,"Beaming with triump
 tstHPMissionPinnacleText4,DialogOptionSelected,$option == tstHP_mPinnacle_briefing4,"SetTextHighlights $tstHP_mPinnacle_reward
 Call $global.tstHP_mPinnacle_ref showMap ""Target: Deep Hyperspace""","""Excellent! It's, ah, somewhere around here-ish"". $HeOrShe waves $hisOrHer hand towards one of the privacy-blurred holos on their desk, before remembering to approve transmission. The fuzzy shapes resolve into a point on a hyperspace chart of the sector.
 
-""Excellent! Even with the new sensor routines, the signal is only really visible during storms, so you might be waiting a little while. But we'll certainly make it worth your while - if the black box kept running, there'll be almost 200 years of data in it, let alone the value our engineering department will get from recovery! Let's say $tstHP_mPinnacle_reward credits.""","tstHP_mPinnacle_briefing5:""I'll be back with your missing ship.""",1
+""Excellent! You're venturing into the storm, but we'll certainly make it worth your while - if the black box kept running, there'll be almost 200 years of data in it, let alone the value our engineering department will get from recovery! Let's say $tstHP_mPinnacle_reward credits.""","tstHP_mPinnacle_briefing5:""I'll be back with your missing ship.""",1
 tstHPMissionPinnacleText5,DialogOptionSelected,$option == tstHP_mPinnacle_briefing5,"AddTextSmall ""Received enhanced hyperspace sensor protocols"" highlight
 Call $mHub accept $missionId
 Call $mHub returnToList","""Marvellous! Then burn bright, as they say.""
@@ -171,6 +172,7 @@ Your tech officer volunteers. ""It's speculation, but if the signal's coupling b
 tstHPMissionPinnacleFleetFind1,BeginFleetEncounter2,"$tstHP_mPinnacle_fleet score:1000
 !$foundFleet","unset $global.tstHP_mPinnacle_stage_FIND
 $global.tstHP_mPinnacle_stage_FIGHT = true
+Call $global.tstHP_mPinnacle_ref fixFlagship
 Call $global.tstHP_mPinnacle_ref updateStage
 $foundFleet = true 1","As you approach, tactical issues their report. A few other derelicts drift in the bubble of calm hyperspace around the prototype, showing unusual high-energy signals. False-colour visualisations on the viewscreen shows an eerie glow surrounding them.
 
@@ -212,7 +214,8 @@ FireBest tstHPMissionPinnacleSalvage","Your ops chief appears relieved. ""Aye, $
 tstHPMissionPinnacleSalvage,tstHPMissionPinnacleSalvage,,,"The shuttles head out, and reports arrive not long after. The ship is a wreck, but in surprisingly good shape for almost 200 years of drifting in hyperspace without a drive field. Structural damage is minimal, but radiation has bleached every surface visible through an open window or hull tear, leaving stark white patches clicking rad-hot.
 
 All escape pods present, all shuttles accounted for. No bodies are reported, but almost all organic material has perished under the intense radiation flux. It is impossible to tell whether the fine dust kicked up by the salvor's footsteps was once furnishings, or crew.",tstHPMissionPinnacleSalvage1:Continue,1
-tstHPMissionPinnacleSalvage1,DialogOptionSelected,$option == tstHPMissionPinnacleSalvage1,$recordingLoops=1,"After the vessel is confirmed safe repair teams arrive to replace the salvors, returning with the bulky, radiation-shielded black box. After an unusually long wait, you debrief the results.
+tstHPMissionPinnacleSalvage1,DialogOptionSelected,$option == tstHPMissionPinnacleSalvage1,"$recordingLoops=0
+FireAll tstHPMissionPinnacleLoopOptions","After the vessel is confirmed safe repair teams arrive to replace the salvors, returning with the bulky, radiation-shielded black box. After an unusually long wait, you debrief the results.
 
 ""As expected, everything else was fried. But..."" your ops chief pauses, ""...the contents are odd. Like an alpha core's idea of a joke.""
 
@@ -220,9 +223,7 @@ A recording is forwarded to your personal screen. A grainy view from the bridge'
 
 When the image returns, the bridge is empty.
 
-""That's the latest recording. There's more, although...""","tstHPMissionPinnacleLoopNext:Check the next recording
-tstHPMissionPinnacleLoopRandom:Check a random recording
-tstHPMissionPinnacleLoopContinue:Continue",1
+""That's the latest recording. There's more, although...""",,1
 tstHPMissionPinnacleLoopRandomStop,DialogOptionSelected,"$option == tstHPMissionPinnacleLoopNext
 $recordingLoops >= 5 score:1000",,"You snap back into awareness as your ops chief shakes your shoulder. ""$PlayerSirOrMadam?""",tstHPMissionPinnacleLoopContinue:Continue,1
 tstHPMissionPinnacleLoopNextStop,DialogOptionSelected,"$option == tstHPMissionPinnacleLoopRandom
@@ -233,9 +234,9 @@ FireAll tstHPMissionPinnacleLoopOptions",,,1
 tstHPMissionPinnacleLoopRandom,DialogOptionSelected,"$option == tstHPMissionPinnacleLoopRandom
 $recordingLoops < 5","FireBest tstHPMissionPinnacleLoopEntry
 FireAll tstHPMissionPinnacleLoopOptions",,,1
-tstHPMissionPinnacleLoopOptions,tstHPMissionPinnacleLoopOptions,,,,"tstHPMissionPinnacleLoopNext:Check the next recording
-tstHPMissionPinnacleLoopRandom:Check a random recording
-tstHPMissionPinnacleLoopContinue:Continue",1
+tstHPMissionPinnacleLoopOptionsNext,tstHPMissionPinnacleLoopOptions,,,,"tstHPMissionPinnacleLoopNext:Check the next recording
+tstHPMissionPinnacleLoopRandom:Check a random recording",1
+tstHPMissionPinnacleLoopOptionsContinue,tstHPMissionPinnacleLoopOptions,$recordingLoops > 0,,,"tstHPMissionPinnacleLoopContinue:Continue",1
 tstHPMissionPinnacleLoopEntry1,tstHPMissionPinnacleLoopEntry,,"$recordingLoops++","Another grainy video of the bridge of the prototype. All the same crew are present, but at different stations, wearing different uniforms. One thing is the same; the sequence of events. A warning, a dive, then an empty bridge.
 OR
 This recording is similar to the first. Though the snow of radiation obscures details, it seems to be same crew, though wearing a different set of uniforms, in different positions. Once again, the strike warning flares on the viewscreen, the phase coils engage, and after the whiteout nobody remains.
@@ -253,39 +254,41 @@ $doneExplore = true 1
 Call $global.tstHP_mPinnacle_ref updateStage","The prototype Pinnacle has been patched up, ready for return to Heliopause Innovations.",,1
 # ---------------- Stage 4: Recovered the fleet, returning ----------------
 tstHPMissionPinnacleReturn,PickGreeting,"$id == tstHP_heliopause_ceo score:2000
-$global.tstHP_mPinnacle_stage_RETURN ",FireAll tstHPMissionPinnacleNews,"After a short delay, your comms officer informs you the call is ready to connect, and $name springs onto the viewscreen.
+$global.tstHP_mPinnacle_stage_RETURN","ShowPersonVisual
+FireAll tstHPMissionPinnacleNews","After a short delay, your comms officer informs you the call is ready to connect, and $name springs onto the viewscreen.
 
 ""Ah, you're back! Marvellous, marvellous. How was your jaunt to the depths of hyperspace?""",,1
-tstHPMissionPinnacleNewsGood,tstHPMissionPinnacleNews,!$newsGood,,,"tstHPMissionPinnacleNewsGood1:Give $himOrHer the good news",1
-tstHPMissionPinnacleNewsGood1,DialogOptionSelected,$option == tstHPMissionPinnacleNewsGood1,"RemoveOption tstHPMissionPinnacleNewsGood
-FireAll tstHPMissionPinnacleNews
-$newsGood = true 1","You forward engineering's report on the salvaged ship. Minimal structural damage and almost all systems have been fully repaired, and the remainder could be with a short stay in dry dock.",,1
-tstHPMissionPinnacleNewsBad,tstHPMissionPinnacleNews,!$newsBad,,,"tstHPMissionPinnacleNewsBad1:Give $himOrHer the bad news",1
-tstHPMissionPinnacleNewsBad1,DialogOptionSelected,$option == tstHPMissionPinnacleNewsBad1,"RemoveOption tstHPMissionPinnacleNewsBad
-FireAll tstHPMissionPinnacleNews
-$newsBad = true 1","You forward your copy of the black-box data archives. $personFirstName eagerly opens up the bridge logs, and you can see them focus intently on a holoscreen, before switching to an expression of confusion and playing the next log. Then the next.
+tstHPMissionPinnacleNewsGood,tstHPMissionPinnacleNews,"!$newsGood",,,"tstHPMissionPinnacleNewsGood1:Give $himOrHer the good news",1
+tstHPMissionPinnacleNewsGood1,DialogOptionSelected,"$option == tstHPMissionPinnacleNewsGood1","RemoveOption tstHPMissionPinnacleNewsGood1
+$newsGood = true 1
+FireAll tstHPMissionPinnacleNews","You forward engineering's report on the salvaged ship. Structural damage is minimal, and almost all systems have been fully repaired. After a short stay in dry dock, the ship could be as good as new.",,1
+tstHPMissionPinnacleNewsBad,tstHPMissionPinnacleNews,"!$newsBad",,,"tstHPMissionPinnacleNewsBad1:Give $himOrHer the bad news",1
+tstHPMissionPinnacleNewsBad1,DialogOptionSelected,"$option == tstHPMissionPinnacleNewsBad1","RemoveOption tstHPMissionPinnacleNewsBad1
+$newsBad = true 1
+FireAll tstHPMissionPinnacleNews","You forward your copy of the black-box data archives. $personFirstName eagerly opens up the bridge logs, and you can see them focus intently on a holoscreen, before switching to an expression of confusion and playing the next log. Then the next.
 
 A polite cough jolts them out of the loop.
 
-""Ah. Rather unnerving. I must say, this isn't exactly what we were hoping for. I suppose R&D will see what they can do with the physical black box, but it does seem a bit unsettling. A shame, though - imagine what we could have done with all that data!""",,1
+""Ah. Rather unsettling for a practical joke, I suppose. I must say, this isn't exactly what we were hoping for, but I suppose R&D will see if they can do anything with the physical black box. A shame, though - imagine what we could have done with all that data!""",,1
 tstHPMissionPinnacleNewsOdd,tstHPMissionPinnacleNews,"$newsBad
-$newsGood",,,"tstHPMissionPinnacleNewsOdd1:Continue",1
-tstHPMissionPinnacleNewsOdd1,DialogOptionSelected,$option == tstHPMissionPinnacleNewsOdd1,,"You recount your interaction with the electromagnetic phenomena surrounding the prototype, and forward the sensor readings and combat logs. $personFirstName's surprise and disappointment from earlier quickly turns into a wide-eyed fascination.
+$newsGood","unset $newsBad
+unset $newsGood",,"tstHPMissionPinnacleNewsOdd1:Continue",1
+tstHPMissionPinnacleNewsOdd1,DialogOptionSelected,"$option == tstHPMissionPinnacleNewsOdd1",,"You recount your interaction with the electromagnetic phenomena surrounding the prototype, and forward the sensor readings and combat logs. $personFirstName's surprise and disappointment from earlier quickly turns into a wide-eyed fascination.
 
 ""Incredible! A truly fascinating account, and such rigorous data gathering. R&D will be positively giddy with this discovery. Please, do give my thanks to the relevant crew!""
 
-$personFirstName wrestles to contain $hisOrHer excitement and display an appropriate level of contrition. ""Though, um, I must also congratulate your cool head in such unprecedented circumstances. I must admit, the records of my predecessors did not quite cover the, ah, complications of the prototype program in sufficient depth. Rest assured, we will vet future prospective commissions with somewhat more vigor.""",tstHPMissionPinnacleReward:Continue,1
-tstHPMissionPinnacleReward,DialogOptionSelected,$option == tstHPMissionPinnacleReward,"unset $global.tstHP_mPinnacle_stage_RETURN
-$global.tstHP_mPinnacle_stage_COMPLETE = true
+You see $himOrHer wrestle to contain $hisOrHer excitement and display an appropriate level of contrition. ""Though, ahem, I must also congratulate your cool head in such unprecedented circumstances. I must admit, my predecessors records didn't quite cover the, ah, complications of the prototype fully. Rest assured, we will vet any future tasks with a bit more vigor!""
+
+""In any case, your help here has been invaluable, and well-deserving of your compensation.""","tstHPMissionPinnacleReward:Continue",1
+tstHPMissionPinnacleReward,DialogOptionSelected,"$option == tstHPMissionPinnacleReward","unset $global.tst_mPinnacle_stage_RETURN
+$global.tstHP_mPinnacle_stage_COMPLETED = true
 Call $global.tstHP_mPinnacle_ref updateStage
-AddTextSmall ""Received updated Pinnacle Mk 1 Storm Dampner algorithms""","""In any case, your help here has been invaluable, and well-deserving of your compensation.""
+AddTextSmall ""Received updated Pinnacle Mk 1 Storm Dampner algorithms"" highlight","As $personFirstName begins processing the transfer, $heOrShe starts. ""Aha! Of course, the matter of the prototype itself. You may be pleased to learn we uncovered the last set of refinements to the dampner algorithm in the archives, that were never rolled out as all prototypes had been lost. I'll have R&D install them for you. By all means, please keep hold of the prototype and put it to good use collecting data - after all, you are clearly more prepared than most for any, ah, teething troubles that might pop up.""
 
-As $heOrShe begins processing the transfer, they start. ""Aha! Of course, the matter of the prototype itself. You may be pleased to learn we uncovered the last set of refinements to the dampner algorithm in the archives, that were never rolled out as all prototypes had been lost. I'll have R&D install them for you. By all means, please keep hold of the prototype and put it to good use collecting data - after all, you are clearly more prepared than most for any, ah, teething troubles that might pop up.""
-
-Your business concluded, $PersonFirstName signs off.",cutCommLink:Close the comm link,1
+Your business concluded, $personFirstName signs off.","cutCommLink:Close the comm link",1
 
 # ================ Comms with possessed ships ================
-tstHPFactionPossessedComms,OpenCommLink,$faction.id == tstHP_possessed_faction score:1000,EndConversation,"Your comms officer bravely attempts to wrestle a signal out of the broad-spectrum EM emissions from the derelicts, but is eventually forced to admit defeat.
+tstHPFactionPossessedComms,OpenCommLink,"$faction.id == tstHP_possessed_faction score:1000","EndConversation","Your comms officer bravely attempts to wrestle a signal out of the broad-spectrum EM emissions from the derelicts, but is eventually forced to admit defeat.
 
 ""Sorry $playerSirOrMadam, I can't get anything but noise.""
 

@@ -6,7 +6,7 @@ import java.util.List;
 import java.awt.Color;
 
 import com.fs.starfarer.api.combat.*;
-import org.hyperlib.FXColours;
+import org.hyperlib.HyperLibColours;
 import org.lwjgl.util.vector.Vector2f;
 
 import com.fs.starfarer.api.Global;
@@ -14,7 +14,6 @@ import com.fs.starfarer.api.combat.EmpArcEntityAPI.EmpArcParams;
 import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI;
 import com.fs.starfarer.api.util.Misc;
 import toaster.hp.campaign.ids.Weapons;
-
 
 /**
  * Multiple instances of this plugin - one for every projectile (on hit), and one for each weapon.
@@ -26,13 +25,13 @@ import toaster.hp.campaign.ids.Weapons;
  *
  */
 @SuppressWarnings("unused")
-public class GhostThunderboltEffect  implements OnHitEffectPlugin, OnFireEffectPlugin, EveryFrameWeaponEffectPlugin {
-    public static Color RIFT_LIGHTNING_COLOR = FXColours.DEEP_HYPERSPACE_STRIKE;
+public class GhostThunderboltEffect implements OnHitEffectPlugin, OnFireEffectPlugin, EveryFrameWeaponEffectPlugin {
+    public static Color RIFT_LIGHTNING_COLOR = HyperLibColours.DEEP_HYPERSPACE_STRIKE;
     public static float RIFT_LIGHTNING_SPEED = 10000f;
 
-    public static String RIFT_LIGHTNING_DAMAGE_REMOVER = Weapons.GHOST_THUNDERBOLT+"_damage_remover";
-    public static String RIFT_LIGHTNING_FIRED_TAG = Weapons.GHOST_THUNDERBOLT+"_fired_tag";
-    public static String RIFT_LIGHTNING_SOURCE_WEAPON = Weapons.GHOST_THUNDERBOLT+"_source_weapon";
+    public static String RIFT_LIGHTNING_DAMAGE_REMOVER = Weapons.GHOST_THUNDERBOLT + "_damage_remover";
+    public static String RIFT_LIGHTNING_FIRED_TAG = Weapons.GHOST_THUNDERBOLT + "_fired_tag";
+    public static String RIFT_LIGHTNING_SOURCE_WEAPON = Weapons.GHOST_THUNDERBOLT + "_source_weapon";
 
     public static final float EDGE_OFFSET_COLLISION_RADIUS_MULT = 0.15f;
 

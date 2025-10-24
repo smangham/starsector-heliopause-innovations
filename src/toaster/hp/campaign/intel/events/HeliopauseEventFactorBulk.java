@@ -24,7 +24,7 @@ public class HeliopauseEventFactorBulk extends BaseOneTimeFactor {
     /**
      * Constructor
      *
-     * @param points    How many points of progress this factor adds.
+     * @param points How many points of progress this factor adds.
      */
     public HeliopauseEventFactorBulk(int points) {
         super(points);
@@ -33,8 +33,8 @@ public class HeliopauseEventFactorBulk extends BaseOneTimeFactor {
     /**
      * Adds a short description shown in the intel event 'recent factors' list.
      *
-     * @param intel     The intel event.
-     * @return          The description, loaded from text 1 column of `strings.csv` for this ID.
+     * @param intel The intel event.
+     * @return The description, loaded from text 1 column of `strings.csv` for this ID.
      */
     @Override
     public String getDesc(BaseEventIntel intel) {
@@ -44,8 +44,8 @@ public class HeliopauseEventFactorBulk extends BaseOneTimeFactor {
     /**
      * Adds a more detailed tooltip description.
      *
-     * @param intel     The intel event to create the tooltip for.
-     * @return          The description, loaded from text 3 column of `strings.csv` for this ID.
+     * @param intel The intel event to create the tooltip for.
+     * @return The description, loaded from text 3 column of `strings.csv` for this ID.
      */
     @Override
     public TooltipCreator getMainRowTooltip(BaseEventIntel intel) {

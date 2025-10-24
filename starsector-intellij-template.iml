@@ -12,5 +12,6 @@
     <orderEntry type="library" name="MagicLib" level="project" />
     <orderEntry type="library" name="WideHorizons" level="project" />
     <orderEntry type="library" name="Graphics" level="project" />
+    <orderEntry type="library" name="starfarer_obf" level="project" />
   </component>
 </module>

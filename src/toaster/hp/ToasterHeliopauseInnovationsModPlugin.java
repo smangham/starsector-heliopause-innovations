@@ -6,21 +6,13 @@ import org.hyperlib.campaign.terrain.HyperLibHyperspaceTerrainPlugin;
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
 import com.fs.starfarer.api.util.Misc;
 import org.hyperlib.campaign.terrain.hyperspace.ApplyStormStrikesHandler;
-import toaster.hp.campaign.terrain.hyperspace.GhostSensorProfileApplyStormStrikesPlugin;
 import toaster.hp.campaign.terrain.hyperspace.StormDampnerApplyStormStrikesPlugin;
 import toaster.hp.world.SectorGen;
 
 /**
- *
+ * Plugin for the Heliopause Innovations mod.
  */
 public class ToasterHeliopauseInnovationsModPlugin extends BaseModPlugin {
-//    private void initialise() {
-//        String last_version_str = Global.getSector().getPersistentData().get("tstHP_version");
-//        if (last_version_str == null) {
-//
-//        }
-//    }
-
     /**
      * Does the setup.
      */
@@ -28,12 +20,11 @@ public class ToasterHeliopauseInnovationsModPlugin extends BaseModPlugin {
         new SectorGen().generate(Global.getSector());
         HyperspaceTerrainPlugin hyper = Misc.getHyperspaceTerrainPlugin();
         Global.getLogger(ToasterHeliopauseInnovationsModPlugin.class).info(
-                "setUp: HyperspaceTerrainPlugin class is "+hyper.getClass().getName()
+                "setUp: HyperspaceTerrainPlugin class is " + hyper.getClass().getName()
         );
         if (hyper instanceof HyperLibHyperspaceTerrainPlugin hyperlib_subclass) {
             Global.getLogger(ToasterHeliopauseInnovationsModPlugin.class).info("setUp: Plugin correct, registering handlers");
-            ApplyStormStrikesHandler.registerStormStrikes(new StormDampnerApplyStormStrikesPlugin());
-            ApplyStormStrikesHandler.registerStormStrikes(new GhostSensorProfileApplyStormStrikesPlugin());
+            ApplyStormStrikesHandler.registerStormStrikesPlugin(new StormDampnerApplyStormStrikesPlugin());
         }
     }
 
@@ -58,7 +49,7 @@ public class ToasterHeliopauseInnovationsModPlugin extends BaseModPlugin {
     /**
      * Do sector gen and hyperspace plugin registration on load.
      *
-     * @param newGame   Is this the 'load' of  starting a new game, true or false.
+     * @param newGame Is this the 'load' of  starting a new game, true or false.
      */
     @Override
     public void onGameLoad(boolean newGame) {

@@ -1,5 +1,5 @@
 {
-	"id":"tstHP_ghost_static",  # this id must match what's in the spreadsheet
+	"id":"tstHP_ghost_static",
 	"specClass":"projectile",
 	"type":"UNIVERSAL",
 	"size":"SMALL",
@@ -12,9 +12,9 @@
 	"turretAngleOffsets":[0],
 	"hardpointOffsets":[0, 0],
 	"hardpointAngleOffsets":[0],
-	"barrelMode":"ALTERNATING", # or LINKED.  whether barrels fire at the same time or alternate.
+	"barrelMode":"ALTERNATING",
 	"animationType":"GLOW",
-	"autocharge":true,  # whether the weapon will continue charging and fire if the LMB is tapped instead of held
-	"projectileSpecId":"tstHP_ghost_static_shot",  # projectile that will be fired
+	"autocharge":true,
+	"projectileSpecId":"tstHP_ghost_static_shot",
     "fireSoundTwo":"shock_repeater_fire"
 }

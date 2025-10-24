@@ -1,21 +1,20 @@
 package toaster.hp.campaign.missions;
 
 import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.Script;
 import com.fs.starfarer.api.campaign.*;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.campaign.rules.MemoryAPI;
 import com.fs.starfarer.api.combat.BattleCreationContext;
 import com.fs.starfarer.api.combat.ShipVariantAPI;
 import com.fs.starfarer.api.fleet.FleetMemberAPI;
-import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin;
-import com.fs.starfarer.api.impl.campaign.FleetEncounterContext;
-import com.fs.starfarer.api.impl.campaign.FleetInteractionDialogPluginImpl;
-import com.fs.starfarer.api.impl.campaign.RuleBasedInteractionDialogPluginImpl;
+import com.fs.starfarer.api.impl.campaign.*;
 import com.fs.starfarer.api.impl.campaign.fleets.FleetParamsV3;
 import com.fs.starfarer.api.impl.campaign.ghosts.BaseSensorGhostCreator;
 import com.fs.starfarer.api.impl.campaign.ids.*;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
+import com.fs.starfarer.api.impl.campaign.missions.academy.GAKallichore;
 import com.fs.starfarer.api.impl.campaign.missions.hub.HubMissionWithTriggers;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.BaseThemeGenerator;
 import com.fs.starfarer.api.impl.campaign.procgen.themes.RemnantSeededFleetManager;
@@ -49,8 +48,8 @@ public class HeliopauseRecoverPinnacle extends HubMissionWithTriggers {
         public FleetInteractionDialogPluginImpl.FIDConfig createConfig() {
             FleetInteractionDialogPluginImpl.FIDConfig config = new FleetInteractionDialogPluginImpl.FIDConfig();
 //			config.alwaysAttackVsAttack = true;
-			config.leaveAlwaysAvailable = true;
-			config.showFleetAttitude = false;
+            config.leaveAlwaysAvailable = true;
+            config.showFleetAttitude = false;
             config.showTransponderStatus = false;
             config.showEngageText = false;
 //            config.alwaysPursue = true;
@@ -69,6 +68,7 @@ public class HeliopauseRecoverPinnacle extends HubMissionWithTriggers {
                     new RemnantSeededFleetManager.RemnantFleetInteractionConfigGen().createConfig().delegate.
                             postPlayerSalvageGeneration(dialog, context, salvage);
                 }
+
                 public void notifyLeave(InteractionDialogAPI dialog) {
                     SectorEntityToken other = dialog.getInteractionTarget();
                     if (!(other instanceof CampaignFleetAPI)) {
@@ -99,8 +99,8 @@ public class HeliopauseRecoverPinnacle extends HubMissionWithTriggers {
                     RepLevel path_rep_level = Global.getSector().getPlayerFleet().getFaction().getRelationshipLevel(Factions.LUDDIC_PATH);
                     boolean would_have_priest = church_rep_level.isAtWorst(RepLevel.SUSPICIOUS) || path_rep_level.isAtWorst(RepLevel.SUSPICIOUS);
 
-                    HeliopauseRecoverPinnacle mission = (HeliopauseRecoverPinnacle) Global.getSector().getMemoryWithoutUpdate().get(getMissionMemKey()+"_ref");
-                    entity.getMemoryWithoutUpdate().set("$"+Variants.PINNACLE_MK1, true);
+                    HeliopauseRecoverPinnacle mission = (HeliopauseRecoverPinnacle) Global.getSector().getMemoryWithoutUpdate().get(getMissionMemKey() + "_ref");
+                    entity.getMemoryWithoutUpdate().set("$" + Variants.PINNACLE_MK1, true);
                     entity.getMemoryWithoutUpdate().set("$would_have_priest", would_have_priest);
                     entity.getMemoryWithoutUpdate().set("$giver_name", mission.getPerson().getName());
 
@@ -149,8 +149,10 @@ public class HeliopauseRecoverPinnacle extends HubMissionWithTriggers {
         COMPLETED
     }
 
-    public static final int XP_REWARD = 7000;  /// The XP reward for completion.
-    public static final Set<Stage> STAGE_HAS_MARKET_DESCRIPTION = Set.of(Stage.RETURN);  /// Stages with market descriptions (where do these show?)
+    public static final int XP_REWARD = 7000;
+    /// The XP reward for completion.
+    public static final Set<Stage> STAGE_HAS_MARKET_DESCRIPTION = Set.of(Stage.RETURN);
+    /// Stages with market descriptions (where do these show?)
 
     protected SectorEntityToken targetToken;  /// The target used to spawn the fleet at.
 
@@ -159,15 +161,16 @@ public class HeliopauseRecoverPinnacle extends HubMissionWithTriggers {
      *
      * @param createdAt The location the mission was created at.
      * @param barEvent  Whether this was created as a bar event (always false).
-     * @return  Whether the mission can be successfully created.
+     * @return Whether the mission can be successfully created.
      */
     @Override
     protected boolean create(MarketAPI createdAt, boolean barEvent) {
-        if (!setGlobalReference(getMissionMemKey()+"_ref", getMissionMemKey()+"_inProgress")) {
+        if (!setGlobalReference(getMissionMemKey() + "_ref", getMissionMemKey() + "_inProgress")) {
             return false;
         }
 
-        setRepPersonChangesHigh();
+        setRepRewardPerson(CoreReputationPlugin.RepRewards.HIGH);
+        setRepRewardFaction(CoreReputationPlugin.RepRewards.HIGH);
         setXPReward(XP_REWARD);
         setCreditReward(CreditReward.HIGH);
 
@@ -176,11 +179,10 @@ public class HeliopauseRecoverPinnacle extends HubMissionWithTriggers {
                 0f, getUnits(8f), getUnits(1f), new Random()
         );
         if (targetPoint == null) return false;
-
-//        targetPoint = new Vector2f(getPerson().getMarket().getStarSystem().getHyperspaceAnchor().getLocation());
+//        targetPoint = this.getPerson().getMarket().getStarSystem().getHyperspaceAnchor().getLocationInHyperspace();
 
         this.targetToken = Global.getSector().getHyperspace().createToken(targetPoint.x, targetPoint.y);
-        this.targetToken.getMemoryWithoutUpdate().set(getMissionMemKey()+"_token", true);
+        this.targetToken.getMemoryWithoutUpdate().set(getMissionMemKey() + "_token", true);
 
         setStoryMission();
         setStartingStage(Stage.FIND);
@@ -195,7 +197,17 @@ public class HeliopauseRecoverPinnacle extends HubMissionWithTriggers {
         connectWithGlobalFlag(Stage.FIND, Stage.FIGHT, getStageMemKey(Stage.FIGHT));
         connectWithGlobalFlag(Stage.FIGHT, Stage.RECOVER, getStageMemKey(Stage.RECOVER));
         connectWithGlobalFlag(Stage.RECOVER, Stage.RETURN, getStageMemKey(Stage.RETURN));
-        setStageOnGlobalFlag(Stage.COMPLETED, getStageMemKey(Stage.COMPLETED));
+        connectWithGlobalFlag(Stage.RETURN, Stage.COMPLETED, getStageMemKey(Stage.COMPLETED));
+
+        Global.getLogger(HeliopauseRecoverPinnacle.class).info(
+                "Keys for stages are: " + getStageMemKey(Stage.FIND)
+                        + ", " + getStageMemKey(Stage.FIGHT)
+                        + ", " + getStageMemKey(Stage.RECOVER)
+                        + ", " + getStageMemKey(Stage.RETURN)
+                        + ", " + getStageMemKey(Stage.COMPLETED) + ", done."
+        );
+
+//        setStageOnGlobalFlag(Stage.COMPLETED, getStageMemKey(Stage.COMPLETED));
 
         // --------------------------------
         // Stage: Find, spawn the fleet when nearby.
@@ -216,28 +228,32 @@ public class HeliopauseRecoverPinnacle extends HubMissionWithTriggers {
                 this.targetToken
         );
 
+        triggerFleetSetAllWeapons();
+
+        triggerFleetSetNoFactionInName();
         triggerFleetSetFlagship(Variants.PINNACLE_BOSS);
         triggerFleetSetCommander(GhostUtil.getGhostCaptain());
-        triggerFleetSetAllWeapons();
-        triggerFleetSetNoFactionInName();
 
-        triggerFleetSetPatrolActionText("Unknown");
+        triggerFleetSetPatrolActionText("Drifting");
 
         triggerFleetNoAutoDespawn();
         triggerFleetMakeImportant(null, Stage.FIND);
         triggerFleetMakeImportant(null, Stage.FIGHT);
-        triggerMakeFleetIgnoreOtherFleets();
-        triggerMakeFleetIgnoredByOtherFleets();
-        triggerMakeAllFleetFlagsPermanent();
 
         triggerSetFleetFlag(MemFlags.MEMORY_KEY_NO_REP_IMPACT);
         triggerSetFleetFlag(MemFlags.MEMORY_KEY_NO_SHIP_RECOVERY);
         triggerSetFleetFlag(MemFlags.MEMORY_KEY_MAKE_AGGRESSIVE);
         triggerSetFleetFlag(MemFlags.MEMORY_KEY_DO_NOT_SHOW_FLEET_DESC);
         triggerSetFleetMemoryValue(MemFlags.FLEET_INTERACTION_DIALOG_CONFIG_OVERRIDE_GEN, new PinnacleFIDConfig());
-        triggerSetFleetMemoryValue("$"+HyperLibTags.HYPERSPACE_STORM_STRIKE_IMMUNE, true);
+        triggerSetFleetMemoryValue("$" + HyperLibTags.HYPERSPACE_STORM_STRIKE_IMMUNE, true);
+
+        triggerMakeFleetIgnoreOtherFleets();
+        triggerMakeFleetIgnoredByOtherFleets();
+        triggerMakeAllFleetFlagsPermanent();
+
         triggerDoNotShowFleetDesc();
-        triggerSpawnFleetAtPickedLocation(getMissionMemKey()+"_fleet",null);
+        triggerSaveFleetRef(getGlobalMemory(), getMissionMemKey() + "_fleet");
+        triggerSpawnFleetAtPickedLocation(getMissionMemKey() + "_fleet", null);
         endTrigger();
 
         // --------------------------------
@@ -247,6 +263,10 @@ public class HeliopauseRecoverPinnacle extends HubMissionWithTriggers {
         triggerDespawnEntity(this.targetToken);
         endTrigger();
 
+        beginStageTrigger(Stage.COMPLETED);
+        triggerSetGlobalMemoryValue(getMissionMemKey() + "_missionCompleted", true);
+        endTrigger();
+
         return true;
     }
 
@@ -254,13 +274,15 @@ public class HeliopauseRecoverPinnacle extends HubMissionWithTriggers {
      * Adds the quest variables to the interaction dialogue memory.
      */
     protected void updateInteractionDataImpl() {
-        set(getMissionMemKey()+"_stage", getCurrentStage());
-        set(getMissionMemKey()+"_token", this.targetToken);
-        set(getMissionMemKey()+"_reward", Misc.getWithDGS(getCreditsReward()));
+        set(getMissionMemKey() + "_stage", getCurrentStage());
+        set(getMissionMemKey() + "_token", this.targetToken);
+        set(getMissionMemKey() + "_reward", Misc.getWithDGS(getCreditsReward()));
+        set(getMissionMemKey() + "_creditsReward", getCreditsReward());
+        set(getMissionMemKey() + "_xpReward", getXPReward());
     }
 
     /**
-     * Actions callable from rules.csv. None used.
+     * Actions callable from rules.csv.
      *
      * @param action
      * @param ruleId
@@ -274,15 +296,26 @@ public class HeliopauseRecoverPinnacle extends HubMissionWithTriggers {
             String action, String ruleId, final InteractionDialogAPI dialog,
             List<Misc.Token> params, final Map<String, MemoryAPI> memoryMap
     ) {
+        if (action.equals("fixFlagship")) {
+            // Trigger spawned fleets don't keep the right
+            CampaignFleetAPI campaignFleet = getGlobalMemory().getFleet(getMissionMemKey() + "_fleet");
+            FleetMemberAPI flagship = campaignFleet.getFlagship();
+            flagship.setVariant(
+                    Global.getSettings().getVariant(Variants.PINNACLE_BOSS), true, true
+            );
+            flagship.getRepairTracker().setCR(1.0f);
+            flagship.setShipName("ISS Friedrich");
+            return true;
+        }
         return super.callAction(action, ruleId, dialog, params, memoryMap);
     }
 
     /**
      * Adds a description for the current stage to an info box in the intel window.
      *
-     * @param info      The description box.
-     * @param width     The height of the description box.
-     * @param height    The height of the description box.
+     * @param info   The description box.
+     * @param width  The height of the description box.
+     * @param height The height of the description box.
      */
     @Override
     public void addDescriptionForCurrentStage(TooltipMakerAPI info, float width, float height) {
@@ -294,19 +327,19 @@ public class HeliopauseRecoverPinnacle extends HubMissionWithTriggers {
      * <p>
      * Not sure why this exists with the above?
      *
-     * @param info      The description box.
-     * @param width     The height of the description box.
-     * @param height    The height of the description box.
+     * @param info   The description box.
+     * @param width  The height of the description box.
+     * @param height The height of the description box.
      */
     @Override
     public void addDescriptionForNonEndStage(TooltipMakerAPI info, float width, float height) {
         float opad = 10f;
 
-        String description = Global.getSettings().getString(ID, getStageKey((Stage) this.currentStage)+"_desc");
+        String description = Global.getSettings().getString(ID, getStageKey((Stage) this.currentStage) + "_desc");
         info.addPara(getSubstitutedText(description), opad);
 
         if (STAGE_HAS_MARKET_DESCRIPTION.contains((Stage) this.currentStage)) {
-            description = Global.getSettings().getString(ID, "stage_"+currentStage.toString()+"_market");
+            description = Global.getSettings().getString(ID, "stage_" + currentStage.toString() + "_market");
             addStandardMarketDesc(getSubstitutedText(description), this.getPerson().getMarket(), info, opad);
         }
     }
@@ -314,9 +347,9 @@ public class HeliopauseRecoverPinnacle extends HubMissionWithTriggers {
     /**
      * Adds a brief description for the next step, called when the stage advances in dialog.
      *
-     * @param info  The info box generated.
-     * @param tc    The tooltip colour.
-     * @param pad   The initial padding for the box.
+     * @param info The info box generated.
+     * @param tc   The tooltip colour.
+     * @param pad  The initial padding for the box.
      * @return True if description added, else false.
      */
     @Override
@@ -336,7 +369,7 @@ public class HeliopauseRecoverPinnacle extends HubMissionWithTriggers {
     /**
      * Replaces tokens in input text with quest variables.
      *
-     * @param text  Text to substitute in.
+     * @param text Text to substitute in.
      * @return The input text, with markers {{person}} and {{market}} replaced.
      */
     public String getSubstitutedText(String text) {
@@ -353,7 +386,9 @@ public class HeliopauseRecoverPinnacle extends HubMissionWithTriggers {
      * @param stage The stage to get a key for.
      * @return E.g. `stage_STAGENAME`.
      */
-    public static String getStageKey(Stage stage) { return "stage_"+stage.toString(); }
+    public static String getStageKey(Stage stage) {
+        return "stage_" + stage.toString();
+    }
 
     /**
      * Gets the ID used for a stage in `descriptions.csv`.
@@ -361,7 +396,9 @@ public class HeliopauseRecoverPinnacle extends HubMissionWithTriggers {
      * @param stage The stage to get a key for.
      * @return E.g. `questId_stage_STAGENAME`.
      */
-    public static String getStageId(Stage stage) { return ID+"_"+getStageKey(stage); }
+    public static String getStageId(Stage stage) {
+        return ID + "_" + getStageKey(stage);
+    }
 
     /**
      * Gets a key used to refer to a stage in global memory.
@@ -369,22 +406,28 @@ public class HeliopauseRecoverPinnacle extends HubMissionWithTriggers {
      * @param stage The stage to get a key for.
      * @return E.g. `$questId_stage_STAGENAME`.
      */
-    public static String getStageMemKey(Stage stage) { return getMissionMemKey() + "_" + getStageKey(stage); }
+    public static String getStageMemKey(Stage stage) {
+        return getMissionMemKey() + "_" + getStageKey(stage);
+    }
 
     /**
      * Gets the key used to refer to the mission in global memory.
      *
      * @return E.g. `$questId`.
      */
-    public static String getMissionMemKey() { return "$" + ID; }
+    public static String getMissionMemKey() {
+        return "$" + ID;
+    }
 
     /**
      * Gets the mission name from strings.csv.
      *
-     * @return      The mission name.
+     * @return The mission name.
      */
     @Override
-    public String getBaseName() { return Global.getSettings().getString(ID, "name"); }
+    public String getBaseName() {
+        return Global.getSettings().getString(ID, "name");
+    }
 
     /**
      * Not entirely sure, I assume this is a postfix shown after a stage title? E.g. "(1/3)"?

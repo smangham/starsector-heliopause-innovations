@@ -27,7 +27,7 @@ public class HyperLibVector {
     /**
      * @param entity    The combat entity to calculate the offsets for.
      * @param offsets   The sprite offsets, e.g. from a ship bounds.
-     * @return The offsets translated into worldspace coords for that ship.
+     * @return  The offsets translated into worldspace coords for that ship.
      */
     public static Vector2f getWorldspaceForEntitySpriteOffsets(
             CombatEntityAPI entity, Vector2f offsets
@@ -43,7 +43,7 @@ public class HyperLibVector {
      * Picks a point within an entity's bounds.
      *
      * @param entity    The entity to pick a point within.
-     * @return A point within the ship's bounds. Its centre if the random selection fails.
+     * @return  A point within the ship's bounds. Its centre if the random selection fails.
      */
     public static Vector2f getRandomPointInBounds(CombatEntityAPI entity) {
         Vector2f point;
@@ -105,7 +105,7 @@ public class HyperLibVector {
      *
      * @param angleDeg  The angle to create the vector at, in degrees.
      * @param length    The length of the vector.
-     * @return A vector of the given r and theta.
+     * @return  A vector of the given r and theta.
      */
     public static Vector2f getVectorForAngle(float angleDeg, float length) {
         return new Vector2f(
@@ -120,7 +120,7 @@ public class HyperLibVector {
      * @param location_end The point to which the arc is going.
      * @param entity       The entity from which the arc is coming.
      * @param offset       The distance into the entity to go.
-     * @return A point just inside the entity's physical edge, where the arc can begin.
+     * @return  A point just inside the entity's physical edge, where the arc can begin.
      */
     public static Vector2f getEdgeLocation(Vector2f location_end, CombatEntityAPI entity, float offset) {
         Vector2f location_edge = CollisionUtils.getNearestPointOnBounds(location_end, entity);

@@ -2,6 +2,8 @@ package toaster.hp.campaign.terrain.hyperspace;
 
 
 import java.awt.Color;
+
+import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
 import org.hyperlib.campaign.terrain.HyperLibHyperspaceTerrainPlugin;
 import org.lazywizard.lazylib.MathUtils;
 import org.lwjgl.util.vector.Vector2f;
@@ -32,7 +34,7 @@ public class StormDampnerHyperStormBoost implements EveryFrameScript {
      * @param cell  The hyperspace cell that jolted the ship.
      * @param fleet The fleet that's been jolted.
      */
-    public StormDampnerHyperStormBoost(HyperLibHyperspaceTerrainPlugin.CellStateTracker cell, CampaignFleetAPI fleet) {
+    public StormDampnerHyperStormBoost(HyperspaceTerrainPlugin.CellStateTracker cell, CampaignFleetAPI fleet) {
         this.cell = cell;
         this.fleet = fleet;
 
@@ -53,11 +55,11 @@ public class StormDampnerHyperStormBoost implements EveryFrameScript {
             float w = hyper.getTiles().length * size;
             float h = hyper.getTiles()[0].length * size;
 
-            x -= w/2f;
-            y -= h/2f;
+            x -= w / 2f;
+            y -= h / 2f;
 
-            float tx = x + cell.i * size + size/2f;
-            float ty = y + cell.j * size + size/2f;
+            float tx = x + cell.i * size + size / 2f;
+            float ty = y + cell.j * size + size / 2f;
 
             // Get the angle from the cell that struck towards the fleet
             angle = Misc.getAngleInDegrees(new Vector2f(tx, ty), fleet.getLocation());
@@ -87,7 +89,7 @@ public class StormDampnerHyperStormBoost implements EveryFrameScript {
     /**
      * Every frame adjust the ship's heading towards the 'target' heading.
      *
-     * @param amount    Seconds elapsed during the last frame.
+     * @param amount Seconds elapsed during the last frame.
      */
     public void advance(float amount) {
         elapsed += amount;
@@ -132,7 +134,9 @@ public class StormDampnerHyperStormBoost implements EveryFrameScript {
         return elapsed >= DURATION_SECONDS || !fleet.isInHyperspace();
     }
 
-    public boolean runWhilePaused() { return false; }
+    public boolean runWhilePaused() {
+        return false;
+    }
 
 }
 

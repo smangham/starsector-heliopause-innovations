@@ -1,84 +1,30 @@
 package org.hyperlib.campaign.terrain;
 
-import java.util.*;
-
-import com.fs.starfarer.api.Global;
-import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
+import com.fs.starfarer.api.util.Misc;
 import org.hyperlib.HyperLibTags;
-
-import com.fs.starfarer.api.campaign.CampaignFleetAPI;
-import com.fs.starfarer.api.campaign.SectorEntityToken;
-
-import com.fs.starfarer.api.util.WeightedRandomPicker;
-import org.hyperlib.campaign.terrain.hyperspace.ApplyStormStrikesBase;
 import org.hyperlib.campaign.terrain.hyperspace.ApplyStormStrikesHandler;
 
+import com.fs.starfarer.api.campaign.CampaignFleetAPI;
+import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
 
 /**
- *
+ * Extends the default hyperspace terrain plugin with a framework for modifying other behaviours.
  */
 public class HyperLibHyperspaceTerrainPlugin extends HyperspaceTerrainPlugin {
     /**
-     * The initialiser.
-     * <p>
-     * So far, the only difference is the log entry, but leaving things open.
-     *
-     * @param terrainId ???
-     * @param entity    ???
-     * @param param     ???
-     */
-    @Override
-    public void init(String terrainId, SectorEntityToken entity, Object param) {
-        super.init(terrainId, entity, param);
-        Global.getLogger(this.getClass()).info("init: HyperLib plugin initialised");
-    }
-
-    /**
      * Applies the results of a hyperspace storm strike.
      * <p>
-     * Evaluates the relevant plugin lists, and then picks the best one.
+     * Basically just wraps the storm strike plugin handler, or defers to the vanilla version.
      *
      * @param cell  The hyperspace cell the fleet is currently in.
      * @param fleet The fleet itself.
-     * @param days  ???
+     * @param days  Days passed since hyperspace was last advanced.
      */
-    protected void applyStormStrikes(CellStateTracker cell, CampaignFleetAPI fleet, float days) {
-        float priority, priority_max = 0;
-        List<ApplyStormStrikesBase> valid_plugins = new ArrayList<>();
-
-        // Assemble a list of plugins by priority for this case.
-        for (ApplyStormStrikesBase plugin : ApplyStormStrikesHandler.getPlugins()) {
-            if ((priority = plugin.getPriority(this, cell, fleet, days)) > 0) {
-                if (priority > priority_max) {
-                    priority_max = priority;
-                    valid_plugins.clear();
-                    valid_plugins.add(plugin);
-                } else if (priority == priority_max) {
-                    valid_plugins.add(plugin);
-                }
-            }
+    protected void applyStormStrikes(HyperspaceTerrainPlugin.CellStateTracker cell, CampaignFleetAPI fleet, float days) {
+        if (!ApplyStormStrikesHandler.fireBestPlugin(this, cell, fleet, days)) {
+            // No plugins had priority > 0, or those that did had no weight, so do the vanilla strikes if applicable.
+            this.applyVanillaStormStrikes(cell, fleet, days);
         }
-
-        if (priority_max > 0) {
-            // If any supercede vanilla priority, pick one by weight.
-            float weight;
-            WeightedRandomPicker<ApplyStormStrikesBase> picker = new WeightedRandomPicker<>();
-
-            for (ApplyStormStrikesBase plugin : valid_plugins) {
-                if ((weight = plugin.getWeight(this, cell, fleet, days)) > 0f) {
-                    picker.add(plugin, weight);
-                }
-            }
-            ApplyStormStrikesBase plugin = picker.pick();
-            if (plugin != null) {
-//                log.info("Selected plugin "+plugin.getID());
-                plugin.applyStormStrikes(this, cell, fleet, days);
-                return;
-            }
-        }
-
-        // No plugins had priority > 0, or those that did had no weight, so do the vanilla strikes if applicable.
-        this.applyVanillaStormStrikes(cell, fleet, days);
     }
 
     /**
@@ -88,11 +34,26 @@ public class HyperLibHyperspaceTerrainPlugin extends HyperspaceTerrainPlugin {
      *
      * @param cell  The hyperspace cell the fleet is currently in.
      * @param fleet The fleet itself.
-     * @param days  ???
+     * @param days  Days passed since hyperspace was last advanced.
      */
-    public void applyVanillaStormStrikes(CellStateTracker cell, CampaignFleetAPI fleet, float days) {
-        if (!fleet.getMemoryWithoutUpdate().contains("$"+HyperLibTags.HYPERSPACE_STORM_STRIKE_IMMUNE)) {
+    public void applyVanillaStormStrikes(HyperspaceTerrainPlugin.CellStateTracker cell, CampaignFleetAPI fleet, float days) {
+        if (!fleet.getMemoryWithoutUpdate().contains(HyperLibTags.HYPERSPACE_STORM_STRIKE_IMMUNE_FLAG)) {
             super.applyStormStrikes(cell, fleet, days);
         }
+    }
+
+    /**
+     * Saves the hyperspace tiles.
+     * <p>
+     * For some reason this isn't inherited from BaseTiledTerrain and needs redeclaring.
+     * Without it, all clouds outside of the currently-loaded zone is scrubbed each save/load.
+     *
+     * @return The HyperspaceTerrainPlugin.
+     */
+    @SuppressWarnings("unused")
+    Object writeReplace() {
+        params.tiles = null;
+        savedTiles = encodeTiles(tiles);
+        return this;
     }
 }

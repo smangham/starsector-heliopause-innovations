@@ -5,8 +5,8 @@ import java.util.*;
 import java.awt.Color;
 
 import com.fs.starfarer.api.util.*;
-import org.apache.log4j.Logger;
-import org.hyperlib.HyperLibIDs;
+import org.hyperlib.HyperLibIds;
+import org.hyperlib.combat.graphics.HyperspaceTiledSpriteSamplers;
 import org.hyperlib.combat.graphics.WarpingTiledSpriteRendererUtil;
 import org.hyperlib.util.ScalingFlickerUtil;
 import org.lwjgl.util.vector.Vector2f;
@@ -21,11 +21,11 @@ import com.fs.starfarer.api.graphics.SpriteAPI;
 
 
 /**
- *
+ * A hyperspace storm cloud.
  */
 public class HyperspaceStormRenderingPlugin extends BaseCombatLayeredRenderingPlugin {
     public static String CLOUD_UNDER_SPRITE = "deep_hyperspace_dark";
-    public static float CLOUD_UNDER_SIZE_MULT = 1.2f;
+    public static float CLOUD_UNDER_SIZE_MULT = 1.0f;
 
     public static String CLOUD_OVER_SPRITE = "deep_hyperspace";
     public static float CLOUD_OVER_SIZE_MULT = 0.9f;
@@ -45,7 +45,6 @@ public class HyperspaceStormRenderingPlugin extends BaseCombatLayeredRenderingPl
     public static class StormCell {
         public WarpingTiledSpriteRendererUtil rendererUnder, rendererOver, rendererGlow;
         public Color color = Color.white;
-        public int spriteIndexX, spriteIndexY;
 
         protected ScalingFlickerUtil glowFlicker;
         protected float currBrightness;
@@ -55,20 +54,19 @@ public class HyperspaceStormRenderingPlugin extends BaseCombatLayeredRenderingPl
          * <p>
          * Constructs a layered cell consisting of background, glow layer, and top layer.
          *
-         * @param size              Side size.
-         * @param vertices          The number of wiggling vertices across the sprite texture.
-         * @param warpMult          Multiplier on the size of the wiggle.
-         * @param glowWaitMax       If it storm flashes, how long is the maximum window between flashes..
-         * @param glowWaitMult      How much that interval is multiplied by each flash.
-         * @param fadeIn            How long it takes for the cloud to fade in.
-         * @param fadeOut           How long it takes for the cloud to fade out.
+         * @param size          Side size.
+         * @param vertices      The number of wiggling vertices across the sprite texture.
+         * @param warpMult      Multiplier on the size of the wiggle.
+         * @param glowWaitMax   If it storm flashes, how long is the maximum window between flashes..
+         * @param glowWaitMult  How much that interval is multiplied by each flash.
+         * @param fadeIn        How long it takes for the cloud to fade in.
+         * @param fadeOut       How long it takes for the cloud to fade out.
          */
         public StormCell(
                 float size, int vertices, float warpMult,
                 float glowWaitMax, float glowWaitMult,
                 float fadeIn, float fadeOut
         ) {
-//            log.info("StormCell - radius: "+radius+", vertices: "+vertices+", warpMult: "+warpMult+", startingInterval: "+startingInterval+", fadeIn: "+fadeIn);
             this.fader = new FaderUtil(0f, fadeIn, fadeOut);
             this.fadeIn();
 
@@ -77,34 +75,29 @@ public class HyperspaceStormRenderingPlugin extends BaseCombatLayeredRenderingPl
             this.brightness = new ValueShifterUtil(1f);
             this.spin = new MutatingValueUtil(0, 0, 0);
 
-            this.spriteIndexX = Misc.random.nextInt(SPRITE_TILES);
-            this.spriteIndexY = Misc.random.nextInt(SPRITE_TILES);
+            SpriteAPI sprite_under = HyperspaceTiledSpriteSamplers.getHyperspaceDarkSprite();
+            SpriteAPI sprite_over = HyperspaceTiledSpriteSamplers.getHyperspaceSprite();
+            SpriteAPI sprite_glow = HyperspaceTiledSpriteSamplers.getHyperspaceGlowSprite();
 
-            float tex_panel_x = 1f / SPRITE_TILES;
-            float tex_panel_y = 1f / SPRITE_TILES;
-            // log.info("Sprite tiles - indexes: "+this.spriteIndexX+":"+this.spriteIndexY+", tile sizes: "+tex_panel_x+":"+tex_panel_y);
+            Global.getLogger(StormCell.class).info("Dims: "+sprite_glow.getTexHeight()+" , "+sprite_glow.getTexWidth());
 
-            SpriteAPI sprite_under = Global.getSettings().getSprite(HyperLibIDs.SPRITE_KEY, CLOUD_UNDER_SPRITE);
-            SpriteAPI sprite_over = Global.getSettings().getSprite(HyperLibIDs.SPRITE_KEY, CLOUD_OVER_SPRITE);
-            SpriteAPI sprite_glow = Global.getSettings().getSprite(HyperLibIDs.SPRITE_KEY, CLOUD_GLOW_SPRITE);
-
-            for (SpriteAPI sprite: List.of(sprite_under, sprite_over, sprite_glow)) {
-                sprite.setWidth(size);
-                sprite.setHeight(size);
-                sprite.setCenterX(size/2f);
-                sprite.setCenterY(size/2f);
-
-                sprite.setTexX(spriteIndexX * tex_panel_x);
-                sprite.setTexY(spriteIndexY * tex_panel_y);
-                sprite.setTexWidth(tex_panel_x);
-                sprite.setTexHeight(tex_panel_y);
-            }
+//            for (SpriteAPI sprite: List.of(sprite_under, sprite_over, sprite_glow)) {
+////                sprite.setWidth(size);
+////                sprite.setHeight(size);
+////                sprite.setCenterX(size/2f);
+////                sprite.setCenterY(size/2f);
+//
+////                sprite.setTexX(spriteIndexX * tex_panel_x);
+////                sprite.setTexY(spriteIndexY * tex_panel_y);
+////                sprite.setTexWidth(tex_panel_x);
+////                sprite.setTexHeight(tex_panel_y);
+//            }
 
             float sprite_under_size = size * CLOUD_UNDER_SIZE_MULT;
             sprite_under.setSize(sprite_under_size, sprite_under_size);
             sprite_under.setCenter(sprite_under_size/2f, sprite_under_size/2f);
             rendererUnder = new WarpingTiledSpriteRendererUtil(
-                    sprite_under, SPRITE_TILES, SPRITE_TILES, vertices, vertices,
+                    sprite_under, vertices, vertices,
                     sprite_under_size * 0.05f * warpMult,
                     sprite_under_size * 0.05f * warpMult * 1.4f,
                     WARP_RATE_MULT
@@ -114,7 +107,7 @@ public class HyperspaceStormRenderingPlugin extends BaseCombatLayeredRenderingPl
             sprite_glow.setSize(sprite_glow_size, sprite_glow_size);
             sprite_glow.setCenter(sprite_glow_size/2f, sprite_glow_size/2f);
             rendererGlow = new WarpingTiledSpriteRendererUtil(
-                    sprite_glow, SPRITE_TILES, SPRITE_TILES, vertices, vertices,
+                    sprite_glow, vertices, vertices,
                     sprite_glow_size * 0.05f * warpMult,
                     sprite_glow_size * 0.05f * warpMult * 1.4f,
                     WARP_RATE_MULT
@@ -124,13 +117,12 @@ public class HyperspaceStormRenderingPlugin extends BaseCombatLayeredRenderingPl
             sprite_over.setSize(sprite_over_size, sprite_over_size);
             sprite_over.setCenter(sprite_over_size/2f, sprite_over_size/2f);
             rendererOver = new WarpingTiledSpriteRendererUtil(
-                    sprite_over, SPRITE_TILES, SPRITE_TILES, vertices, vertices,
+                    sprite_over, vertices, vertices,
                     sprite_over_size * 0.05f * warpMult,
                     sprite_over_size * 0.05f * warpMult * 1.4f,
                     WARP_RATE_MULT
             );
             this.setAlphaMult(1f);
-//            log.info("Sprite sizes- under: "+sprite_under_size+", glow: "+sprite_glow_size+", over: "+sprite_over_size);
         }
 
         public Set<String> tags = new LinkedHashSet<>();
@@ -191,11 +183,11 @@ public class HyperspaceStormRenderingPlugin extends BaseCombatLayeredRenderingPl
         /**
          * Adjust the alpha multiplier of this call, then render the component parts.
          *
-         * @param entityX       The X position of the entity to render.
-         * @param entityY       The Y position of the entity to render.
-         * @param alphaMult     ???
-         * @param angle         ???
-         * @param layer         The rendering layer this has been called for.
+         * @param entityX   The X position of the entity to render.
+         * @param entityY   The Y position of the entity to render.
+         * @param alphaMult Multiplier on the default alpha.
+         * @param angle     ???
+         * @param layer     The rendering layer this has been called for.
          */
         public void render(float entityX, float entityY, float alphaMult, float angle, CombatEngineLayers layer) {
             alphaMult *= this.alphaMult;
@@ -207,15 +199,13 @@ public class HyperspaceStormRenderingPlugin extends BaseCombatLayeredRenderingPl
         /**
          * Does the actual rendering of the component clouds.
          *
-         * @param x
-         * @param y
-         * @param alphaMult
-         * @param angle
-         * @param layer
+         * @param x         The X position of the entity to render.
+         * @param y         The Y position of the entity to render.
+         * @param alphaMult Multiplier on the default alpha.
+         * @param angle     ???
+         * @param layer     The rendering layer this has been called for.
          */
         public void renderImpl(float x, float y, float alphaMult, float angle, CombatEngineLayers layer) {
-//            log.info("StormCell - RenderImpl - x: "+x+", y: "+y+", alphaMult: "+alphaMult+", angle: "+angle);
-
             if (layer == CombatEngineLayers.CLOUD_LAYER) {
                 this.rendererUnder.getSprite().setNormalBlend();
                 this.rendererUnder.getSprite().setAlphaMult(alphaMult);
@@ -365,6 +355,12 @@ public class HyperspaceStormRenderingPlugin extends BaseCombatLayeredRenderingPl
         }
     }
 
+    /**
+     * Returns all cells matching a set of tags.
+     *
+     * @param tags  Select only those cells with these tags.
+     * @return      A list of the storm cells with the specified tags.
+     */
     public List<StormCell> getStormCells(String ... tags) {
         List<StormCell> result = new ArrayList<>();
 

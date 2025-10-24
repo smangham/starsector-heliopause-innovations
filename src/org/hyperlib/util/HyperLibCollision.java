@@ -42,7 +42,13 @@ public class HyperLibCollision {
         return getShipSampler(ship).getInternalPoint();
     }
 
+    public static Vector2f getInternalPointDistantFrom(ShipAPI ship, Vector2f point, float radius) {
+        return getShipSampler(ship).getInternalPointDistantFrom(point, radius);
+    }
+
     public static Vector2f getEdgePoint(ShipAPI ship) {
         return getShipSampler(ship).getEdgePoint();
     }
+
+    public static float getMinDimension(ShipAPI ship) { return getShipSampler(ship).getMinDimension(); }
 }

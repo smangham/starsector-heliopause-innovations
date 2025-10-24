@@ -6,15 +6,15 @@ import com.fs.starfarer.api.graphics.SpriteAPI;
 import com.fs.starfarer.api.impl.combat.BaseShipSystemScript;
 import com.fs.starfarer.api.loading.ProjectileSpecAPI;
 import com.fs.starfarer.api.util.Misc;
-import org.apache.log4j.Logger;
 import org.lazywizard.lazylib.FastTrig;
 import org.lazywizard.lazylib.MathUtils;
 import org.lazywizard.lazylib.VectorUtils;
 import org.lazywizard.lazylib.combat.CombatUtils;
 import org.lwjgl.util.vector.Vector2f;
 import org.magiclib.util.MagicRender;
-import org.hyperlib.FXColours;
+import org.hyperlib.HyperLibColours;
 import toaster.hp.campaign.ids.ShipSystems;
+import toaster.hp.campaign.ids.Tags;
 import toaster.hp.campaign.ids.Weapons;
 
 import java.awt.*;
@@ -38,15 +38,15 @@ public class AttractorField extends BaseShipSystemScript {
     // --------------------------------
     // - Visuals for the whirly glow sprites
     public static final String GLOW_WHIRL_SPRITE_KEY = "glow_whirl";
-    public static final Color GLOW_WHIRL_INNER_COLOUR = FXColours.DEEP_HYPERSPACE_STORMY;
+    public static final Color GLOW_WHIRL_INNER_COLOUR = HyperLibColours.DEEP_HYPERSPACE_STORMY;
     public static final float GLOW_WHIRL_INNER_TURN_RATE = -20.0f;
     public static final float GLOW_WHIRL_INNER_RADIUS = 1200f;
-    public static final Color GLOW_WHIRL_OUTER_COLOUR = FXColours.DEEP_HYPERSPACE_QUIET;
+    public static final Color GLOW_WHIRL_OUTER_COLOUR = HyperLibColours.DEEP_HYPERSPACE_QUIET;
     public static final float GLOW_WHIRL_OUTER_TURN_RATE = -10.0f;
     public static final float GLOW_WHIRL_OUTER_RADIUS = 1600f;
 
     // - Visuals for the glow on projectiles
-    public static final Color GLOW_PROJECTILE_COLOUR = FXColours.DEEP_HYPERSPACE_STORMY;
+    public static final Color GLOW_PROJECTILE_COLOUR = HyperLibColours.DEEP_HYPERSPACE_STORMY;
     public static final float GLOW_PROJECTILE_SIZE_MULT = 1.0f;
 
     // - Visuals for the glowy particles
@@ -128,7 +128,7 @@ public class AttractorField extends BaseShipSystemScript {
         this.durationRemaining = glowWhirlFadeIn + glowWhirlFull + glowWhirlFadeOut;
         this.glowParticleSprite = Global.getSettings().getSprite(ShipSystems.ATTRACTOR_FIELD, GLOW_PARTICLE_SPRITE_KEY);
         for (WeaponAPI weapon: this.ship.getAllWeapons()) {
-            if (weapon.getSpec().hasTag(Weapons.STORMCALLER)) this.weapon = weapon;
+            if (weapon.getSpec().hasTag(Tags.CHARGED_SYSTEM)) this.weapon = weapon;
         }
     }
 

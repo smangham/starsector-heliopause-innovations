@@ -52,15 +52,9 @@
         "name": "Call Storm",
         "activation": "Induce hyperspace storm.",
     },
-    "tstHP_heliopause_submarket":{
-        "illegal_ACTION": "You cannot %s on this market.",
-        "illegal_COMMODITY": "%s must be traded in-person.",
-        "illegal_DEMAND_BLACKLIST": "%s must be traded in-person.",
-        "illegal_DEMAND_WHITELIST": "%s only buys WHATEVER'S WHITELISTED.",
-        "illegal_SPECIAL": "%s must be traded in-person.",
-        "illegal_HULL": "%s cannot be traded here.",
-        "illegal_TAG": "%s cannot be traded here.",
-        "illegal_GENERIC": "You cannot trade this with %s.",
+    "tstHP_storm_dampner":{
+        "cr_event": "Resisted hyperspace storm damage.",
+        "resisted_message": "{{ship}} loses {{cr}} CR resisting storm damage."
     },
     "tstHP_mPinnacle":{
         "name": "Atop a Stormy Pinnacle",
@@ -69,6 +63,7 @@
         "stage_RECOVER_desc": "Recover the wreck of the prototype.",
         "stage_RETURN_desc": "Return to {{market}} with the ship and speak to {{person}}.",
         "stage_RETURN_market": "You agreed to return the wrecked prototype to {{person}} here.",
+        "stage_COMPLETED_desc": "Received safety updates to the Pinnacle Mk 1.",
         "target_reason": "Derelict Pinnacle prototype",
     },
     "abilityCommon":{

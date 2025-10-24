@@ -1,6 +1,6 @@
 package org.hyperlib;
 
 
-public class HyperLibIDs {
+public class HyperLibIds {
     public static String SPRITE_KEY = "hyperlib";
 }

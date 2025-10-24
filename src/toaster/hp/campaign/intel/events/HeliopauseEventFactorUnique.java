@@ -20,8 +20,9 @@ public class HeliopauseEventFactorUnique extends BaseOneTimeFactor {
 
     /**
      * Constructor
-     * @param points        How many points of progress this factor adds.
-     * @param eventName     The unique event name.
+     *
+     * @param points    How many points of progress this factor adds.
+     * @param eventName The unique event name.
      */
     public HeliopauseEventFactorUnique(int points, String eventName) {
         super(points);
@@ -31,8 +32,8 @@ public class HeliopauseEventFactorUnique extends BaseOneTimeFactor {
     /**
      * Adds a short description shown in the intel event 'recent factors' list.
      *
-     * @param intel     The intel event.
-     * @return          The description, loaded from text 1 column of `strings.csv` for this ID.
+     * @param intel The intel event.
+     * @return The description, loaded from text 1 column of `strings.csv` for this ID.
      */
     @Override
     public String getDesc(BaseEventIntel intel) {
@@ -42,8 +43,8 @@ public class HeliopauseEventFactorUnique extends BaseOneTimeFactor {
     /**
      * Adds a more detailed tooltip description.
      *
-     * @param intel     The intel event to create the tooltip for.
-     * @return          The description, loaded from text 3 column of `strings.csv` for this ID.
+     * @param intel The intel event to create the tooltip for.
+     * @return The description, loaded from text 3 column of `strings.csv` for this ID.
      */
     @Override
     public TooltipCreator getMainRowTooltip(BaseEventIntel intel) {
@@ -51,7 +52,7 @@ public class HeliopauseEventFactorUnique extends BaseOneTimeFactor {
             @Override
             public void createTooltip(TooltipMakerAPI tooltip, boolean expanded, Object tooltipParam) {
                 tooltip.addPara(
-                    Global.getSettings().getDescription(ID, Description.Type.CUSTOM).getText3(), 0f,
+                        Global.getSettings().getDescription(ID, Description.Type.CUSTOM).getText3(), 0f,
                         Misc.getHighlightColor(), eventName
                 );
             }

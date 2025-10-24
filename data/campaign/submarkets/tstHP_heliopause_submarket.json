@@ -1,0 +1,29 @@
+{
+    "commodities": {
+        "blacklist": {
+            "ids": ["food"],
+            "message": "%s must be traded in-person"
+        }
+    },
+    "demand_classes": {
+        "blacklist": {
+            "ids": ["survey_data"],
+            "message": "%s must be traded in-person",
+            "display_names": ["Survey data"]
+        }
+    },
+    "special_items": {
+        "blacklist": {
+            "ids": ["topographic_data"],
+            "message": "%s must be traded in-person"
+        }
+    },
+    "ships": {
+        "dp_per_size": {
+            "utility": 15
+        },
+        "static": ["tstHP_pinnacle_Exploration"],
+        "cull_fraction": 0.5
+    },
+    "generic_message": "You cannot trade this with %s"
+}

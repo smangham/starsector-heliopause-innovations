@@ -134,8 +134,8 @@ public class GhostPossessedHullmod extends BaseHullMod {
             params.flashRateMult = 0.25f;
             params.flashCoreRadiusMult = 0f;
             params.flashRadius = 120f;
-            params.flashFringeColor = new Color(255,0,0,40);
-            params.flashCoreColor = new Color(255,255,255,127);
+            params.flashFringeColor = new Color(255, 0, 0, 40);
+            params.flashCoreColor = new Color(255, 255, 255, 127);
 
             // if this is set to true and the swarm is glowing, missile-fragments pop over the glow and it looks bad
             //params.renderFlashOnSameLayer = true;
@@ -152,8 +152,8 @@ public class GhostPossessedHullmod extends BaseHullMod {
             params.flashRateMult = 0.25f;
             params.flashCoreRadiusMult = 0f;
             params.flashRadius = 120f;
-            params.flashFringeColor = new Color(255,0,0,40);
-            params.flashCoreColor = new Color(255,255,255,127);
+            params.flashFringeColor = new Color(255, 0, 0, 40);
+            params.flashCoreColor = new Color(255, 255, 255, 127);
 
             // if this is set to true and the swarm is glowing, missile-fragments pop over the glow and it looks bad
             //params.renderFlashOnSameLayer = true;
@@ -198,7 +198,7 @@ public class GhostPossessedHullmod extends BaseHullMod {
             @Override
             public int getNumMembersToMaintain() {
                 if (ship.isFighter()) {
-                    return (int)Math.round(((0.2f + 0.8f * ship.getHullLevel()) * super.getNumMembersToMaintain()));
+                    return (int) Math.round(((0.2f + 0.8f * ship.getHullLevel()) * super.getNumMembersToMaintain()));
                 }
                 return super.getNumMembersToMaintain();
             }
@@ -249,7 +249,7 @@ public class GhostPossessedHullmod extends BaseHullMod {
                         if (extraGlow < 0) extraGlow = 0;
                         if (extraGlow > 1f) extraGlow = 1f;
 
-                        int glowAlpha = (int)(glowAlphaBase + glowAlphaBase * (ammoFraction + extraGlow * 0.5f));
+                        int glowAlpha = (int) (glowAlphaBase + glowAlphaBase * (ammoFraction + extraGlow * 0.5f));
                         if (glowAlpha > 255) glowAlpha = 255;
                         //params.flashFringeColor = Misc.setAlpha(glowColorShifter.getCurr(), glowAlpha);
                         params.flashFringeColor = Misc.setBrightness(glowColorShifter.getCurr(), 255);
@@ -279,38 +279,52 @@ public class GhostPossessedHullmod extends BaseHullMod {
 
     public static int getBaseSwarmSize(HullSize size) {
         switch (size) {
-            case CAPITAL_SHIP: return 100;
-            case CRUISER: return 60;
-            case DESTROYER: return 40;
-            case FRIGATE: return 20;
-            case FIGHTER: return 50;
-            case DEFAULT: return 20;
-            default: return 20;
+            case CAPITAL_SHIP:
+                return 100;
+            case CRUISER:
+                return 60;
+            case DESTROYER:
+                return 40;
+            case FRIGATE:
+                return 20;
+            case FIGHTER:
+                return 50;
+            case DEFAULT:
+                return 20;
+            default:
+                return 20;
         }
     }
 
     public static float getBaseSwarmRespawnRateMult(HullSize size) {
         switch (size) {
-            case CAPITAL_SHIP: return 5f;
-            case CRUISER: return 3f;
-            case DESTROYER: return 2f;
-            case FRIGATE: return 1f;
-            case FIGHTER: return 0f;
-            case DEFAULT: return 0f;
-            default: return 0f;
+            case CAPITAL_SHIP:
+                return 5f;
+            case CRUISER:
+                return 3f;
+            case DESTROYER:
+                return 2f;
+            case FRIGATE:
+                return 1f;
+            case FIGHTER:
+                return 0f;
+            case DEFAULT:
+                return 0f;
+            default:
+                return 0f;
         }
     }
 
     public String getDescriptionParam(int index, HullSize hullSize) {
-        if (index == 0) return "" + (int)getBaseSwarmSize(HullSize.FRIGATE);
-        if (index == 1) return "" + (int)getBaseSwarmSize(HullSize.DESTROYER);
-        if (index == 2) return "" + (int)getBaseSwarmSize(HullSize.CRUISER);
-        if (index == 3) return "" + (int)getBaseSwarmSize(HullSize.CAPITAL_SHIP);
+        if (index == 0) return "" + (int) getBaseSwarmSize(HullSize.FRIGATE);
+        if (index == 1) return "" + (int) getBaseSwarmSize(HullSize.DESTROYER);
+        if (index == 2) return "" + (int) getBaseSwarmSize(HullSize.CRUISER);
+        if (index == 3) return "" + (int) getBaseSwarmSize(HullSize.CAPITAL_SHIP);
 
-        if (index == 4) return "" + (int)getBaseSwarmRespawnRateMult(HullSize.FRIGATE);
-        if (index == 5) return "" + (int)getBaseSwarmRespawnRateMult(HullSize.DESTROYER);
-        if (index == 6) return "" + (int)getBaseSwarmRespawnRateMult(HullSize.CRUISER);
-        if (index == 7) return "" + (int)getBaseSwarmRespawnRateMult(HullSize.CAPITAL_SHIP);
+        if (index == 4) return "" + (int) getBaseSwarmRespawnRateMult(HullSize.FRIGATE);
+        if (index == 5) return "" + (int) getBaseSwarmRespawnRateMult(HullSize.DESTROYER);
+        if (index == 6) return "" + (int) getBaseSwarmRespawnRateMult(HullSize.CRUISER);
+        if (index == 7) return "" + (int) getBaseSwarmRespawnRateMult(HullSize.CAPITAL_SHIP);
 
         return null;
     }

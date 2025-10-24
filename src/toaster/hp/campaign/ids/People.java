@@ -2,5 +2,5 @@ package toaster.hp.campaign.ids;
 
 
 public class People {
-    public static String HELIOPAUSE_CEO = "tstHP_heliopause_ceo";
+    public static String HELIOPAUSE_CEO = "tstHP_heliopause_ceo";  /// The CEO of Heliopause Innovations
 }

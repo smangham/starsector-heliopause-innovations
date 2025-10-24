@@ -1,0 +1,133 @@
+{
+    "bounds": [
+        97,
+        19,
+        97,
+        -17,
+        77,
+        -35,
+        49,
+        -35,
+        49,
+        -67,
+        24,
+        -67,
+        -11,
+        -94,
+        -46,
+        -94,
+        -77,
+        -91,
+        -86,
+        -49,
+        -49,
+        -49,
+        -28,
+        -38,
+        -64,
+        -26,
+        -55,
+        -1,
+        -62,
+        26,
+        -27,
+        39,
+        -84,
+        50,
+        -78,
+        88,
+        -46,
+        95,
+        -10,
+        95,
+        25,
+        69,
+        48,
+        69,
+        48,
+        35,
+        77,
+        35
+    ],
+    "builtInMods": [
+        "tstHP_possessed_hullmod"
+    ],
+    "center": [
+        97,
+        89
+    ],
+    "collisionRadius": 135,
+    "coversColor": "",
+    "engineSlots": [],
+    "height": 190,
+    "hullId": "tstHP_possessed_venture",
+    "hullName": "Venture (G)",
+    "hullSize": "CRUISER",
+    "shieldCenter": [
+        1,
+        0
+    ],
+    "shieldRadius": 135,
+    "spriteName": "graphics/ships/venture/venture.png",
+    "style": "LOW_TECH",
+    "viewOffset": 0,
+    "weaponSlots": [
+        {
+            "angle": 0, "arc": 360,
+            "id": "WS 001",
+            "locations": [-4, 0],
+            "mount": "HIDDEN",
+            "size": "MEDIUM",
+            "type": "UNIVERSAL"
+        },
+        {
+            "angle": 0, "arc": 360,
+            "id": "WS 002",
+            "locations": [4, 0],
+            "mount": "HIDDEN",
+            "size": "MEDIUM",
+            "type": "UNIVERSAL"
+        },
+        {
+            "angle": 0, "arc": 360,
+            "id": "WS 003",
+            "locations": [0, -4],
+            "mount": "HIDDEN",
+            "size": "MEDIUM",
+            "type": "UNIVERSAL"
+        },
+        {
+            "angle": 0, "arc": 360,
+            "id": "WS 004",
+            "locations": [0, 4],
+            "mount": "HIDDEN",
+            "size": "SMALL",
+            "type": "UNIVERSAL"
+        },
+        {
+            "angle": 0, "arc": 360,
+            "id": "WS 005",
+            "locations": [4, -4],
+            "mount": "HIDDEN",
+            "size": "MEDIUM",
+            "type": "UNIVERSAL"
+        },
+        {
+            "angle": 0, "arc": 360,
+            "id": "WS 006",
+            "locations": [4, 4],
+            "mount": "HARDPOINT",
+            "size": "MEDIUM",
+            "type": "UNIVERSAL"
+        },
+        {
+            "angle": 0, "arc": 360,
+            "id": "WS 007",
+            "locations": [-4, -4],
+            "mount": "HARDPOINT",
+            "size": "SMALL",
+            "type": "UNIVERSAL"
+        },
+    ],
+    "width": 194
+}

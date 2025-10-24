@@ -7,4 +7,6 @@ public class Variants {
     public static final String POSSESSED_STARLINER = "tstHP_possessed_starliner_Default";
     public static final String POSSESSED_SHEPHERD = "tstHP_possessed_shepherd_Default";
     public static final String POSSESSED_TARSUS = "tstHP_possessed_tarsus_Default";
+    public static final String POSSESSED_MULE = "tstHP_possessed_mule_Default";
+    public static final String POSSESSED_VENTURE = "tstHP_possessed_venture_Default";
 }

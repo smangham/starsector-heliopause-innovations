@@ -1,0 +1,38 @@
+{
+    "displayName": "Ghost",
+    "fluxCapacitors": 0,
+    "fluxVents": 11,
+    "goalVariant": true,
+    "hullId": "tstHP_possessed_venture",
+    "hullMods": [],
+    "permaMods": [],
+    "sMods": [],
+    "variantId": "tstHP_possessed_venture_Default",
+    "weaponGroups": [
+        {
+            "autofire": false,
+            "mode": "ALTERNATING",
+            "weapons": {
+                "WS 005": "tstHP_ghost_stormcaller",
+                "WS 006": "tstHP_ghost_stormcaller"
+            }
+        },
+        {
+            "autofire": false,
+            "mode": "ALTERNATING",
+            "weapons": {
+                "WS 004": "tstHP_ghost_static",
+                "WS 007": "tstHP_ghost_static"
+            }
+        },
+        {
+            "autofire": true,
+            "mode": "ALTERNATING",
+            "weapons": {
+                "WS 001": "tstHP_ghost_thunderbolt",
+                "WS 003": "tstHP_ghost_thunderbolt"
+            }
+        },
+    ],
+    "wings": []
+}

@@ -28,8 +28,8 @@ import com.fs.starfarer.api.util.Misc;
 /**
  * Copy of the shock repeater, but with a larger arc.
  *
-* @author Alex originally
-* @author Toaster tweaked
+ * @author Alex originally
+ * @author Toaster tweaked
  */
 @SuppressWarnings("unused")
 public class GhostStaticOnFireEffect implements OnFireEffectPlugin {
@@ -43,8 +43,8 @@ public class GhostStaticOnFireEffect implements OnFireEffectPlugin {
      * Modification to cope with 360 degree angle with no slots.
      *
      * @param projectile The fake projectile fired.
-     * @param weapon The weapon firing.
-     * @param engine The combat engine.
+     * @param weapon     The weapon firing.
+     * @param engine     The combat engine.
      */
     public void onFire(DamagingProjectileAPI projectile, WeaponAPI weapon, CombatEngineAPI engine) {
         CombatEntityAPI target = findTarget(projectile, weapon, engine);
@@ -99,13 +99,13 @@ public class GhostStaticOnFireEffect implements OnFireEffectPlugin {
      * otherwise picks a random location around the ship if there's no target.
      *
      * @param projectile The fake projectile fired.
-     * @param weapon The weapon firing.
-     * @param engine The combat engine.
+     * @param weapon     The weapon firing.
+     * @param engine     The combat engine.
      * @return A location either at a random position, or towards the ship's target.
      */
     public Vector2f pickNoTargetDest(DamagingProjectileAPI projectile, WeaponAPI weapon, CombatEngineAPI engine) {
-		float spread = weapon.getRange() / 5f;
-		float range = weapon.getRange() - spread;
+        float spread = weapon.getRange() / 5f;
+        float range = weapon.getRange() - spread;
         ShipAPI ship = projectile.getSource();
 
         // Error handling
@@ -126,7 +126,7 @@ public class GhostStaticOnFireEffect implements OnFireEffectPlugin {
                     ship.getLocation(), ship.getCollisionRadius(), range, new Random()
             );
         }
-	}
+    }
 
     /**
      * Finds a target for the weapon.
@@ -134,58 +134,57 @@ public class GhostStaticOnFireEffect implements OnFireEffectPlugin {
      * Modification to remove with 360 degree angle.
      *
      * @param projectile The fake projectile.
-     * @param weapon The firing weapon.
-     * @param engine The combat engine.
+     * @param weapon     The firing weapon.
+     * @param engine     The combat engine.
      * @return The entity that the weapon most wants to shoot.
      */
-	public CombatEntityAPI findTarget(DamagingProjectileAPI projectile, WeaponAPI weapon, CombatEngineAPI engine) {
-		float range = weapon.getRange();
-		Vector2f from = projectile.getLocation();
-		
-		Iterator<Object> iter = Global.getCombatEngine().getAllObjectGrid().getCheckIterator(
+    public CombatEntityAPI findTarget(DamagingProjectileAPI projectile, WeaponAPI weapon, CombatEngineAPI engine) {
+        float range = weapon.getRange();
+        Vector2f from = projectile.getLocation();
+
+        Iterator<Object> iter = Global.getCombatEngine().getAllObjectGrid().getCheckIterator(
                 from, range * 2f, range * 2f
         );
-		int owner = weapon.getShip().getOwner();
-		CombatEntityAPI best = null;
-		float minScore = Float.MAX_VALUE;
-		
-		ShipAPI ship = weapon.getShip();
-		boolean ignoreFlares = ship != null && ship.getMutableStats().getDynamic().getValue(Stats.PD_IGNORES_FLARES, 0) >= 1;
-		ignoreFlares |= weapon.hasAIHint(AIHints.IGNORES_FLARES);
-		
-		while (iter.hasNext()) {
-			Object o = iter.next();
-			if (!(o instanceof MissileAPI) &&
-					//!(o instanceof CombatAsteroidAPI) &&
-					!(o instanceof ShipAPI)) continue;
-			CombatEntityAPI other = (CombatEntityAPI) o;
-			if (other.getOwner() == owner) continue;
-			
-			if (other instanceof ShipAPI) {
-				ShipAPI otherShip = (ShipAPI) other;
-				if (otherShip.isHulk()) continue;
-				if (otherShip.isPhased()) continue;
-				if (!otherShip.isTargetable()) continue;
-			}
-			
-			if (other.getCollisionClass() == CollisionClass.NONE) continue;
-			
-			if (ignoreFlares && other instanceof MissileAPI) {
-				MissileAPI missile = (MissileAPI) other;
-				if (missile.isFlare()) continue;
-			}
+        int owner = weapon.getShip().getOwner();
+        CombatEntityAPI best = null;
+        float minScore = Float.MAX_VALUE;
 
-			float radius = Misc.getTargetingRadius(from, other, false);
-			float dist = Misc.getDistance(from, other.getLocation()) - radius;
-			if (dist > range) continue;
+        ShipAPI ship = weapon.getShip();
+        boolean ignoreFlares = ship != null && ship.getMutableStats().getDynamic().getValue(Stats.PD_IGNORES_FLARES, 0) >= 1;
+        ignoreFlares |= weapon.hasAIHint(AIHints.IGNORES_FLARES);
 
-			float score = dist;
-			
-			if (score < minScore) {
-				minScore = score;
-				best = other;
-			}
-		}
-		return best;
-	}
+        while (iter.hasNext()) {
+            Object o = iter.next();
+            if (!(o instanceof MissileAPI) &&
+                    //!(o instanceof CombatAsteroidAPI) &&
+                    !(o instanceof ShipAPI)) continue;
+            CombatEntityAPI other = (CombatEntityAPI) o;
+            if (other.getOwner() == owner) continue;
+
+            if (other instanceof ShipAPI) {
+                ShipAPI otherShip = (ShipAPI) other;
+                if (otherShip.isHulk()) continue;
+                if (otherShip.isPhased()) continue;
+                if (!otherShip.isTargetable()) continue;
+            }
+
+            if (other.getCollisionClass() == CollisionClass.NONE) continue;
+
+            if (ignoreFlares && other instanceof MissileAPI missile) {
+                if (missile.isFlare()) continue;
+            }
+
+            float radius = Misc.getTargetingRadius(from, other, false);
+            float dist = Misc.getDistance(from, other.getLocation()) - radius;
+            if (dist > range) continue;
+
+            float score = dist;
+
+            if (score < minScore) {
+                minScore = score;
+                best = other;
+            }
+        }
+        return best;
+    }
 }

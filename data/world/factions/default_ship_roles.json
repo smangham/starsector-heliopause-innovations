@@ -7,8 +7,10 @@
     },
     "combatMedium":{
         "tstHP_possessed_tarsus_Default":1,
+        "tstHP_possessed_mule_Default":1
     },
     "combatLarge":{
         "tstHP_possessed_starliner_Default":1,
+        "tstHP_possessed_venture_Default":1
     },
 },

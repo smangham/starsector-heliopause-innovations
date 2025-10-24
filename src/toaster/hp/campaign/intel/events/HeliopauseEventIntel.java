@@ -43,7 +43,7 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
     public static Color BAR_COLOR = Global.getSettings().getColor("progressBarFleetPointsColor");
 
     public static final int PROGRESS_MAX = 200;
-    public static final int PROGRESS_1 =  50;
+    public static final int PROGRESS_1 = 75;
     public static final int PROGRESS_2 = 150;
     public static final int PROGRESS_3 = 400;
     public static final int PROGRESS_4 = 550;
@@ -67,8 +67,10 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
      */
     public enum Stage {
         START,
-        MISSIONS,       /// Unlocks missions for Heliopause
-        STORMCALLER,    /// Ability to use the Pinnacle to generate storms.
+        MISSIONS,
+        /// Unlocks missions for Heliopause
+        STORMCALLER,
+        /// Ability to use the Pinnacle to generate storms.
         MAX             /// The maximum value.
     }
 
@@ -77,14 +79,14 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
      * (Java's declaration of constant dicts is weird, don't like it)
      */
     protected static Map<Stage, String> STAGE_ABILITIES_MAP = Map.of(
-        Stage.STORMCALLER, Abilities.STORMCALLER
+            Stage.STORMCALLER, Abilities.STORMCALLER
     );
 
     /**
      * Adds a factor to the progress bar. If the event doesn't exist, creates it first.
      *
-     * @param factor    The factor contributing.
-     * @param dialog    The dialog that created it.
+     * @param factor The factor contributing.
+     * @param dialog The dialog that created it.
      */
     public static void addFactorCreateIfNecessary(EventFactor factor, InteractionDialogAPI dialog) {
         if (get() == null) {
@@ -106,18 +108,18 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
      * @return The singleton intel event.
      */
     public static HeliopauseEventIntel get() {
-        return (HeliopauseEventIntel) Global.getSector().getMemoryWithoutUpdate().get("$"+ID);
+        return (HeliopauseEventIntel) Global.getSector().getMemoryWithoutUpdate().get("$" + ID);
     }
 
     /**
      * Constructor for the class, that can possibly send an intel notification.
      *
-     * @param text                      The text that should be used for a nodification.
-     * @param withIntelNotification     If true, sends a notification with the text.
+     * @param text                  The text that should be used for a nodification.
+     * @param withIntelNotification If true, sends a notification with the text.
      */
     public HeliopauseEventIntel(TextPanelAPI text, boolean withIntelNotification) {
         super();
-        Global.getSector().getMemoryWithoutUpdate().set("$"+ID, this);
+        Global.getSector().getMemoryWithoutUpdate().set("$" + ID, this);
         setup();
         // now that the event is fully constructed, add it and send notification
         Global.getSector().getIntelManager().addIntel(this, !withIntelNotification, text);
@@ -140,7 +142,7 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
     /**
      * Loads the object? Defining it if it's not set up.
      *
-     * @return      The generated IntelEvent.
+     * @return The generated IntelEvent.
      */
     protected Object readResolve() {
         if (getDataFor(Stage.START) == null) {
@@ -163,17 +165,17 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
     @Override
     protected void notifyEnded() {
         super.notifyEnded();
-        Global.getSector().getMemoryWithoutUpdate().unset("$"+ID);
+        Global.getSector().getMemoryWithoutUpdate().unset("$" + ID);
     }
 
     /**
      * Displays a short, bullet-point description.
      *
-     * @param info          The UI component to add the descripition to.
-     * @param mode          The component mode.
+     * @param info     The UI component to add the descripition to.
+     * @param mode     The component mode.
      * @param isUpdate
      * @param tc
-     * @param initPad       The initial padding for the bullets.
+     * @param initPad  The initial padding for the bullets.
      */
     protected void addBulletPoints(
             TooltipMakerAPI info, ListInfoMode mode, boolean isUpdate, Color tc, float initPad
@@ -209,26 +211,29 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
     /**
      * Turns stage data into a key used for string/sprite lookup.
      *
-     * @param esd       Event stage data.
-     * @return          The 'effective' name of it, "stage_<ENUM NAME>", used in `settings.json`.
+     * @param esd Event stage data.
+     * @return The 'effective' name of it, "stage_<ENUM NAME>", used in `settings.json`.
      */
-    protected String getStageKeyForESD(EventStageData esd) { return "stage_" + ((Stage)esd.id).name(); }
+    protected String getStageKeyForESD(EventStageData esd) {
+        return "stage_" + ((Stage) esd.id).name();
+    }
 
     /**
      * Turns stage data into an ID that can be used for string lookup.
      *
-     * @param esd       Event stage data.
-     * @return          The 'effective' name of it, "ID_stage_<ENUM_NAME>", used in `strings.csv`.
+     * @param esd Event stage data.
+     * @return The 'effective' name of it, "ID_stage_<ENUM_NAME>", used in `strings.csv`.
      */
-    protected String getIdForESD(EventStageData esd) { return ID + "_" + getStageKeyForESD(esd); }
+    protected String getIdForESD(EventStageData esd) {
+        return ID + "_" + getStageKeyForESD(esd);
+    }
 
     /**
      * Gets the size of the icons used for the intel tracker.
      *
+     * @param stageId The Stage enum for the event.
+     * @return The size, in pixels, of the icon for that stage.
      * @see this.getImageSizeForStageDesc
-     *
-     * @param stageId   The Stage enum for the event.
-     * @return          The size, in pixels, of the icon for that stage.
      */
     public float getImageSizeForStageDesc(Object stageId) {
         if (stageId == Stage.START) return 64f;
@@ -238,10 +243,9 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
     /**
      * Gets the offset of the icons used for the intel tracker.
      *
+     * @param stageId The Stage enum for the event.
+     * @return The offset, in pixels, of the icon for that stage.
      * @see this.getImageSizeForStageDesc
-     *
-     * @param stageId   The Stage enum for the event.
-     * @return          The offset, in pixels, of the icon for that stage.
      */
     public float getImageIndentForStageDesc(Object stageId) {
         if (stageId == Stage.START) return 0f;
@@ -251,9 +255,9 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
     /**
      * Adds descriptive text to the tooltip mouseover of a stage.
      *
-     * @param info      The tooltip box.
-     * @param width     The width of the tooltip box.
-     * @param stageId   The stage being mouse-overed.
+     * @param info    The tooltip box.
+     * @param width   The width of the tooltip box.
+     * @param stageId The stage being mouse-overed.
      */
     @Override
     public void addStageDescriptionText(TooltipMakerAPI info, float width, Object stageId) {
@@ -272,10 +276,10 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
     /**
      * Generates a description for this stage of the event.
      *
-     * @param info          The info panel to add to.
-     * @param stageId       The stage the description is for.
-     * @param initPad       ???
-     * @param forTooltip    Is this a tooltip or full-screen description.
+     * @param info       The info panel to add to.
+     * @param stageId    The stage the description is for.
+     * @param initPad    ???
+     * @param forTooltip Is this a tooltip or full-screen description.
      */
     public void addStageDesc(
             TooltipMakerAPI info, Object stageId, float initPad, boolean forTooltip
@@ -290,8 +294,8 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
     /**
      * Creates the tooltip for a stage.
      *
-     * @param stageId       The ID of the stage reached.
-     * @return              The created tooltip.
+     * @param stageId The ID of the stage reached.
+     * @return The created tooltip.
      */
     public TooltipCreator getStageTooltipImpl(Object stageId) {
         final EventStageData esd = getDataFor(stageId);
@@ -301,7 +305,7 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
                 @Override
                 public void createTooltip(TooltipMakerAPI tooltip, boolean expanded, Object tooltipParam) {
                     float opad = 10f;
-                    tooltip.addTitle(Global.getSettings().getString(ID, getStageKeyForESD(esd)+"_name"));
+                    tooltip.addTitle(Global.getSettings().getString(ID, getStageKeyForESD(esd) + "_name"));
                     addStageDesc(tooltip, esd.id, opad, true);
                     esd.addProgressReq(tooltip, opad);
                 }
@@ -313,18 +317,20 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
     /**
      * Gets the icon for this event.
      *
-     * @return              The icon for the whole event.
+     * @return The icon for the whole event.
      */
     @Override
-    public String getIcon() { return Global.getSettings().getSpriteName(ID, "icon"); }
+    public String getIcon() {
+        return Global.getSettings().getSpriteName(ID, "icon");
+    }
 
     /**
      * Gets the icon for a stage of this event.
      * <p>
      * If the stage adds an ability, uses that ability's icon.
      *
-     * @param stageId       The ID of the stage.
-     * @return              The name of the sprite.
+     * @param stageId The ID of the stage.
+     * @return The name of the sprite.
      */
     protected String getStageIconImpl(Object stageId) {
         EventStageData esd = getDataFor(stageId);
@@ -345,15 +351,23 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
     }
 
     @Override
-    public Color getBarProgressIndicatorColor() { return super.getBarProgressIndicatorColor(); }
+    public Color getBarProgressIndicatorColor() {
+        return super.getBarProgressIndicatorColor();
+    }
 
     @Override
-    protected int getStageImportance(Object stageId) { return super.getStageImportance(stageId); }
+    protected int getStageImportance(Object stageId) {
+        return super.getStageImportance(stageId);
+    }
 
     @Override
-    protected String getName() { return Global.getSettings().getString(ID, "name"); }
+    protected String getName() {
+        return Global.getSettings().getString(ID, "name");
+    }
 
-    public void reportFleetDespawnedToListener(CampaignFleetAPI fleet, FleetDespawnReason reason, Object param) { }
+    public void reportFleetDespawnedToListener(CampaignFleetAPI fleet, FleetDespawnReason reason, Object param) {
+    }
+
     public void reportBattleOccurred(CampaignFleetAPI fleet, CampaignFleetAPI primaryWinner, BattleAPI battle) {
 //		if (isEnded() || isEnding()) return;
 //
@@ -367,6 +381,7 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
     public int getResetProgressMin() {
         return getDataFor(Stage.STORMCALLER).progress;
     }
+
     public int getResetProgressMax() {
         return getResetProgressMin() + 10;
     }
@@ -379,8 +394,8 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
     /**
      * Sets the tags this event has on the Intel window.
      *
-     * @param map           The map view.
-     * @return              The tags this event sits under.
+     * @param map The map view.
+     * @return The tags this event sits under.
      */
     @Override
     public Set<String> getIntelTags(SectorMapAPI map) {
@@ -392,7 +407,7 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
     /**
      * Everyframe script that applies the effects of this event.
      *
-     * @param amount        The amount of time passed (in days?).
+     * @param amount The amount of time passed (in days?).
      */
     @Override
     protected void advanceImpl(float amount) {
@@ -405,7 +420,7 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
     /**
      * Internal function to add an ability and put it on the bar if possible.
      *
-     * @param id            The ID of the ability.
+     * @param id The ID of the ability.
      */
     public void addAbility(String id) {
         if (Global.getSector().getPlayerFleet().hasAbility(id)) return;
@@ -419,7 +434,8 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
 
         AbilitySlotsAPI slots = Global.getSector().getUIData().getAbilitySlotsAPI();
         int curr = slots.getCurrBarIndex();
-        OUTER: for (int i = 0; i < 5; i++) {
+        OUTER:
+        for (int i = 0; i < 5; i++) {
             slots.setCurrBarIndex(i);
             for (AbilitySlotAPI slot : slots.getCurrSlotsCopy()) {
                 if (Abilities.STORMCALLER.equals(id) && Abilities.STORMCALLER.equals(slot.getAbilityId())) {
@@ -436,7 +452,7 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
      * <p>
      * Executes the effect of hitting that stage.
      *
-     * @param esd           The event stage reached.
+     * @param esd The event stage reached.
      */
     @Override
     protected void notifyStageReached(EventStageData esd) {
@@ -459,7 +475,8 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
         //applyFleetEffects();
     }
 
-    public void reportAboutToRefreshCharacterStatEffects() { }
+    public void reportAboutToRefreshCharacterStatEffects() {
+    }
 
     public void reportRefreshedCharacterStatEffects() {
         // called when opening colony screen, so the Spaceport tooltip gets the right values
@@ -568,17 +585,19 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
     /**
      * Does this event have monthly progress? (No)
      *
-     * @return              Always false.
+     * @return Always false.
      */
-    public boolean withMonthlyFactors() { return false; }
+    public boolean withMonthlyFactors() {
+        return false;
+    }
 
     /**
      * Selects which sound, if any, to play when a given stage is reached.
      * <p>
      * Used to play the "Ability learned!" sound when hitting ranks that give an ability.
      *
-     * @param stageId       The ID of the stage reached.
-     * @return              The key of the sound to play.
+     * @param stageId The ID of the stage reached.
+     * @return The key of the sound to play.
      */
     protected String getSoundForStageReachedUpdate(Object stageId) {
         if (STAGE_ABILITIES_MAP.containsKey((Stage) stageId)) return "ui_learned_ability";
@@ -590,9 +609,11 @@ public class HeliopauseEventIntel extends BaseEventIntel implements FleetEventLi
      * <p>
      * No sound is used.
      *
-     * @param factor        The factor influencing this event.
-     * @return              The key of the sound to play; always null.
+     * @param factor The factor influencing this event.
+     * @return The key of the sound to play; always null.
      */
     @Override
-    protected String getSoundForOneTimeFactorUpdate(EventFactor factor) { return null; }
+    protected String getSoundForOneTimeFactorUpdate(EventFactor factor) {
+        return null;
+    }
 }

@@ -14,11 +14,7 @@ import java.util.List;
  * Plays a looping sound of a hyperspace storm
  */
 public class SoundLoopBase extends BaseEveryFrameCombatPlugin {
-//    private static Logger log = Logger.getLogger(org.hyperlib.combat.sound.SoundLoopBase.class);  /// The logger.
-
-
-    protected static float SOUND_FADE_TIME = 0.2f;
-    /// This is the 'natural' fade
+    protected static float SOUND_FADE_TIME = 0.2f;  /// This is the 'natural' fade
 
     // Set during initialisation
     private final String soundId;

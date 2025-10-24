@@ -1,7 +1,9 @@
 package org.hyperlib.util;
 
+import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.combat.BoundsAPI;
 import com.fs.starfarer.api.combat.ShipAPI;
+import com.fs.starfarer.api.util.Misc;
 import org.lazywizard.lazylib.CollisionUtils;
 import org.lazywizard.lazylib.FastTrig;
 import org.lazywizard.lazylib.MathUtils;
@@ -10,16 +12,18 @@ import org.lwjgl.util.vector.Vector2f;
 import java.util.List;
 
 /**
- *
+ * Slightly more efficiently samples points within or on a ship's bounds.
  */
-class ShipPointSampler {
+public class ShipPointSampler {
     protected final float x_base, y_base, x_mult, y_mult;
-    protected final ShipAPI ship;
+    protected final ShipAPI ship;  /// The ship this is for.
 
     /**
-     * @param shipAPI The entity to use the bounds of.
+     * Declares the sampler for a specific ship.
+     *
+     * @param shipAPI   The entity to use the bounds of.
      */
-    protected ShipPointSampler(ShipAPI shipAPI) {
+    public ShipPointSampler(ShipAPI shipAPI) {
         float x_min = 9999f, x_max = -9999f, y_min = 9999f, y_max = -9999f;
         BoundsAPI bounds = shipAPI.getExactBounds();
         for (BoundsAPI.SegmentAPI segment : bounds.getOrigSegments()) {
@@ -40,19 +44,25 @@ class ShipPointSampler {
     }
 
     /**
-     * @return A point within the ship's bounds, or its centre if sampling fails.
+     * Gets a point within the collision bounds.
+     *
+     * @return  A point within the ship's bounds, or its centre if sampling fails.
      */
     protected Vector2f getInternalPoint() {
         Vector2f point = new Vector2f();
         float sin = (float) FastTrig.sin(Math.toRadians(ship.getFacing()));
         float cos = (float) FastTrig.cos(Math.toRadians(ship.getFacing()));
+        float x_random, y_random;
 
         for (int i = 0; i < HyperLibVector.RANDOM_POINT_MAX_TRIES; i++) {
+            x_random = x_base + x_mult * (float) Math.random();
+            y_random = y_base + y_mult * (float) Math.random();
+
             Vector2f.add(
                     ship.getLocation(),
                     new Vector2f(
-                            cos * (x_base + x_mult * (float) Math.random()),
-                            sin * (y_base + y_mult * (float) Math.random())
+                            cos * x_random + sin * y_random,
+                            sin * x_random + cos * y_random
                     ),
                     point
             );
@@ -61,11 +71,57 @@ class ShipPointSampler {
         return new Vector2f(ship.getLocation());
     }
 
+    /**
+     * Gets a point in the bounds, but not within a given distance of another point.
+     *
+     * @param point     The point to not be near.
+     * @param radius    The radius away from the point the sample must be.
+     * @return  The location if successful, or the ship's centre if not.
+     */
+    protected Vector2f getInternalPointDistantFrom(Vector2f point, float radius) {
+        Vector2f pointOut = new Vector2f();
+        float distance, x_random, y_random;
+        float sin = (float) FastTrig.sin(Math.toRadians(ship.getFacing()));
+        float cos = (float) FastTrig.cos(Math.toRadians(ship.getFacing()));
+
+        for (int i = 0; i < HyperLibVector.RANDOM_POINT_MAX_TRIES; i++) {
+            x_random = x_base + x_mult * (float) Math.random();
+            y_random = y_base + y_mult * (float) Math.random();
+
+            Vector2f.add(
+                    ship.getLocation(),
+                    new Vector2f(
+                            cos * x_random + sin * y_random,
+                            sin * x_random + cos * y_random
+                    ),
+                    pointOut
+            );
+            distance = Misc.getDistance(point, pointOut);
+            if (distance > radius) {
+                if (CollisionUtils.isPointWithinBounds(pointOut, ship)) return pointOut;
+            } else {
+                Global.getLogger(ShipPointSampler.class).info("Point "+i+" failed, distance "+distance+" vs ship scale "+getMinDimension());
+            }
+        }
+
+        return new Vector2f(ship.getLocation());
+    }
+
+    /**
+     * Gets one of the bounding box points.
+     *
+     * @return  One of the bounds points.
+     */
     protected Vector2f getBoundsPoint() {
         List<BoundsAPI.SegmentAPI> segments = ship.getExactBounds().getSegments();
         return segments.get(MathUtils.getRandomNumberInRange(0, segments.size() - 1)).getP1();
     }
 
+    /**
+     * Gets a point on the edge of the ship's bounding box.
+     *
+     * @return  A point somewhere along one of the bounding box segments.
+     */
     protected Vector2f getEdgePoint() {
         List<BoundsAPI.SegmentAPI> segments = ship.getExactBounds().getSegments();
         BoundsAPI.SegmentAPI segment = segments.get(MathUtils.getRandomNumberInRange(0, segments.size() - 1));
@@ -75,6 +131,16 @@ class ShipPointSampler {
                 (Vector2f) new Vector2f(segment.getP1()).scale(random),
                 (Vector2f) new Vector2f(segment.getP2()).scale(1f - random),
                 new Vector2f()
+        );
+    }
+
+    /**
+     * @return  The minimum of the X and Y dimensions.
+     */
+    protected float getMinDimension() {
+        return Math.min(
+                x_base + x_mult,
+                y_base + y_mult
         );
     }
 }

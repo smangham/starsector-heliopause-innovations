@@ -70,9 +70,7 @@ Their research and development department will share the results of any work tha
 tstHP_heliopause_event_factor_bulk,CUSTOM,Sold survey data,,"Standard sensor data from observations of planets and hyperspace.",,
 tstHP_heliopause_event_factor_unique,CUSTOM,Sold unique sensor data,,"Unique sensor data obtained from %s.",,,
 # ================================ MISSIONS ================================
-tstHP_mPinnacle_stage_FIND,CUSTOM,"Search for the lost prototype near the coordinates provided.
-
-The ship appears to be highlighted during hyperspace storms. ",hyperspace storms,,,
+tstHP_mPinnacle_stage_FIND,CUSTOM,"Search for the lost prototype near the coordinates provided.",,,,
 tstHP_mPinnacle_stage_FIGHT,CUSTOM,"Engage the lost prototype.",,,,
 tstHP_mPinnacle_stage_RECOVER,CUSTOM,"Recover the wreck of the prototype ship.",,,,
 tstHP_mPinnacle_stage_RETURN,CUSTOM,"Return to {{market}} and deliver the prototype ship to {{person}}.",{{person}},,,

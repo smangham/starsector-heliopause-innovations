@@ -6,8 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.fs.starfarer.api.combat.*;
-import org.hyperlib.FXColours;
-import org.lazywizard.lazylib.CollisionUtils;
+import org.hyperlib.HyperLibColours;
 import org.lwjgl.util.vector.Vector2f;
 
 import com.fs.starfarer.api.Global;
@@ -28,7 +27,7 @@ public class GhostMoteAIScript implements MissileAIPlugin {
     public static float AVOID_RANGE = 50;
     public static float COHESION_RANGE = 100;
 
-    public static final Color ARC_COLOUR = FXColours.DEEP_HYPERSPACE_STRIKE;
+    public static final Color ARC_COLOUR = HyperLibColours.DEEP_HYPERSPACE_STRIKE;
     public static final float ARC_WIDTH = 24f;
     public static final float ARC_DURATION = 0.25f;
 
@@ -105,6 +104,7 @@ public class GhostMoteAIScript implements MissileAIPlugin {
             hardAvoidList.add(asteroid);
         }
     }
+
     public void doFlocking(float elapsed) {
         if (missile.getSource() == null) return;
 
@@ -182,7 +182,7 @@ public class GhostMoteAIScript implements MissileAIPlugin {
             float dist = Misc.getDistance(missile.getLocation(), source.getLocation());
             if (dist > sourceRejoin) {
                 Vector2f dir = Misc.getUnitVectorAtDegreeAngle(Misc.getAngleInDegrees(missile.getLocation(), source.getLocation()));
-                float f = dist / (sourceRejoin  + SOURCE_REJOIN_SCALING_BASE) - 1f;
+                float f = dist / (sourceRejoin + SOURCE_REJOIN_SCALING_BASE) - 1f;
                 dir.scale(f * 0.5f);
                 Vector2f.add(total, dir, total);
             }
@@ -242,7 +242,7 @@ public class GhostMoteAIScript implements MissileAIPlugin {
      */
     public void advance(float amount) {
         if (missile.isFizzling()) return;
-        if (missile.getSource() ==  null) return;
+        if (missile.getSource() == null) return;
         elapsed += amount;
 
         updateListTracker.advance(amount);
@@ -327,12 +327,12 @@ public class GhostMoteAIScript implements MissileAIPlugin {
 
     @SuppressWarnings("unchecked")
     protected boolean isTargetValid() {
-        if (target == null || (target instanceof ShipAPI && ((ShipAPI)target).isPhased())) {
+        if (target == null || (target instanceof ShipAPI && ((ShipAPI) target).isPhased())) {
             return false;
         }
         CombatEngineAPI engine = Global.getCombatEngine();
 
-        if (target != null && target instanceof ShipAPI && ((ShipAPI)target).isHulk()) return false;
+        if (target != null && target instanceof ShipAPI && ((ShipAPI) target).isHulk()) return false;
 
         List list = null;
         if (target instanceof ShipAPI) {
@@ -439,6 +439,7 @@ public class GhostMoteAIScript implements MissileAIPlugin {
     public void setTarget(CombatEntityAPI target) {
         this.target = target;
     }
+
     public void render() {
 
     }

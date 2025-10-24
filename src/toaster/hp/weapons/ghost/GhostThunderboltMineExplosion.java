@@ -17,18 +17,18 @@ public class GhostThunderboltMineExplosion implements ProximityExplosionEffect {
     /**
      * Effect run when the explosion explodes, before damage is dealt.
      *
-     * @param explosion             The explosion that happened.
-     * @param originalProjectile    The projectile that exploded.
+     * @param explosion          The explosion that happened.
+     * @param originalProjectile The projectile that exploded.
      */
-	public void onExplosion(DamagingProjectileAPI explosion, DamagingProjectileAPI originalProjectile) {
-        for (ShipAPI ship: CombatUtils.getShipsWithinRange(explosion.getLocation(), explosion.getCollisionRadius())) {
+    public void onExplosion(DamagingProjectileAPI explosion, DamagingProjectileAPI originalProjectile) {
+        for (ShipAPI ship : CombatUtils.getShipsWithinRange(explosion.getLocation(), explosion.getCollisionRadius())) {
             CombatUtils.applyForce(
                     ship,
                     VectorUtils.getDirectionalVector(originalProjectile.getSource().getLocation(), ship.getLocation()),
                     STRIKE_IMPULSE
             );
         }
-	}
+    }
 }
 
 

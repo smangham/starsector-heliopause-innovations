@@ -8,7 +8,9 @@ import java.util.Random;
 
 import com.fs.starfarer.api.combat.*;
 import com.fs.starfarer.api.combat.listeners.ApplyDamageResultAPI;
+import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
 import com.fs.starfarer.api.impl.combat.dweller.DwellerShroud;
+import org.hyperlib.campaign.terrain.HyperLibHyperspaceTerrainPlugin;
 import org.hyperlib.combat.HyperspaceStormRenderingPlugin;
 import org.lazywizard.lazylib.MathUtils;
 import org.lwjgl.util.vector.Vector2f;
@@ -18,7 +20,7 @@ import com.fs.starfarer.api.combat.EmpArcEntityAPI.EmpArcParams;
 import com.fs.starfarer.api.combat.WeaponAPI.WeaponType;
 import com.fs.starfarer.api.impl.combat.dweller.DwellerShroud.DwellerShroudParams;
 import com.fs.starfarer.api.util.Misc;
-import org.hyperlib.FXColours;
+import org.hyperlib.HyperLibColours;
 import toaster.hp.campaign.ids.HullMods;
 import toaster.hp.campaign.ids.Weapons;
 import org.hyperlib.combat.sound.HyperspaceStormSoundLoop;
@@ -39,14 +41,15 @@ import org.hyperlib.combat.sound.HyperspaceStormSoundLoop;
 @SuppressWarnings("unused")
 public class StormcallerEffect implements OnHitEffectPlugin, OnFireEffectPlugin, EveryFrameWeaponEffectPlugin {
     public static final float RIFT_LIGHTNING_SPEED = 10000f;
-    public static final String RIFT_LIGHTNING_DAMAGE_REMOVER = Weapons.STORMCALLER+"_damage_remover";
-    public static final String RIFT_LIGHTNING_FIRED_TAG = Weapons.STORMCALLER+"_fired_tag";
-    public static final String RIFT_LIGHTNING_SOURCE_WEAPON = Weapons.STORMCALLER+"_source_weapon";
-    public static final Color RIFT_LIGHTNING_COLOR = FXColours.DEEP_HYPERSPACE_STORMY;
+    public static final String RIFT_LIGHTNING_DAMAGE_REMOVER = Weapons.STORMCALLER + "_damage_remover";
+    public static final String RIFT_LIGHTNING_FIRED_TAG = Weapons.STORMCALLER + "_fired_tag";
+    public static final String RIFT_LIGHTNING_SOURCE_WEAPON = Weapons.STORMCALLER + "_source_weapon";
+    public static final Color RIFT_LIGHTNING_COLOR = HyperLibColours.DEEP_HYPERSPACE_STORMY;
 
     public static class FiredLightningProjectile {
         public DamagingProjectileAPI projectile;
     }
+
     protected List<FiredLightningProjectile> fired = new ArrayList<>();
 
     /**
@@ -54,9 +57,9 @@ public class StormcallerEffect implements OnHitEffectPlugin, OnFireEffectPlugin,
      * <p>
      * Runs every frame on the *weapon*. Removes any fired projectiles, fires into space if they didn't hit.
      *
-     * @param amount    How much time has elapsed since last frame.
-     * @param engine    The combat engine.
-     * @param weapon    The weapon.
+     * @param amount How much time has elapsed since last frame.
+     * @param engine The combat engine.
+     * @param weapon The weapon.
      */
     @Override
     public void advance(float amount, CombatEngineAPI engine, WeaponAPI weapon) {
@@ -83,9 +86,9 @@ public class StormcallerEffect implements OnHitEffectPlugin, OnFireEffectPlugin,
      * <p>
      * Runs on the *weapon*. Tags the projectile with the source weapon, so it can link back on hit.
      *
-     * @param projectile    The projectile fired.
-     * @param weapon        The weapon that fired it.
-     * @param engine        The combat engine.
+     * @param projectile The projectile fired.
+     * @param weapon     The weapon that fired it.
+     * @param engine     The combat engine.
      */
     @Override
     public void onFire(DamagingProjectileAPI projectile, WeaponAPI weapon, CombatEngineAPI engine) {
@@ -104,12 +107,12 @@ public class StormcallerEffect implements OnHitEffectPlugin, OnFireEffectPlugin,
      * This needs to be overridden as you can't override static methods,
      * so without this it calls the RiftLightning onHit.
      *
-     * @param projectile    The projectile that hit.
-     * @param target        The entity struck, if any.
-     * @param point         The point the projectile struck.
-     * @param shieldHit     Did it hit a shield?
-     * @param damageResult  The API for dealing damage to the target.
-     * @param engine        The combat engine.
+     * @param projectile   The projectile that hit.
+     * @param target       The entity struck, if any.
+     * @param point        The point the projectile struck.
+     * @param shieldHit    Did it hit a shield?
+     * @param damageResult The API for dealing damage to the target.
+     * @param engine       The combat engine.
      */
     @Override
     public void onHit(DamagingProjectileAPI projectile, CombatEntityAPI target,
@@ -125,43 +128,41 @@ public class StormcallerEffect implements OnHitEffectPlugin, OnFireEffectPlugin,
      * <p>
      * Split from onHit as it's static.
      *
-     * @param projectile    The projectile fired.
-     * @param weapon        The weapon that fired it, if any.
-     * @param point         The point the projectile struck.
-     * @param target        The entity struck, if any.
+     * @param projectile The projectile fired.
+     * @param weapon     The weapon that fired it, if any.
+     * @param point      The point the projectile struck.
+     * @param target     The entity struck, if any.
      */
-	public static void fireArc(
+    public static void fireArc(
             DamagingProjectileAPI projectile, WeaponAPI weapon, Vector2f point, CombatEntityAPI target
     ) {
-		boolean firedAlready = projectile.getCustomData().containsKey(RIFT_LIGHTNING_FIRED_TAG);
-		if (firedAlready) return;
-		
-		projectile.setCustomData(RIFT_LIGHTNING_FIRED_TAG, true);
-		
-		CombatEngineAPI engine = Global.getCombatEngine();
-		
-		ShipAPI ship = weapon.getShip();
-		if (ship == null) return;
+        boolean firedAlready = projectile.getCustomData().containsKey(RIFT_LIGHTNING_FIRED_TAG);
+        if (firedAlready) return;
 
-		Vector2f from = projectile.getSpawnLocation();
+        projectile.setCustomData(RIFT_LIGHTNING_FIRED_TAG, true);
 
-		float dist = Float.MAX_VALUE;
-		if (point != null) dist = Misc.getDistance(from, point);
-		
-		float maxRange = weapon.getRange();
-		if (dist > maxRange || point == null) {
-			dist = maxRange * (0.85f + 0.15f * (float) Math.random());
-			if (projectile.didDamage()) {
-				dist = maxRange;
-			}
-			point = Misc.getUnitVectorAtDegreeAngle(projectile.getFacing());
-			point.scale(dist);
-			Vector2f.add(point, from, point);
-		}
-		
-		float arcSpeed = RIFT_LIGHTNING_SPEED;
-		
-		DwellerShroud shroud = DwellerShroud.getShroudFor(ship);
+        CombatEngineAPI engine = Global.getCombatEngine();
+
+        ShipAPI ship = weapon.getShip();
+        if (ship == null) return;
+
+        Vector2f from = projectile.getSpawnLocation();
+
+        float dist = Float.MAX_VALUE;
+        if (point != null) dist = Misc.getDistance(from, point);
+
+        float maxRange = weapon.getRange();
+        if (dist > maxRange || point == null) {
+            dist = maxRange * (0.85f + 0.15f * (float) Math.random());
+            if (projectile.didDamage()) {
+                dist = maxRange;
+            }
+            point = Misc.getUnitVectorAtDegreeAngle(projectile.getFacing());
+            point.scale(dist);
+            Vector2f.add(point, from, point);
+        }
+
+        DwellerShroud shroud = DwellerShroud.getShroudFor(ship);
 //        if (shroud != null) {
 //			float angle = Misc.getAngleInDegrees(ship.getLocation(), point);
 //			from = Misc.getUnitVectorAtDegreeAngle(angle + 90f - 180f * (float) Math.random());
@@ -170,33 +171,32 @@ public class StormcallerEffect implements OnHitEffectPlugin, OnFireEffectPlugin,
 //		}
 
         if (ship.getVariant().getHullMods().contains(HullMods.GHOST_POSSESSED) || ship.getHullSpec().isBuiltInMod(HullMods.GHOST_POSSESSED)) {
-            from = Misc.getPointWithinRadius(ship.getLocation(), ship.getCollisionRadius()/4f);
-            Vector2f.add(ship.getLocation(), from, from);
+            from = Misc.getPointWithinRadius(ship.getLocation(), ship.getCollisionRadius() / 4f);
         }
 
         EmpArcParams params = new EmpArcParams();
-		params.segmentLengthMult = 8f;
-		params.zigZagReductionFactor = 0.15f;
-		params.fadeOutDist = 50f;
-		params.minFadeOutMult = 10f;
+        params.segmentLengthMult = 8f;
+        params.zigZagReductionFactor = 0.15f;
+        params.fadeOutDist = 50f;
+        params.minFadeOutMult = 10f;
 //		params.flickerRateMult = 0.7f;
-		params.flickerRateMult = 0.3f;
+        params.flickerRateMult = 0.3f;
 //		params.flickerRateMult = 0.05f;
 //		params.glowSizeMult = 3f;
 //		params.brightSpotFullFraction = 0.5f;
-		params.movementDurOverride = Math.max(0.05f, dist / arcSpeed);
+        params.movementDurOverride = Math.max(0.05f, dist / RIFT_LIGHTNING_SPEED);
 
-		EmpArcEntityAPI arc = (EmpArcEntityAPI) engine.spawnEmpArcVisual(
+        EmpArcEntityAPI arc = engine.spawnEmpArcVisual(
                 from, ship, point, null,
-				80f, // thickness
-				RIFT_LIGHTNING_COLOR,
-				new Color(255,255,255,255),
-				params
+                80f, // thickness
+                RIFT_LIGHTNING_COLOR,
+                new Color(255, 255, 255, 255),
+                params
         );
-		arc.setCoreWidthOverride(40f);
-		arc.setRenderGlowAtStart(false);
-		arc.setFadedOutAtStart(true);
-		arc.setSingleFlickerMode(true);
+        arc.setCoreWidthOverride(40f);
+        arc.setRenderGlowAtStart(false);
+        arc.setFadedOutAtStart(true);
+        arc.setSingleFlickerMode(true);
 
         // --------------------------------
         // Spawn mines to produce cloud
@@ -227,7 +227,7 @@ public class StormcallerEffect implements OnHitEffectPlugin, OnFireEffectPlugin,
         engine.addPlugin(new HyperspaceStormSoundLoop(mines.get(0), 8f));
 
         // Place the N mines
-        for (int i=1; i < ammo_count; i++) {
+        for (int i = 1; i < ammo_count; i++) {
 //            mine_spawn_tries = 0;
 
             // For each, try to find a valid location that's not too close to another
@@ -261,44 +261,44 @@ public class StormcallerEffect implements OnHitEffectPlugin, OnFireEffectPlugin,
             }
         }
         weapon.getAmmoTracker().setAmmo(0);
-		
-		if (shroud != null) {
-			DwellerShroudParams shroudParams = shroud.getShroudParams();
-			params = new EmpArcParams();
-			params.segmentLengthMult = 4f;
-			params.glowSizeMult = 4f;
-			params.flickerRateMult = 0.5f + (float) Math.random() * 0.5f;
-			params.flickerRateMult *= 1.5f;
 
-			float thickness = shroudParams.overloadArcThickness;
-			
-			float angle = Misc.getAngleInDegrees(from, ship.getLocation());
-			angle = angle + 90f * ((float) Math.random() - 0.5f);
-			Vector2f dir = Misc.getUnitVectorAtDegreeAngle(angle);
-			dist = shroudParams.maxOffset;
-			dist = dist * 0.5f + dist * 0.5f * (float) Math.random();
-			//dist *= 1.5f;
-			dist *= 0.5f;
-			dir.scale(dist);
-			Vector2f to = Vector2f.add(from, dir, new Vector2f());
-			
-			arc = (EmpArcEntityAPI) engine.spawnEmpArcVisual(
-					from, ship, to, ship, thickness, RIFT_LIGHTNING_COLOR, Color.white, params
+        if (shroud != null) {
+            DwellerShroudParams shroudParams = shroud.getShroudParams();
+            params = new EmpArcParams();
+            params.segmentLengthMult = 4f;
+            params.glowSizeMult = 4f;
+            params.flickerRateMult = 0.5f + (float) Math.random() * 0.5f;
+            params.flickerRateMult *= 1.5f;
+
+            float thickness = shroudParams.overloadArcThickness;
+
+            float angle = Misc.getAngleInDegrees(from, ship.getLocation());
+            angle = angle + 90f * ((float) Math.random() - 0.5f);
+            Vector2f dir = Misc.getUnitVectorAtDegreeAngle(angle);
+            dist = shroudParams.maxOffset;
+            dist = dist * 0.5f + dist * 0.5f * (float) Math.random();
+            //dist *= 1.5f;
+            dist *= 0.5f;
+            dir.scale(dist);
+            Vector2f to = Vector2f.add(from, dir, new Vector2f());
+
+            arc = engine.spawnEmpArcVisual(
+                    from, ship, to, ship, thickness, RIFT_LIGHTNING_COLOR, Color.white, params
             );
-			
-			arc.setCoreWidthOverride(shroudParams.overloadArcCoreThickness);
-			arc.setSingleFlickerMode(false);
-		}
-	}
+
+            arc.setCoreWidthOverride(shroudParams.overloadArcCoreThickness);
+            arc.setSingleFlickerMode(false);
+        }
+    }
 
     /**
      * Figures out how long to delay the appearance of a cloud.
      *
-     * @param projectile_location   The location the projectile 'hit'
-     * @param mine_location         The location the mine will be placed.
-     * @param delay_base            The 'base' delay (from projectile travel time).
-     * @param spread_speed          The speed at which cloud spawns spread out from the central point.
-     * @return                      How long it should take for the cloud to fade in.
+     * @param projectile_location The location the projectile 'hit'
+     * @param mine_location       The location the mine will be placed.
+     * @param delay_base          The 'base' delay (from projectile travel time).
+     * @param spread_speed        The speed at which cloud spawns spread out from the central point.
+     * @return How long it should take for the cloud to fade in.
      */
     public static float minePlacementDelay(
             Vector2f projectile_location, Vector2f mine_location, float delay_base, float spread_speed
@@ -309,15 +309,15 @@ public class StormcallerEffect implements OnHitEffectPlugin, OnFireEffectPlugin,
     /**
      * Spawns a mine/stormcloud.
      *
-     * @param source        The ship that fired this weapon.
-     * @param mineLocation  The location the mine should be placed.
-     * @param delay         The visual delay until the weapon arc finishes.
-     * @return              The mine spawned.
+     * @param source       The ship that fired this weapon.
+     * @param mineLocation The location the mine should be placed.
+     * @param delay        The visual delay until the weapon arc finishes.
+     * @return The mine spawned.
      */
-	public static MissileAPI spawnMineCloud(
+    public static MissileAPI spawnMineCloud(
             ShipAPI source, Vector2f mineLocation, float delay
     ) {
-		CombatEngineAPI engine = Global.getCombatEngine();
+        CombatEngineAPI engine = Global.getCombatEngine();
         MissileAPI mine = (MissileAPI) engine.spawnProjectile(
                 source, null,
                 Weapons.STORMCALLER_MINELAYER,
@@ -330,7 +330,7 @@ public class StormcallerEffect implements OnHitEffectPlugin, OnFireEffectPlugin,
         if (source != null) {
             Global.getCombatEngine().applyDamageModifiersToSpawnedProjectileWithNullWeapon(
                     source, WeaponType.ENERGY, false, mine.getDamage());
-        };
+        }
 
         // Set the mine to only live for a fraction of the full life, not blow up other mines, not move.
         float mine_lifetime = MathUtils.getRandomNumberInRange(0.5f, 1f) * mine.getMaxFlightTime();
@@ -348,7 +348,8 @@ public class StormcallerEffect implements OnHitEffectPlugin, OnFireEffectPlugin,
                 StormcallerParams.CLOUD_FADE_OUT,
                 mine_lifetime - 0.25f
         );
+
         engine.addLayeredRenderingPlugin(stormRenderingPlugin);
         return mine;
-	}
+    }
 }
