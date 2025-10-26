@@ -10,6 +10,7 @@ DO_NOT_USE
 .flac$
 ^.github/
 ^.run/
+^images/
 .iml$
 banner.png$
 .drawio$

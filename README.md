@@ -1,5 +1,5 @@
+![Faction Banner](images/heliopause_banner.png)
 # Heliopause Innovations
-
 `v0.1.0` for Starsector `0.98a-RC8`, made using Wisp's [IntelliJ Mod Template].
 
 ## Description
@@ -28,19 +28,22 @@ Visit the **CEO** on the planet **Ailmar**, in the **Westernesse** system, to st
 
 * **Intel Event** - **Heliopause Innovations R&D**: 
   * Trade survey data to the CEO for reputation, credits, and event progress.
+  * <img src="images/heliopause_opening.png" alt="Alt Text" style="width:50%; height:auto;"><img src="images/heliopause_event.png" alt="Alt Text" style="width:50%; height:auto;">
+  * <img src="images/heliopause_event_turnin.png" alt="Alt Text" style="width:50%; height:auto;">
 
 * **Mission** - **Atop A Stormy Pinnacle**: 
   * Unlocked by the R&D event, you'll be asked to recover the **Pinnacle Mk 1** from the depths of hyperspace.
+  * <img src="images/heliopause_mission_pinnacle_start.png" alt="Alt Text" style="width:50%; height:auto;">
 
 * **Ability** - **Call Storm**:
   * Unlocked by the R&D event, gain an ability that lets fleets with a **Pinnacle** create hyperspace storms.
 
 ### New Ships
 
-| **Pinnacle Cruiser**                                                                                                                                                                                                 | **Pinnacle Mk 1 Cruiser**                                                                | 
-|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------| 
-| A modification of the Apogee that shields the rest of the fleet. Out of combat, it blocks damage from storm strikes at the cost of CR; in-combat, it can attract projectiles towards itself and its ablative drones. | The original version of the **Pinnacle**, without drones but capable of phasing.         |
-| ![Pinnacle](graphics/toaster/hp/ships/pinnacle/pinnacle.png)![Ablative Drone](graphics/toaster/hp/ships/pinnacle/pinnacle_drone.png)                                                                                 | ![Pinnacle Mk 1](graphics/toaster/hp/ships/pinnacle/pinnacle_mk1.png)                    |
+| **Pinnacle Cruiser**                                                                                                                                                                                                      | **Pinnacle Mk 1 Cruiser**                                                                | 
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------| 
+| A modification of the Apogee that shields the rest of the fleet. Out of combat, it blocks damage from storm strikes at the cost of CR; in-combat, it can attract projectiles towards itself and its ablative drones.      | The original version of the **Pinnacle**, without drones but capable of phasing.         |
+| ![Pinnacle](graphics/toaster/hp/ships/pinnacle/pinnacle.png)![Ablative Drone](graphics/toaster/hp/ships/pinnacle/pinnacle_drone.png)<img src="images/pinnacle_system.png" alt="Alt Text" style="width:70%; height:auto;"> | ![Pinnacle Mk 1](graphics/toaster/hp/ships/pinnacle/pinnacle_mk1.png)                    |
 
 Some variations on vanilla ships appear as enemies. 
 
