@@ -1,6 +1,5 @@
 package org.hyperlib.campaign.terrain;
 
-import com.fs.starfarer.api.util.Misc;
 import org.hyperlib.HyperLibTags;
 import org.hyperlib.campaign.terrain.hyperspace.ApplyStormStrikesHandler;
 
@@ -20,6 +19,7 @@ public class HyperLibHyperspaceTerrainPlugin extends HyperspaceTerrainPlugin {
      * @param fleet The fleet itself.
      * @param days  Days passed since hyperspace was last advanced.
      */
+    @Override
     protected void applyStormStrikes(HyperspaceTerrainPlugin.CellStateTracker cell, CampaignFleetAPI fleet, float days) {
         if (!ApplyStormStrikesHandler.fireBestPlugin(this, cell, fleet, days)) {
             // No plugins had priority > 0, or those that did had no weight, so do the vanilla strikes if applicable.
@@ -55,5 +55,14 @@ public class HyperLibHyperspaceTerrainPlugin extends HyperspaceTerrainPlugin {
         params.tiles = null;
         savedTiles = encodeTiles(tiles);
         return this;
+    }
+
+    /**
+     * Constructor to nick the content of an existing HyperspaceTerrainPlugin.
+     *
+     * @param plugin The existing plugin.
+     */
+    public HyperLibHyperspaceTerrainPlugin(HyperspaceTerrainPlugin plugin) {
+        super();
     }
 }

@@ -1,0 +1,21 @@
+{
+    "name": "Heliopause Innovations R&D",
+    "icon": "graphics/toaster/hp/factions/heliopause_crest.png",
+    "tags": ["exploration"],
+    "stages": {
+        "start" : {
+            "value": 0,
+        },
+        "missions": {
+            "value": 100,
+        },
+        "stormcaller": {
+            "value": 150,
+            "ability": "tstHP_stormcaller_ability"
+        },
+        "loop": {
+            "value": 200,
+            "reset_to_range": [150, 160]
+        }
+    }
+}

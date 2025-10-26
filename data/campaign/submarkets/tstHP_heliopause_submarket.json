@@ -1,15 +1,8 @@
 {
-    "commodities": {
-        "blacklist": {
-            "ids": ["food"],
-            "message": "%s must be traded in-person"
-        }
-    },
     "demand_classes": {
         "blacklist": {
             "ids": ["survey_data"],
-            "message": "%s must be traded in-person",
-            "display_names": ["Survey data"]
+            "message": "Survey data must be traded in-person"
         }
     },
     "special_items": {
@@ -19,8 +12,8 @@
         }
     },
     "ships": {
-        "dp_per_size": {
-            "utility": 15
+        "utility": {
+            "per_size": 15
         },
         "static": ["tstHP_pinnacle_Exploration"],
         "cull_fraction": 0.5

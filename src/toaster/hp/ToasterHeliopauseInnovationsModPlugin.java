@@ -2,6 +2,7 @@ package toaster.hp;
 
 import com.fs.starfarer.api.BaseModPlugin;
 import com.fs.starfarer.api.Global;
+import com.thoughtworks.xstream.XStream;
 import org.hyperlib.campaign.terrain.HyperLibHyperspaceTerrainPlugin;
 import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
 import com.fs.starfarer.api.util.Misc;
@@ -27,6 +28,8 @@ public class ToasterHeliopauseInnovationsModPlugin extends BaseModPlugin {
             ApplyStormStrikesHandler.registerStormStrikesPlugin(new StormDampnerApplyStormStrikesPlugin());
         }
     }
+
+
 
     @Override
     public void onApplicationLoad() throws Exception {
@@ -54,7 +57,7 @@ public class ToasterHeliopauseInnovationsModPlugin extends BaseModPlugin {
     @Override
     public void onGameLoad(boolean newGame) {
         Global.getLogger(ToasterHeliopauseInnovationsModPlugin.class).info("OnGameLoad");
-        super.onNewGame();
+        super.onGameLoad(newGame);
         setUp();
     }
 

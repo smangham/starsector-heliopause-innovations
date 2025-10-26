@@ -2,7 +2,6 @@ package org.hyperlib.util;
 
 import java.util.*;
 
-import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,7 +13,6 @@ import org.json.JSONObject;
  * without constantly having to cast.
  */
 public class SensibleHashMap extends HashMap<String, Object> {
-    // ----------------------------------------------------------------
     /*
      * https://stackoverflow.com/questions/21720759/convert-a-json-string-to-a-hashmap
      */
@@ -59,43 +57,48 @@ public class SensibleHashMap extends HashMap<String, Object> {
     }
     // ----------------------------------------------------------------
 
-    public float getFloatOrDefault(String key, float defaultValue) {
-        if (!this.containsKey(key)) return defaultValue;
-        return Float.parseFloat(this.get(key).toString());
-    }
-
-    public float getFloat(String key) {
-        return Float.parseFloat((String) this.get(key).toString());
-    }
-
-    public int getIntOrDefault(String key, int defaultValue) {
-        if (!this.containsKey(key)) return defaultValue;
-        return Integer.parseInt((String) this.get(key));
-    }
-
-    public int getInt(String key) {
-        return Integer.parseInt(this.get(key).toString());
+    public boolean getBool(String key) {
+        if (this.get(key) instanceof Boolean value) return value;
+        return Boolean.parseBoolean(this.get(key).toString());
     }
 
     public boolean getBoolOrDefault(String key, boolean defaultValue) {
         if (!this.containsKey(key)) return defaultValue;
-        return Boolean.parseBoolean(this.get(key).toString());
+        return getBool(key);
     }
 
-    public boolean getBool(String key) {
-        return Boolean.parseBoolean(this.get(key).toString());
+    public int getInt(String key) {
+        if (this.get(key) instanceof Integer value) return value;
+        return Integer.parseInt(this.get(key).toString());
     }
 
-    public @Nullable String getStringOrDefault(String key, @Nullable String defaultValue) {
+    public int getIntOrDefault(String key, int defaultValue) {
         if (!this.containsKey(key)) return defaultValue;
-        return this.get(key).toString();
+        return getInt(key);
+    }
+
+    public float getFloat(String key) {
+        if (this.get(key) instanceof Float value) return value;
+        return Float.parseFloat(this.get(key).toString());
+    }
+
+    public float getFloatOrDefault(String key, float defaultValue) {
+        if (!this.containsKey(key)) return defaultValue;
+        return getFloat(key);
     }
 
     public String getString(String key) {
+        if (this.get(key) instanceof String value) return value;
         return this.get(key).toString();
     }
 
-    public @Nullable List<Integer> getIntListOrDefault(String key, @Nullable List<Integer> defaultValue) {
+    public String getStringOrDefault(String key, String defaultValue) {
+        if (!this.containsKey(key)) return defaultValue;
+        return getString(key);
+    }
+
+
+    public List<Integer> getIntListOrDefault(String key, List<Integer> defaultValue) {
         if (!this.containsKey(key)) return defaultValue;
         return this.getIntList(key);
     }
@@ -105,12 +108,16 @@ public class SensibleHashMap extends HashMap<String, Object> {
         List<Object> listObj = (List<Object>) this.get(key);
         List<Integer> listOut = new ArrayList<>();
         for (int i = 0; i < listObj.size(); i++) {
-            listOut.add(Integer.parseInt(listObj.get(i).toString()));
+            if (listObj.get(i) instanceof Integer value) {
+                listOut.add(value);
+            } else {
+                listOut.add(Integer.parseInt(listObj.get(i).toString()));
+            }
         }
         return listOut;
     }
 
-    public @Nullable List<Float> getFloatListOrDefault(String key, @Nullable List<Float> defaultValue) {
+    public List<Float> getFloatListOrDefault(String key, List<Float> defaultValue) {
         if (!this.containsKey(key)) return defaultValue;
         return this.getFloatList(key);
     }
@@ -120,12 +127,16 @@ public class SensibleHashMap extends HashMap<String, Object> {
         List<Object> listObj = (List<Object>) this.get(key);
         List<Float> listOut = new ArrayList<>();
         for (int i = 0; i < listObj.size(); i++) {
-            listOut.add(Float.parseFloat(listObj.get(i).toString()));
+            if (listObj.get(i) instanceof Float value) {
+                listOut.add(value);
+            } else {
+                listOut.add(Float.parseFloat(listObj.get(i).toString()));
+            }
         }
         return listOut;
     }
 
-    public @Nullable List<String> getStringListOrDefault(String key, @Nullable List<String> defaultValue) {
+    public List<String> getStringListOrDefault(String key, List<String> defaultValue) {
         if (!this.containsKey(key)) return defaultValue;
         return this.getStringList(key);
     }
@@ -140,7 +151,7 @@ public class SensibleHashMap extends HashMap<String, Object> {
         return listOut;
     }
 
-    public @Nullable Set<String> getStringSetOrDefault(String key, @Nullable Set<String> defaultValue) {
+    public Set<String> getStringSetOrDefault(String key, Set<String> defaultValue) {
         if (!this.containsKey(key)) return defaultValue;
         return this.getStringSet(key);
     }
@@ -151,12 +162,12 @@ public class SensibleHashMap extends HashMap<String, Object> {
         return new HashSet<>(listString);
     }
 
-    public @Nullable SensibleHashMap getDictOrDefault(String key, @Nullable SensibleHashMap defaultValue) {
+    public SensibleHashMap getMapOrDefault(String key, SensibleHashMap defaultValue) {
         if (!this.containsKey(key)) return defaultValue;
-        return this.getDict(key);
+        return this.getMap(key);
     }
 
-    public SensibleHashMap getDict(String key) {
+    public SensibleHashMap getMap(String key) {
         return (SensibleHashMap) this.get(key);
     }
 }

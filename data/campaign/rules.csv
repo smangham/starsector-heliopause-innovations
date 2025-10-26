@@ -91,14 +91,14 @@ $HisOrHer demeanour becomes slightly more serious. ""Now, I assure you, you will
 tstHPCEOGreetAcceptNo:""I'd rather wait until the situation is calmer.""",1
 tstHPCEOGreetDev,tstHPCEOGreetOptions,,,,"tstHPCEOGreetDev1:>> (dev) Start event",1
 tstHPCEOGreetDev1,DialogOptionSelected,$option == tstHPCEOGreetDev1,"$HeliopauseCEOAccepted = true
-tstHP_Heliopause addData 100 ""jump point collapse in Galatia system"";
+tstHP_Heliopause addData 20 ""jump point collapse in Galatia system"";
 unset $HeliopauseCEOGreetReturn
 EndConversation",">> Started event",cutCommLink:Close the comm link,1
 tstHPCEOGreetAcceptYes,DialogOptionSelected,$option == tstHPCEOGreetAcceptYes,"AdjustRepActivePerson FRIENDLY 5
 $HeliopauseCEOAccepted = true","""Wonderful, wonderful. I'll send you over a cryptokey, and have you set up on our systems as a subcontractor. If you find any more hyperspace readings or survey data, be sure to return. We'll give you access to any new prototypes or upgrades your data helps us develop.""
 ",tstHPCEOGreetAcceptYes1:Continue,1
 tstHPCEOGreetAcceptYes1,DialogOptionSelected,$option == tstHPCEOGreetAcceptYes1,"AddCredits 50000
-tstHP_Heliopause addData 100 ""jump point collapse in Galatia system"";
+tstHP_Heliopause addData 20 ""jump point collapse in Galatia system"";
 unset $HeliopauseCEOGreetReturn
 unset $askedPrototypes
 unset $askedBaird
