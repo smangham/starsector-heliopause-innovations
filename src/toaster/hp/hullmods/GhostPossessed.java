@@ -9,6 +9,7 @@ import com.fs.starfarer.api.impl.combat.MoteControlScript;
 import com.fs.starfarer.api.util.IntervalUtil;
 import com.fs.starfarer.combat.ai.system.V;
 import org.hyperlib.HyperLibColours;
+import org.hyperlib.HyperLibTags;
 import org.hyperlib.combat.graphics.HyperspaceTiledSpriteSamplers;
 import org.hyperlib.util.HyperLibCollision;
 import org.lazywizard.lazylib.combat.CombatUtils;
@@ -79,7 +80,7 @@ public class GhostPossessed extends BaseHullMod {
     /// The multiplier to the collision radius for the jitter range
     public static final float JITTER_INTENSITY_MIN = 0;
     public static final float JITTER_INTENSITY_MAX = 1.0f;
-    public static final Color JITTER_COLOUR = new Color(138, 250, 244, 175);
+    public static final Color JITTER_COLOUR = new Color(138, 250, 244, 128);
 
     // --------------------------------
     // Target arc
@@ -100,36 +101,32 @@ public class GhostPossessed extends BaseHullMod {
     // --------------------------------
     // Variables that are set during initialisation
     // --------------------------------
-    protected Vector2f cloudSize;
+    protected transient Vector2f cloudSize;
     /// The size of the clouds.
-    protected List<WeaponAPI> chargedWeapons;
-    /// The weapons that use charges.
-    protected ScalingFlickerUtil jitterFlicker;
+    protected transient ScalingFlickerUtil jitterFlicker;
     /// Lightning flicker effect for the jitter.
-    protected float jitterRange;
+    protected transient float jitterRange;
     /// Pre-calculated jitter max range.
-    protected ShipAPI ship;
-    /// This ship.
-    protected boolean spawnMotes = true;
+    protected transient boolean spawnMotes = true;
     /// Whether the ship should auto-spawn motes.
-    protected float arcWidth;
+    protected transient float arcWidth;
     /// The width of the lightning arcs.
-    protected float arcExclusionRadius;
+    protected transient float arcExclusionRadius;
     /// How far apart arc points should be spaced.
-    protected int shipSize;
+    protected transient int shipSize;
     /// Cache the modified size.
 
     // --------------------------------
     // Variables that change during run
     // --------------------------------
-    protected IntervalUtil cloudInterval = new IntervalUtil(0.05f, 0.1f);
+    protected transient IntervalUtil cloudInterval = new IntervalUtil(0.05f, 0.1f);
     /// FX interval for trailing clouds.
-
-    protected float arcElapsed = 0f;
+    protected transient float arcElapsed = 0f;
     /// Used to ensure arcs only trigger once per lightning pulse.
-    protected float charge = 0f;
+    protected transient float charge = 0f;
     /// Charges up when motes are killed, used by systems and defences.
-    protected boolean handledDeath = false;  /// Have we caught and handled the death?
+    protected transient boolean handledDeath = false;
+    /// Have we caught and handled the death?
 
     /**
      * Modifies the charge level on the ship.
@@ -142,10 +139,32 @@ public class GhostPossessed extends BaseHullMod {
         );
     }
 
+    /**
+     * Modifies the charge level on a ship.
+     *
+     * @param amount How much to modify the value by.
+     */
+    public static void modifyCharge(ShipAPI ship, float amount) {
+        GhostPossessed ghostPossessed = getGhostPossessedScriptFor(ship);
+        if (ghostPossessed != null) {
+            ghostPossessed.modifyCharge(amount);
+        }
+    }
+
+    /**
+     * Gets the current charge level.
+     *
+     * @return The electric charge on the ship (1-3, for % bonuses).
+     */
     public float getCharge() {
         return this.charge;
     }
 
+    /**
+     * Gets the current charge level, normalised.
+     *
+     * @return The electric charge on the ship (0-1, for rendering e.t.c.).
+     */
     public float getNormalisedCharge() {
         return (this.charge - 1f) / (CHARGE_MAX - 1f);
     }
@@ -239,6 +258,41 @@ public class GhostPossessed extends BaseHullMod {
     }
 
     /**
+     * @param ship
+     * @param countMin
+     */
+    public static void spawnCloudsFor(ShipAPI ship, int countMin) {
+        int cloudsBelow = MathUtils.getRandomNumberInRange(countMin, ship.getHullSize().ordinal());
+        int cloudsAbove = MathUtils.getRandomNumberInRange(countMin, ship.getHullSize().ordinal());
+        Vector2f cloudSize = getCloudSize(ship);
+
+        for (int i = 0; i < cloudsBelow; i++) {
+            MagicRender.battlespace(
+                    HyperspaceTiledSpriteSamplers.getHyperspaceDarkSprite(),
+                    HyperLibCollision.getInternalPoint(ship), new Vector2f(),
+                    cloudSize, new Vector2f(),
+                    MathUtils.getRandomNumberInRange(0f, 360f), MathUtils.getRandomNumberInRange(-15f, 15f),
+                    Color.WHITE, false,
+                    0f, 0f, 0f, 0f, 0f,
+                    CLOUD_FADE_IN, CLOUD_FULL, CLOUD_FADE_OUT,
+                    CombatEngineLayers.ABOVE_PLANETS
+            );
+        }
+        for (int i = 0; i < cloudsAbove; i++) {
+            MagicRender.battlespace(
+                    HyperspaceTiledSpriteSamplers.getHyperspaceSprite(),
+                    HyperLibCollision.getInternalPoint(ship), new Vector2f(),
+                    cloudSize, new Vector2f(),
+                    MathUtils.getRandomNumberInRange(0f, 360f), MathUtils.getRandomNumberInRange(-15f, 15f),
+                    CLOUD_OVER_COLOUR, false,
+                    0f, 0f, 0f, 0f, 0f,
+                    CLOUD_FADE_IN, CLOUD_FULL, CLOUD_FADE_OUT,
+                    CombatEngineLayers.ABOVE_SHIPS_LAYER
+            );
+        }
+    }
+
+    /**
      * Applies the ghost ship effects once a ship spawns.
      *
      * @param ship The ship.
@@ -246,7 +300,6 @@ public class GhostPossessed extends BaseHullMod {
      */
     @Override
     public void applyEffectsAfterShipCreation(ShipAPI ship, String id) {
-        this.ship = ship;
         this.handledDeath = false;
         ship.setHeavyDHullOverlay();
         ship.setExtraOverlay(Global.getSettings().getSpriteName(ID, "damage"));
@@ -266,10 +319,6 @@ public class GhostPossessed extends BaseHullMod {
             Global.getLogger(GhostPossessed.class).info(" Ship " + ship + " is keeping its glow and venting.");
         }
 
-        this.cloudSize = new Vector2f(
-                32f + 16f * ship.getHullSize().ordinal(),
-                32f + 16f * ship.getHullSize().ordinal()
-        );
         this.jitterRange = ship.getCollisionRadius() * CHARGE_JITTER_RADIUS_MULT;
         this.jitterFlicker = new ScalingFlickerUtil(JITTER_FLICKER_WAIT_MAX, 1f);
         this.jitterFlicker.newWait();
@@ -278,11 +327,10 @@ public class GhostPossessed extends BaseHullMod {
         this.arcElapsed = 0;
         this.shipSize = ship.getHullSize().ordinal() - 1;
 
-        Global.getLogger(GhostPossessed.class).info("Ship: " + ship + ", arc exclusion radius: " + arcExclusionRadius);
+//        Global.getLogger(GhostPossessed.class).info("Ship: " + ship + ", arc exclusion radius: " + arcExclusionRadius);
 
         this.charge = 1f;
-        this.chargedWeapons = GhostUtil.getChargedWeapons(ship);
-        for (WeaponAPI weapon : chargedWeapons) {
+        for (WeaponAPI weapon : GhostUtil.getChargedWeapons(ship)) {
             AmmoTrackerAPI ammoTracker = weapon.getAmmoTracker();
             ammoTracker.setMaxAmmo(getMaxMotes(ship));
             ammoTracker.setAmmo(0);
@@ -297,6 +345,19 @@ public class GhostPossessed extends BaseHullMod {
 
         // Store this script in the combat engine.
         getShipMap().put(ship, this);
+
+        ship.addTag(HyperLibTags.HYPERSPACE_STORM_STRIKE_IMMUNE);
+    }
+
+    /**
+     * @param ship
+     * @return
+     */
+    public static Vector2f getCloudSize(ShipAPI ship) {
+        return new Vector2f(
+                (32f + 16f * ship.getHullSize().ordinal()),
+                (32f + 16f * ship.getHullSize().ordinal())
+        );
     }
 
     /**
@@ -318,12 +379,20 @@ public class GhostPossessed extends BaseHullMod {
         // --------------------------------
         if (ship.isHulk()) {
             if (!this.handledDeath) {
+                CombatEngineAPI engine = Global.getCombatEngine();
                 SharedGhostMoteAIData data = getSharedData(ship);
                 Global.getLogger(GhostPossessed.class).info("Ship " + ship + " has died, killing " + data.motes.size() + " motes");
                 this.handledDeath = true;
 
                 for (int i = 0; i < data.motes.size(); i++) {
-                    data.motes.get(i).flameOut();
+                    MissileAPI mote = data.motes.get(i);
+                    EmpArcEntityAPI arc = engine.spawnEmpArcVisual(
+                            ship.getLocation(), ship, mote.getLocation(), mote, 16f,
+                            HyperLibColours.DEEP_HYPERSPACE_STRIKE, Color.WHITE
+                    );
+                    arc.setRenderGlowAtStart(false);
+                    arc.setSingleFlickerMode(true);
+                    mote.flameOut();
                 }
                 data.motes.clear();
 
@@ -354,9 +423,14 @@ public class GhostPossessed extends BaseHullMod {
         }
 
         // --------------------------------
+        // Extra VFX are only when not phased
+        // --------------------------------
+        if (ship.isPhased()) return;
+
+        // --------------------------------
         // Play jitter FX
         // --------------------------------
-        jitterFlicker.advance(amount);
+        this.jitterFlicker.advance(amount);
         float jitterMag = MathUtils.clamp(
                 Math.max(
                         getNormalisedCharge(),
@@ -368,7 +442,7 @@ public class GhostPossessed extends BaseHullMod {
                 ship, JITTER_COLOUR,
                 jitterMag,
                 10,
-                jitterRange * jitterMag
+                this.jitterRange * jitterMag
         );
         ship.setCircularJitter(true);
 
@@ -377,33 +451,7 @@ public class GhostPossessed extends BaseHullMod {
         // --------------------------------
         this.cloudInterval.advance(amount);
         if (this.cloudInterval.intervalElapsed()) {
-            int cloudsBelow = MathUtils.getRandomNumberInRange(1, this.shipSize);
-            int cloudsAbove = MathUtils.getRandomNumberInRange(1, this.shipSize);
-
-            for (int i = 0; i < cloudsBelow; i++) {
-                MagicRender.battlespace(
-                        HyperspaceTiledSpriteSamplers.getHyperspaceDarkSprite(),
-                        HyperLibCollision.getInternalPoint(ship), new Vector2f(),
-                        this.cloudSize, new Vector2f(),
-                        MathUtils.getRandomNumberInRange(0f, 360f), MathUtils.getRandomNumberInRange(-15f, 15f),
-                        Color.WHITE, false,
-                        0f, 0f, 0f, 0f, 0f,
-                        CLOUD_FADE_IN, CLOUD_FULL, CLOUD_FADE_OUT,
-                        CombatEngineLayers.ABOVE_PLANETS
-                );
-            }
-            for (int i = 0; i < cloudsAbove; i++) {
-                MagicRender.battlespace(
-                        HyperspaceTiledSpriteSamplers.getHyperspaceSprite(),
-                        HyperLibCollision.getInternalPoint(ship), new Vector2f(),
-                        this.cloudSize, new Vector2f(),
-                        MathUtils.getRandomNumberInRange(0f, 360f), MathUtils.getRandomNumberInRange(-15f, 15f),
-                        CLOUD_OVER_COLOUR, false,
-                        0f, 0f, 0f, 0f, 0f,
-                        CLOUD_FADE_IN, CLOUD_FULL, CLOUD_FADE_OUT,
-                        CombatEngineLayers.ABOVE_SHIPS_LAYER
-                );
-            }
+            spawnCloudsFor(ship, 1);
         }
 
         // --------------------------------
@@ -445,7 +493,7 @@ public class GhostPossessed extends BaseHullMod {
             if (motesKilled > 0) {
                 this.modifyCharge(motesKilled * 0.5f / (float) this.shipSize);
 
-                this.chargedWeapons.forEach(
+                GhostUtil.getChargedWeapons(ship).forEach(
                         weaponAPI -> weaponAPI.getAmmoTracker().setAmmo(
                                 Math.min(
                                         weaponAPI.getAmmoTracker().getMaxAmmo(),

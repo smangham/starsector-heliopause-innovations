@@ -1,0 +1,235 @@
+{
+    "hullName": "Holiday",
+    "hullId": "tstHP_holiday",
+    "hullSize": "CRUISER",
+    "style": "MIDLINE",
+    "spriteName": "graphics/toaster/hp/ships/holiday/holiday.png",
+    "height": 284,
+    "width": 126,
+    "center": [
+        63, 142
+    ],
+    "collisionRadius": 142,
+    "coversColor": "",
+    "shieldCenter": [
+        0, 0
+    ],
+    "shieldRadius": 141.5,
+    "viewOffset": 0,
+    "builtInMods": [
+        "tstHP_chronosleeper_hullmod"
+    ],
+    "builtInWings": [],
+    "builtInModules": null,
+    "weaponSlots": [
+        {
+            "id": "WS 000",
+            "size": "LARGE",
+            "type": "COMPOSITE",
+            "mount": "TURRET",
+            "arc": 277,
+            "angle": 180.5,
+            "locations": [
+                     -53,     -0.5
+            ]
+        },
+        {
+            "id": "WS 001",
+            "size": "MEDIUM",
+            "type": "BALLISTIC",
+            "mount": "TURRET",
+            "arc": 237,
+            "angle": 0,
+            "locations": [
+                      15,        0
+            ]
+        },
+        {
+            "id": "WS 002",
+            "size": "SMALL",
+            "type": "HYBRID",
+            "mount": "TURRET",
+            "arc": 168,
+            "angle": 97,
+            "locations": [
+                    47.5,       36
+            ]
+        },
+        {
+            "id": "WS 003",
+            "size": "SMALL",
+            "type": "HYBRID",
+            "mount": "TURRET",
+            "arc": 168,
+            "angle": 263,
+            "locations": [
+                    47.5,      -36
+            ]
+        },
+        {
+            "id": "WS 004",
+            "size": "SMALL",
+            "type": "BALLISTIC",
+            "mount": "TURRET",
+            "arc": 166,
+            "angle": 50,
+            "locations": [
+                   120.5,     20.5
+            ]
+        },
+        {
+            "id": "WS 005",
+            "size": "SMALL",
+            "type": "BALLISTIC",
+            "mount": "TURRET",
+            "arc": 166,
+            "angle": 310,
+            "locations": [
+                   120.5,    -20.5
+            ]
+        },
+        {
+            "id": "WS 006",
+            "size": "SMALL",
+            "type": "BALLISTIC",
+            "mount": "TURRET",
+            "arc": 171,
+            "angle": 116.5,
+            "locations": [
+                     -82,       35
+            ]
+        },
+        {
+            "id": "WS 007",
+            "size": "SMALL",
+            "type": "BALLISTIC",
+            "mount": "TURRET",
+            "arc": 171,
+            "angle": 243.5,
+            "locations": [
+                     -82,      -35
+            ]
+        },
+        {
+            "id": "WS 008",
+            "size": "SMALL",
+            "type": "COMPOSITE",
+            "mount": "TURRET",
+            "arc": 147,
+            "angle": 88,
+            "locations": [
+                     -27,     39.5
+            ]
+        },
+        {
+            "id": "WS 009",
+            "size": "SMALL",
+            "type": "COMPOSITE",
+            "mount": "TURRET",
+            "arc": 147,
+            "angle": 272,
+            "locations": [
+                     -27,    -39.5
+            ]
+        }
+    ],
+    "engineSlots": [
+        {
+            "location": [
+                -142.5, 18
+            ],
+            "length": 88.5,
+            "width": 16,
+            "angle": 180,
+            "contrailSize": 12,
+            "style": "MIDLINE"
+        },
+        {
+            "location": [
+                -142.5, -18
+            ],
+            "length": 88.5,
+            "width": 16,
+            "angle": 180,
+            "contrailSize": 12,
+            "style": "MIDLINE"
+        },
+        {
+            "location": [
+                -141, -1
+            ],
+            "length": 88.5,
+            "width": 16,
+            "angle": 180,
+            "contrailSize": 12,
+            "style": "MIDLINE"
+        }
+    ],
+    "bounds": [
+           139.5,       -5,
+           130.5,      -14,
+             129,      -26,
+             119,      -29,
+             111,    -26.5,
+        
+             102,    -32.5,
+            66.5,    -32.5,
+            61.5,    -34.5,
+            53.5,      -44,
+              49,      -47,
+        
+            34.5,      -47,
+            29.5,    -43.5,
+            23.5,      -39,
+              -5,      -38,
+            -7.5,    -46.5,
+        
+             -14,      -50,
+             -26,      -50,
+             -33,      -48,
+             -39,      -45,
+             -59,    -42.5,
+        
+           -67.5,      -44,
+           -76.5,      -52,
+          -110.5,    -51.5,
+            -119,      -42,
+          -125.5,    -33.5,
+        
+            -132,      -33,
+            -139,      -23,
+            -139,       23,
+            -132,       33,
+          -125.5,     33.5,
+        
+            -119,       42,
+          -110.5,     51.5,
+           -76.5,       52,
+           -67.5,       44,
+             -59,     42.5,
+        
+             -39,       45,
+             -33,       48,
+             -26,       50,
+             -14,       50,
+            -7.5,     46.5,
+        
+              -5,       38,
+            23.5,       39,
+            29.5,     43.5,
+            34.5,       47,
+              49,       47,
+        
+            53.5,       44,
+            61.5,     34.5,
+            66.5,     32.5,
+             102,     32.5,
+             111,     26.5,
+        
+             119,       29,
+             129,       26,
+           130.5,       14,
+           139.5,        5
+    # 54 points total.
+    ]
+}

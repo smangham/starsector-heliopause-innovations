@@ -12,20 +12,20 @@ import org.json.JSONObject;
  * Loads a JSONObject into a hashmap with member functions that allow you to navigate the tree
  * without constantly having to cast.
  */
-public class SensibleHashMap extends HashMap<String, Object> {
+public class MagicMap extends HashMap<String, Object> {
     /*
      * https://stackoverflow.com/questions/21720759/convert-a-json-string-to-a-hashmap
      */
-    public static SensibleHashMap fromJSON(JSONObject json) throws JSONException {
-        SensibleHashMap retMap = new SensibleHashMap();
+    public static MagicMap fromJSON(JSONObject json) throws JSONException {
+        MagicMap retMap = new MagicMap();
 
         if (json != JSONObject.NULL) retMap = toMap(json);
         return retMap;
     }
 
     @SuppressWarnings("unchecked")
-    protected static SensibleHashMap toMap(JSONObject object) throws JSONException {
-        SensibleHashMap map = new SensibleHashMap();
+    protected static MagicMap toMap(JSONObject object) throws JSONException {
+        MagicMap map = new MagicMap();
 
         Iterator<String> keysItr = object.keys();
         while (keysItr.hasNext()) {
@@ -162,12 +162,12 @@ public class SensibleHashMap extends HashMap<String, Object> {
         return new HashSet<>(listString);
     }
 
-    public SensibleHashMap getMapOrDefault(String key, SensibleHashMap defaultValue) {
+    public MagicMap getMapOrDefault(String key, MagicMap defaultValue) {
         if (!this.containsKey(key)) return defaultValue;
         return this.getMap(key);
     }
 
-    public SensibleHashMap getMap(String key) {
-        return (SensibleHashMap) this.get(key);
+    public MagicMap getMap(String key) {
+        return (MagicMap) this.get(key);
     }
 }

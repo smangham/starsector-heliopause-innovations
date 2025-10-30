@@ -1,0 +1,31 @@
+{
+    "displayName": "Exploration",
+    "fluxCapacitors": 30,
+    "fluxVents": 30,
+    "goalVariant": true,
+    "hullId": "tstHP_holiday",
+    "hullMods": [
+        "pointdefenseai",
+        "reinforcedhull"
+    ],
+    "quality": 0.0,
+    "variantId": "tstHP_holiday_Exploration",
+    "weaponGroups": [
+        {
+            "autofire": false,
+            "mode": "ALTERNATING",
+            "weapons": {
+                "WS 004": "lightdualmg",
+                "WS 005": "lightdualmg",
+                "WS 002": "ioncannon",
+                "WS 003": "ioncannon",
+                "WS 008": "annihilator",
+                "WS 009": "annihilator",
+                "WS 006": "lightmg",
+                "WS 007": "lightmg",
+                "WS 000": "devastator",
+                "WS 001": "heavymg"
+            }
+        }
+    ]
+}

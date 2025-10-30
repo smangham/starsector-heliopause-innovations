@@ -33,7 +33,7 @@ public class MissionDefinition implements MissionDefinitionPlugin {
 //        api.addToFleet(FleetSide.PLAYER, Variants.PINNACLE_MK1, FleetMemberType.SHIP, false);
 //        api.addToFleet(FleetSide.PLAYER, Variants.PINNACLE_BOSS, FleetMemberType.SHIP, false);
 //        api.addToFleet(FleetSide.PLAYER, Variants.POSSESSED_STARLINER, FleetMemberType.SHIP, false);
-//        api.addToFleet(FleetSide.PLAYER, Variants.POSSESSED_SHEPHERD, FleetMemberType.SHIP, false);
+        api.addToFleet(FleetSide.PLAYER, Variants.POSSESSED_SHEPHERD, FleetMemberType.SHIP, false);
 //        api.addToFleet(FleetSide.PLAYER, Variants.POSSESSED_TARSUS, FleetMemberType.SHIP, false);
 
         api.addToFleet(FleetSide.PLAYER, "venture_Exploration", FleetMemberType.SHIP, false);

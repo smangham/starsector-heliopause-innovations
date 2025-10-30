@@ -92,8 +92,7 @@ public class StormcallerMineExplosion implements ProximityExplosionEffect {
         for (ShipAPI ship : CombatUtils.getShipsWithinRange(explosionPoint, explosionRadius)) {
             if (
                     !ship.isFighter() && ship.isTargetable() && !ship.isPhased() &&
-                            !ship.getVariant().getTags().contains(HyperLibTags.HYPERSPACE_STORM_STRIKE_IMMUNE) &&
-                            !ship.getHullSpec().getTags().contains(HyperLibTags.HYPERSPACE_STORM_STRIKE_IMMUNE)
+                            !ship.hasTag(HyperLibTags.HYPERSPACE_STORM_STRIKE_IMMUNE)
             ) {
                 picker.add(ship, ship.getHullSize().ordinal());
             }

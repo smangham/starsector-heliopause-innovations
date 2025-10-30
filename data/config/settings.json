@@ -47,6 +47,9 @@
             "stage_START":"graphics/icons/campaign/slipstream_detection.png",
             "stage_MISSIONS":"graphics/toaster/hp/factions/heliopause_crest.png",
             "stage_MAX":"graphics/icons/missions/hyperspace_oddity.png"
+        },
+        "tstHP_chronosleeper_hullmod": {
+            "icon":"graphics/toaster/hp/hullmods/chronosleeper.png"
         }
 	}
 }

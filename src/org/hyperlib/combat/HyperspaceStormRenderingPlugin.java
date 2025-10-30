@@ -320,7 +320,6 @@ public class HyperspaceStormRenderingPlugin extends BaseCombatLayeredRenderingPl
         }
     }
 
-
     public boolean shouldDespawn() {
         if (attachedTo instanceof MissileAPI missile) {
             return !Global.getCombatEngine().isMissileAlive(missile);

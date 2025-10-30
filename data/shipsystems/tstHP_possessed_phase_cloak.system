@@ -1,0 +1,30 @@
+{
+	"id":"tstHP_possessed_phase_cloak",
+	"type":"PHASE_CLOAK",
+	"aiType":"DAMPER_FIELD",
+
+    "statsScript":"toaster.hp.shipsystems.GhostPhaseCloak",
+	"canNotCauseOverload":true,
+
+    # "effectColor1":[80,55,200,255],
+    # "effectColor2":[32,32,128,255],
+
+    # "jitterUnderColor":[255,165,90,155],
+    # "jitterUnderCopies":25,
+    # "jitterUnderMinRange":0,
+    # "jitterUnderRange":7,
+    # "jitterUnderRangeRadiusFraction":0,
+
+    # "jitterColor":[255,165,90,55],
+    # "jitterCopies":2,
+    # "jitterMinRange":0,
+    # "jitterRange":5,
+    # "jitterRangeRadiusFraction":0,
+
+	"clampTurnRateAfter":true,
+	"clampMaxSpeedAfter":true,
+
+	"soundFilterType":"LOWPASS",
+	"soundFilterGain":0.8,
+	"soundFilterGainHF":0.25,
+}

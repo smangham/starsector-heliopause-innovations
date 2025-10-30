@@ -47,6 +47,9 @@ This prototype version uses a shallow displacement into P-Space to evade attract
 tstHP_possessed_damper_system,SHIP_SYSTEM,"Highly-charged hull plating dramatically reduces damage.
 
 The presence of significant concentrations of energy, including kinetic or chemical potential, induces an extreme polarisation in the hull charge. The resulting electromagnetic field gradients shred matter and disrupt coherent energy weapons. The process by which this hyper-polarisation is induced is not yet known.",Special,"Highly-charged hull plating dramatically reduces damage.",,"Reduces incoming damage by {{75%}}, and reduces accumulated charge on the hull."
+tstHP_possessed_phase_cloak,SHIP_SYSTEM,"Briefly slides into hyperspace, avoiding damage.
+
+The presence of significant concentrations of energy in realspace, including kinetic or chemical potential, induces an extreme countervailing polarisation that forces the vessel into hyperspace. The process by which this hyper-polarisation is induced is not yet known.",Special,"Briefly slides into hyperspace, avoiding damage.",,"Phases the ship out for {{3 seconds}} with no increase in time multiplier, and reduces accumulated charge on the hull."
 tstHP_possessed_mote_controller,SHIP_SYSTEM,"Energy motes deal heavy EMP damage to ships and obliterate fighters and missiles. Using the system creates a temporary attractor point for the motes. The motes automatically target nearby missiles and fighters unless an attractor point is set on an enemy ship.",Special,"Energy motes deal heavy EMP damage to ships and obliterate fighters and missiles.",,"Motes deal {{1000 damage}} and {{1000 EMP}} damage. Activation reduces accumulated charge on the hull."
 
 # ================================ WEAPONS ================================
