@@ -1,6 +1,6 @@
 ![Faction Banner](images/heliopause_banner.png)
 # Heliopause Innovations
-`v0.1.0` for Starsector `0.98a-RC8`, made using Wisp's [IntelliJ Mod Template].
+`v0.1.1` for Starsector `0.98a-RC8`, made using Wisp's [IntelliJ Mod Template].
 
 ## Description
 
@@ -34,7 +34,7 @@ Visit the **CEO** on the planet **Ailmar**, in the **Westernesse** system, to st
 * **Mission** - **Atop A Stormy Pinnacle**: 
   * Unlocked by the R&D event, you'll be asked to recover the **Pinnacle Mk 1** from the depths of hyperspace.
   * <img src="images/heliopause_mission_pinnacle_start.png" alt="Alt Text" style="width:50%; height:auto;">
-
+    
 * **Ability** - **Call Storm**:
   * Unlocked by the R&D event, gain an ability that lets fleets with a **Pinnacle** create hyperspace storms.
 
@@ -44,6 +44,11 @@ Visit the **CEO** on the planet **Ailmar**, in the **Westernesse** system, to st
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------| 
 | A modification of the Apogee that shields the rest of the fleet. Out of combat, it blocks damage from storm strikes at the cost of CR; in-combat, it can attract projectiles towards itself and its ablative drones.      | The original version of the **Pinnacle**, without drones but capable of phasing.         |
 | ![Pinnacle](graphics/toaster/hp/ships/pinnacle/pinnacle.png)![Ablative Drone](graphics/toaster/hp/ships/pinnacle/pinnacle_drone.png)<img src="images/pinnacle_system.png" alt="Alt Text" style="width:70%; height:auto;"> | ![Pinnacle Mk 1](graphics/toaster/hp/ships/pinnacle/pinnacle_mk1.png)                    |
+
+| **Holiday Combat Liner** (Sprite by *happycrow*)                                                                                               | **Holiday Mk 1 Cruiser**                                                | 
+|------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------| 
+| A modification of the Starliner that can freeze ships in-place, invulnerable. Out of combat, it reduces the salary of surplus crew by 95%.     | The original version of the **Holiday**, with higher maintenance costs. |
+| ![Holiday](graphics/toaster/hp/ships/holiday/holiday.png) <img src="images/holiday_system.png" alt="Alt Text" style="width:70%; height:auto;"> | ![Holiday Mk 1](graphics/toaster/hp/ships/holiday/holiday_mk1.png)      |
 
 Some variations on vanilla ships appear as enemies. 
 
@@ -70,11 +75,13 @@ There's two new missions available from the main menu:
 
 ## References
 
-* [IntelliJ Mod Template] by Wisp
-* [Smooth Apogee Sprite] by Tartiflette
+* [IntelliJ Mod Template] by **Wisp**
+* [Smooth Apogee Sprite] by **Tartiflette**
+* [Holiday Combat Liner] by **happycrow**
 
 [GraphicsLib]: https://fractalsoftworks.com/forum/index.php?topic=10982.0
 [MagicLib]: https://github.com/MagicLibStarsector/MagicLib/
 [LazyLib]: https://github.com/LazyWizard/lazylib/
+[Holiday Combat Liner]: https://fractalsoftworks.com/forum/index.php?topic=34294.0
 [IntelliJ Mod Template]: https://github.com/wispborne/Starsector-IntelliJ-Template
 [Smooth Apogee Sprite]: https://fractalsoftworks.com/forum/index.php?topic=9320.0

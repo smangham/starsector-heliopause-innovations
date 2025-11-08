@@ -1,0 +1,14 @@
+{
+    "baseHullId":"tstHP_holiday",
+    "skinHullId":"tstHP_holiday_mk1",
+    "hullName":"Holiday Mk 1",
+    "descriptionPrefix":"The prototype of the Holiday occasionally suffers from relativistic stress when traversing gravitational field gradients. Days or even months of accelerated time can be rapidly dumped into the machinery, significantly increasing the maintenance profile.",
+	"tags":["restricted", "no_dealer", "codex_unlockable"],
+    "spriteName":"graphics/toaster/hp/ships/holiday/holiday_mk1.png",
+    "baseValueMult":0.8,
+    "builtInMods":["high_maintenance"]
+}
+
+
+
+

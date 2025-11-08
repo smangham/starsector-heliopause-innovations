@@ -1,4 +1,4 @@
-package org.hyperlib.combat.graphics;
+package org.magiclib.graphics;
 
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.graphics.SpriteAPI;
@@ -6,8 +6,17 @@ import org.lazywizard.lazylib.MathUtils;
 
 /**
  * Samples a single sprite from a tilesheet of multiple symbols.
+ * <p>
+ * Example of using it to get hyperspace terrain sprites:
+ * <pre>
+ *     MagicTiledSpriteSampler mySampler = new MagicTiledSpriteSampler("hyperspace", "deep_hyperspace", 4, 4);
+ *     SpriteAPI sprite = mySampler.getSprite();
+ * </pre>
+ *
+ * @author Toaster
  */
-public class TiledSpriteSampler {
+@SuppressWarnings("unused")
+public class MagicTiledSpriteSampler {
     protected final String category;
     /// The category in the graphics section.
     protected final String key;
@@ -28,7 +37,7 @@ public class TiledSpriteSampler {
      * @param tilesX   How many tiles in the X direction.
      * @param tilesY   How many tiles in the Y direction.
      */
-    public TiledSpriteSampler(
+    public MagicTiledSpriteSampler(
             String category, String key, int tilesX, int tilesY
     ) {
         this.category = category;

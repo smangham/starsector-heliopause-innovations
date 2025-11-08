@@ -7,7 +7,7 @@ import com.fs.starfarer.api.combat.EmpArcEntityAPI;
 import com.fs.starfarer.api.combat.EmpArcEntityAPI.EmpArcParams;
 import com.fs.starfarer.api.util.WeightedRandomPicker;
 import org.hyperlib.HyperLibTags;
-import org.hyperlib.HyperLibSoundIds;
+import org.hyperlib.HyperLibSounds;
 import org.lazywizard.lazylib.MathUtils;
 import org.lazywizard.lazylib.VectorUtils;
 import org.lazywizard.lazylib.combat.CombatUtils;
@@ -152,7 +152,7 @@ public class StormcallerMineExplosion implements ProximityExplosionEffect {
                     originalProjectile.getDamageAmount(),
                     originalProjectile.getEmpAmount(),
                     100000f,  // If they were hit by the blast, they're in range!
-                    HyperLibSoundIds.HYPERSPACE_LIGHTNING,
+                    HyperLibSounds.HYPERSPACE_LIGHTNING,
                     StormcallerParams.STRIKE_ARC_WIDTH,
                     StormcallerParams.STRIKE_COLOUR,
                     Color.white,
@@ -193,7 +193,7 @@ public class StormcallerMineExplosion implements ProximityExplosionEffect {
             );
             arc.setFadedOutAtStart(true);
             Global.getSoundPlayer().playSound(
-                    HyperLibSoundIds.HYPERSPACE_LIGHTNING, 1f, 1f, explosionPoint, new Vector2f()
+                    HyperLibSounds.HYPERSPACE_LIGHTNING, 1f, 1f, explosionPoint, new Vector2f()
             );
         }
     }

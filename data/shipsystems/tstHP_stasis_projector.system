@@ -1,0 +1,23 @@
+{
+	"id":"tstHP_stasis_projector",
+	"type":"STAT_MOD",
+    "aiType":"CUSTOM",
+    "aiScript":"toaster.hp.shipsystems.StasisProjectorAI",
+	
+	"statsScript":"toaster.hp.shipsystems.StasisProjector",
+
+	"runScriptWhileIdle":true, # unapply() never gets called
+		
+	"fadeActivationSoundOnChargedown":true,
+    "useSound":"system_temporalshell",
+    "loopSound":"system_temporalshell_loop",
+    "deactivateSound":"system_temporalshell_off",
+	"outOfUsesSound":"gun_out_of_ammo",
+	
+	"aiHints":{
+	}
+}
+
+
+
+

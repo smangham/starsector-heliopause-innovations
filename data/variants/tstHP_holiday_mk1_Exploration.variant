@@ -1,15 +1,15 @@
 {
-    "displayName": "Exploration",
+    "displayName": "Prototype",
     "fluxCapacitors": 30,
     "fluxVents": 30,
     "goalVariant": true,
-    "hullId": "tstHP_holiday",
+    "hullId": "tstHP_holiday_mk1",
     "hullMods": [
         "pointdefenseai",
         "reinforcedhull"
     ],
     "quality": 0.0,
-    "variantId": "tstHP_holiday_Exploration",
+    "variantId": "tstHP_holiday_mk1_Exploration",
     "weaponGroups": [
         {
             "autofire": true,

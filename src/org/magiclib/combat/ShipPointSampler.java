@@ -1,6 +1,5 @@
-package org.hyperlib.util;
+package org.magiclib.combat;
 
-import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.combat.BoundsAPI;
 import com.fs.starfarer.api.combat.ShipAPI;
 import com.fs.starfarer.api.util.Misc;
@@ -13,10 +12,24 @@ import java.util.List;
 
 /**
  * Slightly more efficiently samples points within or on a ship's bounds.
+ * <p>
+ * Generally, just use `MagicPointSampler`. If you really need to, try:
+ * <pre>
+ *     ShipPointSampler mySampler = new ShipPointSampler(myShip);
+ *     Vector2f myShipPoint = mySampler.getInternalPoint();
+ * </pre>
+ *
+ * @author Toaster
  */
 public class ShipPointSampler {
+    public static int RANDOM_POINT_MAX_TRIES = 8;
+    /// How many times to try sampling before giving up.
+
     protected final float x_base, y_base, x_mult, y_mult;
-    protected final ShipAPI ship;  /// The ship this is for.
+    /// The base values on each axis, and the range they span.
+
+    protected final ShipAPI ship;
+    /// The ship this is for.
 
     /**
      * Declares the sampler for a specific ship.
@@ -54,7 +67,7 @@ public class ShipPointSampler {
         float cos = (float) FastTrig.cos(Math.toRadians(ship.getFacing()));
         float x_random, y_random;
 
-        for (int i = 0; i < HyperLibVector.RANDOM_POINT_MAX_TRIES; i++) {
+        for (int i = 0; i < RANDOM_POINT_MAX_TRIES; i++) {
             x_random = x_base + x_mult * (float) Math.random();
             y_random = y_base + y_mult * (float) Math.random();
 
@@ -80,11 +93,12 @@ public class ShipPointSampler {
      */
     protected Vector2f getInternalPointDistantFrom(Vector2f point, float radius) {
         Vector2f pointOut = new Vector2f();
-        float distance, x_random, y_random;
+        float x_random, y_random;
+        float radiusSq = radius * radius;
         float sin = (float) FastTrig.sin(Math.toRadians(ship.getFacing()));
         float cos = (float) FastTrig.cos(Math.toRadians(ship.getFacing()));
 
-        for (int i = 0; i < HyperLibVector.RANDOM_POINT_MAX_TRIES; i++) {
+        for (int i = 0; i < RANDOM_POINT_MAX_TRIES; i++) {
             x_random = x_base + x_mult * (float) Math.random();
             y_random = y_base + y_mult * (float) Math.random();
 
@@ -96,14 +110,44 @@ public class ShipPointSampler {
                     ),
                     pointOut
             );
-            distance = Misc.getDistance(point, pointOut);
-            if (distance > radius) {
-                if (CollisionUtils.isPointWithinBounds(pointOut, ship)) return pointOut;
-            } else {
-                Global.getLogger(ShipPointSampler.class).info("Point " + i + " failed, distance " + distance + " vs ship scale " + getMinDimension());
+            if (Misc.getDistanceSq(point, pointOut) > radiusSq && CollisionUtils.isPointWithinBounds(pointOut, ship)) {
+                return pointOut;
             }
         }
+        return new Vector2f(ship.getLocation());
+    }
 
+    /**
+     * Gets a point in the bounds, within a given distance of another point.
+     *
+     * @param point  The point to be near.
+     * @param radius The radius within the point the sample must be.
+     * @return The location if successful, or the ship's centre if not.
+     */
+    protected Vector2f getInternalPointNearTo(Vector2f point, float radius) {
+        Vector2f pointOut = new Vector2f();
+        float x_random, y_random;
+        float radiusSq = radius * radius;
+        float sin = (float) FastTrig.sin(Math.toRadians(ship.getFacing()));
+        float cos = (float) FastTrig.cos(Math.toRadians(ship.getFacing()));
+
+        for (int i = 0; i < RANDOM_POINT_MAX_TRIES; i++) {
+            x_random = x_base + x_mult * (float) Math.random();
+            y_random = y_base + y_mult * (float) Math.random();
+
+            Vector2f.add(
+                    ship.getLocation(),
+                    new Vector2f(
+                            cos * x_random + sin * y_random,
+                            sin * x_random + cos * y_random
+                    ),
+                    pointOut
+            );
+
+            if (Misc.getDistanceSq(point, pointOut) <= radiusSq && CollisionUtils.isPointWithinBounds(pointOut, ship)) {
+                return pointOut;
+            }
+        }
         return new Vector2f(ship.getLocation());
     }
 
@@ -135,10 +179,24 @@ public class ShipPointSampler {
     }
 
     /**
+     * Gets the smallest scale of the ship, more usefully than getCollisionRadius.
+     *
      * @return The minimum of the X and Y dimensions.
      */
     protected float getMinDimension() {
         return Math.min(
+                x_base + x_mult,
+                y_base + y_mult
+        );
+    }
+
+    /**
+     * Gets the largest scale of the ship, more usefully than getCollisionRadius.
+     *
+     * @return The maximum of the X and Y dimensions.
+     */
+    protected float getMaxDimension() {
+        return Math.max(
                 x_base + x_mult,
                 y_base + y_mult
         );

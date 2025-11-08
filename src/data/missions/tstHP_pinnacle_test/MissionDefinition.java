@@ -3,7 +3,6 @@ package data.missions.tstHP_pinnacle_test;
 import com.fs.starfarer.api.combat.BattleCreationContext;
 import com.fs.starfarer.api.fleet.FleetGoal;
 import com.fs.starfarer.api.fleet.FleetMemberType;
-import com.fs.starfarer.api.impl.combat.EscapeRevealPlugin;
 import com.fs.starfarer.api.mission.FleetSide;
 import com.fs.starfarer.api.mission.MissionDefinitionAPI;
 import com.fs.starfarer.api.mission.MissionDefinitionPlugin;
@@ -30,10 +29,11 @@ public class MissionDefinition implements MissionDefinitionPlugin {
 		// Set up the player's fleet.  Variant names come from the
 		// files in data/variants and data/variants/fighters
 		api.addToFleet(FleetSide.PLAYER, Variants.PINNACLE_EXPLORATION, FleetMemberType.SHIP, "ISS Pride of Opis", true);
+        api.addToFleet(FleetSide.PLAYER, Variants.HOLIDAY_MK1, FleetMemberType.SHIP, false);
 //        api.addToFleet(FleetSide.PLAYER, Variants.PINNACLE_MK1, FleetMemberType.SHIP, false);
 //        api.addToFleet(FleetSide.PLAYER, Variants.PINNACLE_BOSS, FleetMemberType.SHIP, false);
 //        api.addToFleet(FleetSide.PLAYER, Variants.POSSESSED_STARLINER, FleetMemberType.SHIP, false);
-        api.addToFleet(FleetSide.PLAYER, Variants.POSSESSED_SHEPHERD, FleetMemberType.SHIP, false);
+//        api.addToFleet(FleetSide.PLAYER, Variants.POSSESSED_SHEPHERD, FleetMemberType.SHIP, false);
 //        api.addToFleet(FleetSide.PLAYER, Variants.POSSESSED_TARSUS, FleetMemberType.SHIP, false);
 
         api.addToFleet(FleetSide.PLAYER, "venture_Exploration", FleetMemberType.SHIP, false);

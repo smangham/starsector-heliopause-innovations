@@ -5,9 +5,8 @@ import java.util.*;
 import java.awt.Color;
 
 import com.fs.starfarer.api.util.*;
-import org.hyperlib.HyperLibIds;
 import org.hyperlib.combat.graphics.HyperspaceTiledSpriteSamplers;
-import org.hyperlib.combat.graphics.WarpingTiledSpriteRendererUtil;
+import org.magiclib.graphics.WarpingTiledSpriteRendererUtil;
 import org.hyperlib.util.ScalingFlickerUtil;
 import org.lwjgl.util.vector.Vector2f;
 

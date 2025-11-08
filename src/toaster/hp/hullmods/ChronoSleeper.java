@@ -43,16 +43,18 @@ public class ChronoSleeper extends BaseHullMod {
     public static final String ID = HullMods.CHRONOSLEEPER;
     /// The game ID for this hullmod.
 
+    public static final String CAPACITY_TEXT = Global.getSettings().getString(ID, "capacity");
+
     public static final float CREW_SALARY_REDUCTION = 0.95f;
     ///  The reduction in slaary of crew in chronostasis.
 
     public static final String TAG = Tags.CHRONOSLEEPER;
     /// The tag for a ship with chronosleep facilities.
 
-    public static String MEMORY_KEY = "$"+Tags.CHRONOSLEEPER;
+    public static final String MEMORY_KEY = "$"+Tags.CHRONOSLEEPER;
     ///  The memory key used to store whether or not there are active chronosleepers.
 
-    public static float DAYS_PER_CHECK = 1f;
+    public static final float DAYS_PER_CHECK = 1f;
     /// How long to wait between re-assessing the fleet
 
     protected float elapsed = 0f;
@@ -110,6 +112,27 @@ public class ChronoSleeper extends BaseHullMod {
     }
 
     /**
+     * @param tooltip
+     * @param hullSize
+     * @param ship
+     * @param width
+     * @param isForModSpec
+     */
+    @Override
+    public void addPostDescriptionSection(TooltipMakerAPI tooltip, ShipAPI.HullSize hullSize, ShipAPI ship, float width, boolean isForModSpec) {
+        super.addPostDescriptionSection(tooltip, hullSize, ship, width, isForModSpec);
+
+        if (ship == null) return;
+        if (ship.getFleetMember() == null) return;
+
+        tooltip.addPara(
+                CAPACITY_TEXT.replace("%s", "" + getChronoSleepCapacity(ship.getFleetMember())),
+                10f, Misc.getTextColor(), Misc.getHighlightColor(),
+                "" + getChronoSleepCapacity(ship.getFleetMember())
+        );
+    }
+
+    /**
      * @param index
      * @param hullSize
      * @param ship
@@ -117,13 +140,7 @@ public class ChronoSleeper extends BaseHullMod {
      */
     @Override
     public String getDescriptionParam(int index, ShipAPI.HullSize hullSize, ShipAPI ship) {
-        if (ship.getFleetMember() != null) {
-            if (index == 0) return "" + (int) (CREW_SALARY_REDUCTION * 100);
-            if (index == 1) return "" + getChronoSleepCapacity(ship.getFleetMember());
-        } else {
-            if (index == 0) return "" + (int) (CREW_SALARY_REDUCTION * 100);
-            if (index == 1) return "" + (ship.getHullSpec().getMaxCrew() - ship.getHullSpec().getMinCrew());
-        }
+        if (index == 0) return "" + (int) (CREW_SALARY_REDUCTION * 100);
         return super.getDescriptionParam(index, hullSize, ship);
     }
 

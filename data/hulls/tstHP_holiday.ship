@@ -14,7 +14,7 @@
     "shieldCenter": [
         0, 0
     ],
-    "shieldRadius": 141.5,
+    "shieldRadius": 165,
     "viewOffset": 0,
     "builtInMods": [
         "tstHP_chronosleeper_hullmod"
@@ -25,7 +25,7 @@
         {
             "id": "WS 000",
             "size": "LARGE",
-            "type": "COMPOSITE",
+            "type": "UNIVERSAL",
             "mount": "TURRET",
             "arc": 277,
             "angle": 180.5,
@@ -36,7 +36,7 @@
         {
             "id": "WS 001",
             "size": "MEDIUM",
-            "type": "BALLISTIC",
+            "type": "UNIVERSAL",
             "mount": "TURRET",
             "arc": 237,
             "angle": 0,
@@ -47,10 +47,10 @@
         {
             "id": "WS 002",
             "size": "SMALL",
-            "type": "HYBRID",
+            "type": "MISSILE",
             "mount": "TURRET",
             "arc": 168,
-            "angle": 97,
+            "angle": 80,
             "locations": [
                     47.5,       36
             ]
@@ -58,10 +58,10 @@
         {
             "id": "WS 003",
             "size": "SMALL",
-            "type": "HYBRID",
+            "type": "MISSILE",
             "mount": "TURRET",
             "arc": 168,
-            "angle": 263,
+            "angle": 280,
             "locations": [
                     47.5,      -36
             ]
@@ -69,7 +69,7 @@
         {
             "id": "WS 004",
             "size": "SMALL",
-            "type": "BALLISTIC",
+            "type": "ENERGY",
             "mount": "TURRET",
             "arc": 166,
             "angle": 50,
@@ -80,7 +80,7 @@
         {
             "id": "WS 005",
             "size": "SMALL",
-            "type": "BALLISTIC",
+            "type": "ENERGY",
             "mount": "TURRET",
             "arc": 166,
             "angle": 310,
@@ -91,7 +91,7 @@
         {
             "id": "WS 006",
             "size": "SMALL",
-            "type": "BALLISTIC",
+            "type": "ENERGY",
             "mount": "TURRET",
             "arc": 171,
             "angle": 116.5,
@@ -102,7 +102,7 @@
         {
             "id": "WS 007",
             "size": "SMALL",
-            "type": "BALLISTIC",
+            "type": "ENERGY",
             "mount": "TURRET",
             "arc": 171,
             "angle": 243.5,
@@ -113,7 +113,7 @@
         {
             "id": "WS 008",
             "size": "SMALL",
-            "type": "COMPOSITE",
+            "type": "MISSILE",
             "mount": "TURRET",
             "arc": 147,
             "angle": 88,
@@ -124,12 +124,23 @@
         {
             "id": "WS 009",
             "size": "SMALL",
-            "type": "COMPOSITE",
+            "type": "MISSILE",
             "mount": "TURRET",
             "arc": 147,
             "angle": 272,
             "locations": [
                      -27,    -39.5
+            ]
+        },
+        {
+            "id": "LB 000",
+            "size": "SMALL",
+            "type": "LAUNCH_BAY",
+            "mount": "HIDDEN",
+            "arc": 45,
+            "angle": 0,
+            "locations": [
+                    65.5,        0
             ]
         }
     ],

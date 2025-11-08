@@ -1,18 +1,19 @@
 package org.hyperlib.combat.graphics;
 
 import com.fs.starfarer.api.graphics.SpriteAPI;
+import org.magiclib.graphics.MagicTiledSpriteSampler;
 
 /**
  * Samplers for the various tiled sprites.
  */
 public class HyperspaceTiledSpriteSamplers {
-    protected static TiledSpriteSampler deepHyperspace = new TiledSpriteSampler(
+    protected static MagicTiledSpriteSampler deepHyperspace = new MagicTiledSpriteSampler(
             "hyperlib", "deep_hyperspace", 4, 4
     );
-    protected static TiledSpriteSampler deepHyperspaceDark = new TiledSpriteSampler(
+    protected static MagicTiledSpriteSampler deepHyperspaceDark = new MagicTiledSpriteSampler(
             "hyperlib", "deep_hyperspace_dark", 4, 4
     );
-    protected static TiledSpriteSampler deepHyperspaceGlow = new TiledSpriteSampler(
+    protected static MagicTiledSpriteSampler deepHyperspaceGlow = new MagicTiledSpriteSampler(
             "hyperlib", "deep_hyperspace_glow", 4, 4
     );
 

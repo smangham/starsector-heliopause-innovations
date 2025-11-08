@@ -7,16 +7,13 @@ import com.fs.starfarer.api.combat.ShipAPI.HullSize;
 import com.fs.starfarer.api.impl.campaign.ids.Stats;
 import com.fs.starfarer.api.impl.combat.MoteControlScript;
 import com.fs.starfarer.api.util.IntervalUtil;
-import com.fs.starfarer.combat.ai.system.V;
 import org.hyperlib.HyperLibColours;
 import org.hyperlib.HyperLibTags;
 import org.hyperlib.combat.graphics.HyperspaceTiledSpriteSamplers;
-import org.hyperlib.util.HyperLibCollision;
-import org.lazywizard.lazylib.combat.CombatUtils;
+import org.magiclib.combat.MagicPointSampler;
 import org.magiclib.util.MagicRender;
 import org.magiclib.util.MagicUI;
 import toaster.hp.GhostUtil;
-import org.hyperlib.util.HyperLibVector;
 import org.hyperlib.util.ScalingFlickerUtil;
 import org.lazywizard.lazylib.MathUtils;
 import org.lwjgl.util.vector.Vector2f;
@@ -28,7 +25,6 @@ import toaster.hp.combat.ghost.GhostMoteAIScript;
 
 import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 
 /**
@@ -269,7 +265,7 @@ public class GhostPossessed extends BaseHullMod {
         for (int i = 0; i < cloudsBelow; i++) {
             MagicRender.battlespace(
                     HyperspaceTiledSpriteSamplers.getHyperspaceDarkSprite(),
-                    HyperLibCollision.getInternalPoint(ship), new Vector2f(),
+                    MagicPointSampler.getInternalPoint(ship), new Vector2f(),
                     cloudSize, new Vector2f(),
                     MathUtils.getRandomNumberInRange(0f, 360f), MathUtils.getRandomNumberInRange(-15f, 15f),
                     Color.WHITE, false,
@@ -281,7 +277,7 @@ public class GhostPossessed extends BaseHullMod {
         for (int i = 0; i < cloudsAbove; i++) {
             MagicRender.battlespace(
                     HyperspaceTiledSpriteSamplers.getHyperspaceSprite(),
-                    HyperLibCollision.getInternalPoint(ship), new Vector2f(),
+                    MagicPointSampler.getInternalPoint(ship), new Vector2f(),
                     cloudSize, new Vector2f(),
                     MathUtils.getRandomNumberInRange(0f, 360f), MathUtils.getRandomNumberInRange(-15f, 15f),
                     CLOUD_OVER_COLOUR, false,
@@ -323,7 +319,7 @@ public class GhostPossessed extends BaseHullMod {
         this.jitterFlicker = new ScalingFlickerUtil(JITTER_FLICKER_WAIT_MAX, 1f);
         this.jitterFlicker.newWait();
         this.arcWidth = ARC_WIDTH_BASE + ARC_WIDTH_HULL_SIZE_MULT * ship.getHullSize().ordinal();
-        this.arcExclusionRadius = HyperLibCollision.getMinDimension(ship) * 0.9f;
+        this.arcExclusionRadius = MagicPointSampler.getMinDimension(ship) * 0.9f;
         this.arcElapsed = 0;
         this.shipSize = ship.getHullSize().ordinal() - 1;
 
@@ -350,8 +346,10 @@ public class GhostPossessed extends BaseHullMod {
     }
 
     /**
-     * @param ship
-     * @return
+     * Gets a size of cloud that's reasonable size for the ship.
+     *
+     * @param ship The ship to get the cloud size for.
+     * @return A cloud of size appropriate for it.
      */
     public static Vector2f getCloudSize(ShipAPI ship) {
         return new Vector2f(
@@ -474,8 +472,8 @@ public class GhostPossessed extends BaseHullMod {
                     )
             );
             for (int i = 0; i < numArcs; i++) {
-                pointStart = HyperLibCollision.getInternalPoint(ship);
-                pointEnd = HyperLibCollision.getInternalPointDistantFrom(ship, pointStart, this.arcExclusionRadius);
+                pointStart = MagicPointSampler.getInternalPoint(ship);
+                pointEnd = MagicPointSampler.getInternalPointDistantFrom(ship, pointStart, this.arcExclusionRadius);
 
                 EmpArcEntityAPI arc = engine.spawnEmpArcVisual(
                         pointStart, ship, pointEnd, ship,
@@ -576,7 +574,7 @@ public class GhostPossessed extends BaseHullMod {
         public String loopSound;
     }
 
-    public static Map<String, MoteData> MOTE_DATA = new HashMap<String, MoteData>();
+    public static Map<String, MoteData> MOTE_DATA = new HashMap<>();
 
     static {
         // Trimmed down to just the one entry
@@ -621,7 +619,7 @@ public class GhostPossessed extends BaseHullMod {
      *
      */
     public static class SharedGhostMoteAIData extends MoteControlScript.SharedMoteAIData {
-        public int maxMotes = 0;
+        public int maxMotes;
 //        public float elapsed = 0f;
 //        public List<MissileAPI> motes = new ArrayList<MissileAPI>();
 

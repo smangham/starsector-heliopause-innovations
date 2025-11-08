@@ -1,4 +1,4 @@
-package org.hyperlib.campaign;
+package org.magiclib.campaign;
 
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.*;
@@ -12,7 +12,7 @@ import com.fs.starfarer.api.impl.campaign.submarkets.BaseSubmarketPlugin;
 import com.fs.starfarer.api.impl.campaign.submarkets.BlackMarketPlugin;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.hyperlib.util.MagicMap;
+import org.magiclib.util.MagicMap;
 
 import java.io.IOException;
 import java.util.*;

@@ -1,4 +1,4 @@
-package org.hyperlib.combat.graphics;
+package org.magiclib.graphics;
 
 import java.awt.Color;
 
@@ -7,16 +7,24 @@ import org.lwjgl.opengl.GL11;
 import com.fs.starfarer.api.graphics.SpriteAPI;
 import com.fs.starfarer.api.util.WarpingSpriteRendererUtil.MutatingValue;
 
-
 /**
  * Warping sprite utility for tiled sprites.
  * <p>
  * For rendering sprites that wiggle a bit like hyperspace clouds.
  * Based on WarpingSpriteRendererUtil, but adjusted to allow for tiled sprites.
+ * Example use:
+ * <pre>
+ *     MagicTiledSpriteSampler mySampler = new MagicTiledSpriteSampler("hyperspace", "deep_hyperspace", 4, 4);
+ *     SpriteAPI mySprite = mySampler.getSprite();
+ *     WarpingTiledSpriteRendererUtil myRenderer = new WarpingTiledSpriteRendererUtil(
+ *         mySprite, 4, 4, mySprite.getWidth() * 0.1, mySprite.getWidth() * 0.2, 1
+ *     );
+ * </pre>
  *
  * @author Alex originally.
  * @author Toaster minor modifications.
  */
+@SuppressWarnings("unused")
 public class WarpingTiledSpriteRendererUtil {
     /**
      * Shivering sprite vertex
@@ -97,7 +105,7 @@ public class WarpingTiledSpriteRendererUtil {
     /**
      * Only works once, if the original mult was 1f - original rate values are not retained.
      *
-     * @param mult
+     * @param mult Multiplier to the warping rate.
      */
     public void setWarpRateMult(float mult) {
         for (int i = 0; i < verticesWide; i++) {
@@ -236,18 +244,3 @@ public class WarpingTiledSpriteRendererUtil {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

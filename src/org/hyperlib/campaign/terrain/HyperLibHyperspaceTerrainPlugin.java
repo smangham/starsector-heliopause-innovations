@@ -1,5 +1,6 @@
 package org.hyperlib.campaign.terrain;
 
+import com.fs.starfarer.api.campaign.SectorEntityToken;
 import org.hyperlib.HyperLibTags;
 import org.hyperlib.campaign.terrain.hyperspace.ApplyStormStrikesHandler;
 
@@ -10,6 +11,18 @@ import com.fs.starfarer.api.impl.campaign.terrain.HyperspaceTerrainPlugin;
  * Extends the default hyperspace terrain plugin with a framework for modifying other behaviours.
  */
 public class HyperLibHyperspaceTerrainPlugin extends HyperspaceTerrainPlugin {
+    /**
+     * Initiqlise the terrain.
+     *
+     * @param terrainId The id for this terrain.
+     * @param entity The sector entity for it.
+     * @param param The parameters used for initialisation.
+     */
+    @Override
+    public void init(String terrainId, SectorEntityToken entity, Object param) {
+        super.init(terrainId, entity, param);
+    }
+
     /**
      * Applies the results of a hyperspace storm strike.
      * <p>
@@ -58,11 +71,11 @@ public class HyperLibHyperspaceTerrainPlugin extends HyperspaceTerrainPlugin {
     }
 
     /**
-     * Constructor to nick the content of an existing HyperspaceTerrainPlugin.
-     *
-     * @param plugin The existing plugin.
+     * Standard constructor.
+     * <p>
+     * Strangely dev mode worked without it but non-dev mode doesn't?
      */
-    public HyperLibHyperspaceTerrainPlugin(HyperspaceTerrainPlugin plugin) {
+    public HyperLibHyperspaceTerrainPlugin() {
         super();
     }
 }

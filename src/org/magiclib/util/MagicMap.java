@@ -1,4 +1,4 @@
-package org.hyperlib.util;
+package org.magiclib.util;
 
 import java.util.*;
 
@@ -12,6 +12,7 @@ import org.json.JSONObject;
  * Loads a JSONObject into a hashmap with member functions that allow you to navigate the tree
  * without constantly having to cast.
  */
+@SuppressWarnings("unused")
 public class MagicMap extends HashMap<String, Object> {
     /*
      * https://stackoverflow.com/questions/21720759/convert-a-json-string-to-a-hashmap
@@ -43,7 +44,7 @@ public class MagicMap extends HashMap<String, Object> {
     }
 
     protected static List<Object> toList(JSONArray array) throws JSONException {
-        List<Object> list = new ArrayList<Object>();
+        List<Object> list = new ArrayList<>();
         for (int i = 0; i < array.length(); i++) {
             Object value = array.get(i);
             if (value instanceof JSONArray) {
@@ -156,7 +157,6 @@ public class MagicMap extends HashMap<String, Object> {
         return this.getStringSet(key);
     }
 
-    @SuppressWarnings("unchecked")
     public HashSet<String> getStringSet(String key) {
         List<String> listString = getStringList(key);
         return new HashSet<>(listString);

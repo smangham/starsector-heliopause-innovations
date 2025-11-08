@@ -52,6 +52,14 @@
         "name": "Call Storm",
         "activation": "Induce hyperspace storm.",
     },
+    "tstHP_stasis_projector":{
+        "floating_text": "Slowed time",
+        "status_target": "current time rate",
+        "status_user": "target time rate",
+        "info_ready": "READY",
+        "info_out_of_range": "OUT OF RANGE",
+        "info_no_target": "NO TARGET",
+},
     "tstHP_storm_dampner":{
         "cr_event": "Resisted hyperspace storm damage.",
         "resisted_message": "{{ship}} loses {{cr}} CR resisting storm damage."
@@ -65,6 +73,9 @@
         "stage_RETURN_market": "You agreed to return the wrecked prototype to {{person}} here.",
         "stage_COMPLETED_desc": "Received safety updates to the Pinnacle Mk 1.",
         "target_reason": "Derelict Pinnacle prototype",
+    },
+    "tstHP_chronosleeper_hullmod":{
+        "capacity": "This ship has the capacity to hold %s crew in stasis."
     },
     "abilityCommon":{
         "range": "*2000 units = 1 map grid cell",

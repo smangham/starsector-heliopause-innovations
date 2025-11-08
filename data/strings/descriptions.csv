@@ -24,6 +24,11 @@ The ship is a relatively uncommon sight, at least in part due to difficulties re
 These can include, due to fundamental design flaws, the sudden overload and failure of the projectors if the ship enters sufficiently deep hyperspace. Though a non-issue in abyssal hyperspace where no storm protection is needed, crews occasionally find themselves scrambling to reset systems during regular storms.
 
 This early prototype does not use ablative drones to intercept storm strikes, instead using its field projectors to displace the ship into P-space to avoid them."
+tstHP_holiday,SHIP,"A licensed modification of the Starliner, the Holiday uses temporal manipulation as an alternative to cryosleep for long-distance missions.
+
+Frontier surveys routinely involve long travel times for large crews. As traditional cryosleep poses a risk of brain damage or death on during freezing or defrosting, the hazard pay required means long-distance trips can be ruinously expensive. Instead, the Holiday uses 'chronosleep' - holding passengers in stasis using temporal dampening fields.
+
+The difficulty of maintaining a stable timeflow against the spacetime distortions associated with hyperspace travel means that the technology scales poorly, and the Holiday is the smallest technically viable vessel. Development became economically unviable post-Collapse and only a few early models survive."
 tstHP_pinnacle_drone,SHIP,"A simplistic design in contrast to their parent vessel, ablative drones are little more than an armour plate with an engine attached, and a basic shield generator to protect against disruption by charged particle bursts. Despite their sturdy construction, they are not expected to survive deployment in a storm."
 tstHP_possessed_tarsus,SHIP,"Many ships are lost in hyperspace throughout the sector, thanks to conflict, malfunction, or disaster. In rare cases, some have been sighted once again, but with unusual self-perpetuating electromagnetic phenomena in their flux conduits. Theories have been suggested based on the effects of long exposure to hyperspace outside of the stable lower-dimensional space imposed by a drive bubble, but with few observations they have largely been written off.
 
@@ -44,6 +49,11 @@ tstHP_attractor_field_mk1,SHIP_SYSTEM,"Projects a field capable of attracting bo
 Using esoteric high-energy physics and an array of sub-AI compute cores, the ship forms a local sink in at least seven different fields. Litigation over the precise number was not yet settled by the time of the Collapse.
 
 This prototype version uses a shallow displacement into P-Space to evade attracted strikes, instead of intercepting them with drones. This feature was removed from the production model due to persistent safety concerns.",Special,"Phases the ship whilst projecting a field that attracts projectiles.",,"Redirects projectiles within {{1600}} units towards the ship by {{120}} degrees per second, and slows them by {{33%}} per second. The ship is phased during the system's activation."
+tstHP_stasis_projector,SHIP_SYSTEM,"Freezes a ship in place, rendering it immune to damage.
+
+""Apparently the maths 'came to them in a dream', but they know you don't sleep. My bet? They're laundering a hidden AI core.""
+- Overheard, Heliopause Innovations R&D",Special,"Freezes a ship in place, rendering it immune to damage.",,"The target ship reduces time rate by {{95%}} and damage by {{100%}} for {{3}} seconds."
+
 tstHP_possessed_damper_system,SHIP_SYSTEM,"Highly-charged hull plating dramatically reduces damage.
 
 The presence of significant concentrations of energy, including kinetic or chemical potential, induces an extreme polarisation in the hull charge. The resulting electromagnetic field gradients shred matter and disrupt coherent energy weapons. The process by which this hyper-polarisation is induced is not yet known.",Special,"Highly-charged hull plating dramatically reduces damage.",,"Reduces incoming damage by {{75%}}, and reduces accumulated charge on the hull."
