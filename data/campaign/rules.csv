@@ -1,13 +1,13 @@
 id,trigger,conditions,script,text,options,notes
-# ================ Faction relationship entries ================
+# ================ Faction relationship entries ================,,,,,,
 tstHPHeliopauseRepGood_4,RelationshipLevelDesc,"$faction.rel == COOPERATIVE
 $faction.id == tstHP_heliopause_faction",,"Tales of wondrous planets and exotic phenomena explored by your fleet are a cornerstone of $faction marketing efforts. Directors offer you hospitality whenever your $shipOrFleet docks, and multiple R&D projects hinge on data you gather.",,1
 tstHPHeliopauseRepGood_3,RelationshipLevelDesc,"$faction.rel == FRIENDLY
-$faction.id == tstHP_heliopause_faction",,"Guides on data acquisition and frontier-friendly behaviour included with new $faction ships include examples taken from your $shipOrFleet. Senior staff plan ways to leverage their connections to you for advancement.",,1
+$faction.id == tstHP_heliopause_faction",,Guides on data acquisition and frontier-friendly behaviour included with new $faction ships include examples taken from your $shipOrFleet. Senior staff plan ways to leverage their connections to you for advancement.,,1
 tstHPHeliopauseRepGood_2,RelationshipLevelDesc,"$faction.rel == WELCOMING
  $faction.id == tstHP_heliopause_faction",,"$faction staff welcome your $shipOrFleet's arrival in-system, and your data quality and reliability is highly-rated.",,1
 tstHPHeliopauseRepGood_1,RelationshipLevelDesc,"$faction.rel == FAVORABLE
-$faction.id == tstHP_heliopause_faction",,"You are considered a reliable customer by $faction. Your $shipOrFleet is registered on a mailing list for updated brochures.",,1
+$faction.id == tstHP_heliopause_faction",,You are considered a reliable customer by $faction. Your $shipOrFleet is registered on a mailing list for updated brochures.,,1
 tstHPHeliopauseRepNone,RelationshipLevelDesc,"$faction.rel == NEUTRAL
 $faction.id == tstHP_heliopause_faction",,"$faction is not particularly aware of your actions, for good or ill. You are just another prospective customer.",,1
 tstHPHeliopauseRepBad_1,RelationshipLevelDesc,"$faction.rel == SUSPICIOUS
@@ -18,8 +18,8 @@ tstHPHeliopauseRepBad_3,RelationshipLevelDesc,"$faction.rel == HOSTILE
 $faction.id == tstHP_heliopause_faction",,"$faction actively expends its limited resources gathering documentation and evidence on your crimes, to submit to the Domain once the gate network is restored. Their fleets consider you hostile.",,1
 tstHPHeliopauseRepBad_4,RelationshipLevelDesc,"$faction.rel == VENGEFUL
 $faction.id == tstHP_heliopause_faction",,"Every $faction ship sold has transponder codes associated with your $shipOrFleet in its database, automatically IFF-flagged as hostile.",,1
-
-# ================ Starting the Heliopause data gathering event ================
+,,,,,,
+# ================ Starting the Heliopause data gathering event ================,,,,,,
 tstHPCEOGreetFirst,PickGreeting,"$id == tstHP_heliopause_ceo score:1000
 !$HeliopauseCEOGreet","$HeliopauseCEOGreet = true
 BeginConversation tstHP_heliopause_ceo
@@ -66,7 +66,7 @@ tstHPCEOGreetWhy2,DialogOptionSelected,$option == tstHPCEOGreetWhy2,FireAll tstH
 
 ""Since the Collapse, well, the company's done what it could with what remains. Brokering survey data, ship sales. The odd survey of some interesting phenomena, but without the Explorarium around to cover it we simply don't have the resources to do it at scale. And without that data, we can't develop any of the new products we need to survive.""
 
-""It's a vicious cycle. The only way to break it is to jump-start our R&D with fascinating new data like the readings your $shipOrFleet has.""",
+""It's a vicious cycle. The only way to break it is to jump-start our R&D with fascinating new data like the readings your $shipOrFleet has.""",,
 tstHPCEOGreetConcern,tstHPCEOGreetOptions,!$askedConcern,,,"tstHPCEOGreetConcern1:""How do I know you'll use the data responsibly?""",1
 tstHPCEOGreetConcern1,DialogOptionSelected,$option == tstHPCEOGreetConcern1,"AdjustRepActivePerson VENGEFUL -2
 RemoveOption tstHPCEOGreetConcern1
@@ -89,11 +89,11 @@ tstHPCEOGreetAccept1,DialogOptionSelected,$option == tstHPCEOGreetAccept1,"SetTe
 
 $HisOrHer demeanour becomes slightly more serious. ""Now, I assure you, you will have absolute commercial confidentiality over this. The Hegemony might not be particularly keen for these readings to spread, but if they consider themselves to be the continuity Domain then they really ought to respect they're within our Domain-assigned purview.""","tstHPCEOGreetAcceptYes:""It's a deal.""
 tstHPCEOGreetAcceptNo:""I'd rather wait until the situation is calmer.""",1
-tstHPCEOGreetDev,tstHPCEOGreetOptions,,,,"tstHPCEOGreetDev1:>> (dev) Start event",1
+tstHPCEOGreetDev,tstHPCEOGreetOptions,,,,tstHPCEOGreetDev1:>> (dev) Start event,1
 tstHPCEOGreetDev1,DialogOptionSelected,$option == tstHPCEOGreetDev1,"$HeliopauseCEOAccepted = true
 tstHP_Heliopause addData 20 ""jump point collapse in Galatia system"";
 unset $HeliopauseCEOGreetReturn
-EndConversation",">> Started event",cutCommLink:Close the comm link,1
+EndConversation",>> Started event,cutCommLink:Close the comm link,1
 tstHPCEOGreetAcceptYes,DialogOptionSelected,$option == tstHPCEOGreetAcceptYes,"AdjustRepActivePerson FRIENDLY 5
 $HeliopauseCEOAccepted = true","""Wonderful, wonderful. I'll send you over a cryptokey, and have you set up on our systems as a subcontractor. If you find any more hyperspace readings or survey data, be sure to return. We'll give you access to any new prototypes or upgrades your data helps us develop.""
 ",tstHPCEOGreetAcceptYes1:Continue,1
@@ -106,12 +106,12 @@ unset $askedConcern
 unset $askedWhy
 EndConversation","You conclude the call, handing over to your respective staff to handle the logistics.
 
-Sensors and Tech collate the data from the window of interest; long-range scans during the jump-point collapse, several days of background readings, and the window leading up to and just after the restabilisation. Some minor edits are required to remove the tell-tale signs of AI cores. Though $personFirstName would almost certainly overlook them, discretion is unlikely to hurt. Transmitting the sheer volume of data takes time, but even before you have finished your comm pings to inform you the credits have been recieved. $HeOrShe is clearly enthusiastic to do business with you.",cutCommLink:Continue
+Sensors and Tech collate the data from the window of interest; long-range scans during the jump-point collapse, several days of background readings, and the window leading up to and just after the restabilisation. Some minor edits are required to remove the tell-tale signs of AI cores. Though $personFirstName would almost certainly overlook them, discretion is unlikely to hurt. Transmitting the sheer volume of data takes time, but even before you have finished your comm pings to inform you the credits have been recieved. $HeOrShe is clearly enthusiastic to do business with you.",cutCommLink:Continue,
 tstHPCEOGreetAcceptNo,DialogOptionSelected,$option == tstHPCEOGreetAcceptNo,$HeliopauseCEOGreetReturn = true,"""Ah, alas. A shame, but not unreasonable - I can understand being concerned that sharing the data might put you in hot water with the parties involved. Once the situation has cooled down a little, as it were, you're more than welcome to return. We'll still be interested in those readings - unless, of course, someone else has already sold us them!""
 
 $personFirstName signs off, seemingly confident of your return.",cutCommLink:Close the comm link,1
-
-# ================ Donating data to progress Heliopause event ================
+,,,,,,
+# ================ Donating data to progress Heliopause event ================,,,,,,
 tstHPCEOSellDataNo,PopulateOptions,"$id == tstHP_heliopause_ceo
 !tstHP_Heliopause canSellData","SetEnabled tstHPCEOSellData1 false
 SetTooltip tstHPCEOSellData1 ""You do not have any Survey Data or Hyperspace Topology to trade.""",,"tstHPCEOSellData1:""I have some data to trade.""",1
@@ -122,9 +122,9 @@ tstHPCEOSoldDataNo,tstHPCEOSoldData,$bountyValue == 0 score:1000,,"""Unfortunate
 tstHPCEOSoldDataYes,tstHPCEOSoldData,$bountyValue > 0 score:1000,"RemoveOption tstHPCEOSellData
 FireAll PopulateOptions","$personFirstName smiles, ""Excellent! Let's see what wonders you've uncovered out there...""",,"Fired from script.
 Needs to rerun fireall to remove give if player gave everything."
-
-# ================ Mission 1: Recover the prototype Pinnacle ================
-# ---------------- Stage 1: Talk to CEO ----------------
+,,,,,,
+# ================ Mission 1: Recover the prototype Pinnacle ================,,,,,,
+# ---------------- Stage 1: Talk to CEO ----------------,,,,,,
 tstHPMissionPinnacleOption,tstHP_mPinnacle_option,,,,tstHPMissionPinnacleText:Ask about the lost prototype.,1
 tstHPMissionPinnacleOptionDev,tstHP_mPinnacle_option,$global.isDevMode,,,tstHPMissionPinnacleDev:>> (dev) Accept mission.,1
 tstHPMissionPinnacleBlurb,tstHP_mPinnacle_blurb,,,"$HeOrShe gestures enthusiastically at one of the privacy-blurred holos on $hisOrHer desk. ""R&D used your readings to complete some triangulation - they think they've tracked down one of our missing prototypes.""",,1
@@ -162,7 +162,7 @@ Call $mHub returnToList","""Marvellous! Then burn bright, as they say.""
 A ping on your communications officer's terminal indicates the approximate location of your target has been transferred.",cutCommLink:Close the comm link,1
 tstHPMissionPinnacleDev,DialogOptionSelected,$option == tstHPMissionPinnacleDev,"$missionId = tstHP_mPinnacle
 Call $mHub accept $missionId",>> Accepted mission,cutCommLink:Close the comm link,1
-# ---------------- Stage 2: Found the fleet, fighting ----------------
+# ---------------- Stage 2: Found the fleet, fighting ----------------,,,,,
 tstHPMissionPinnacleFleetFind,BeginFleetEncounter,"$tstHP_mPinnacle_fleet score:1000
 !$foundFleet",$fidpi_addContinue = true 0,"After hours of tedious tuning and retuning, your sensor officer eventually brings the prototype into focus ""$PlayerSirOrMadam, we're seeing some unusual readings around the vessel. Lots of broad-spectrum EM noise, but also neutrino spikes that resemble reactor flux, and it looks like the storm dampner is still running.""
  
@@ -183,8 +183,8 @@ tstHPMissionPinnacleFleetDefeated,tstHPMissionPinnacleFleetDefeated,,"unset $glo
 $global.tstHP_mPinnacle_stage_RECOVER = true
 Call $global.tstHP_mPinnacle_ref updateStage
 $foundWreck = true","After the final derelict ship sparks its last, there is a short but tense wait, before your sensors officer confirms EM noise has returned to background levels.",tstHPMissionPinnacleFleetDefeated1:Continue,1
-# ---------------- Stage 3: Fought the fleet, recovering ----------------
-tstHPMissionPinnacleFleetDefeated1,DialogOptionSelected,"$option == tstHPMissionPinnacleFleetDefeated1",FireBest OpenInteractionDialog,,,1
+# ---------------- Stage 3: Fought the fleet, recovering ----------------,,,,,
+tstHPMissionPinnacleFleetDefeated1,DialogOptionSelected,$option == tstHPMissionPinnacleFleetDefeated1,FireBest OpenInteractionDialog,,,1
 tstHPMissionPinnacleRecover,ShowSalvageEntityDetails,"$tstHP_pinnacle_mk1_Prototype score:1000
 $customType == wreck",ShowDefaultVisual,"This time, the prototype is quiet.",,1
 tstHPMissionPinnacleRecoverSpecialReturn,CheckSalvageSpecial,"$tstHP_pinnacle_mk1_Prototype score:1000
@@ -236,8 +236,8 @@ $recordingLoops < 5","FireBest tstHPMissionPinnacleLoopEntry
 FireAll tstHPMissionPinnacleLoopOptions",,,1
 tstHPMissionPinnacleLoopOptionsNext,tstHPMissionPinnacleLoopOptions,,,,"tstHPMissionPinnacleLoopNext:Check the next recording
 tstHPMissionPinnacleLoopRandom:Check a random recording",1
-tstHPMissionPinnacleLoopOptionsContinue,tstHPMissionPinnacleLoopOptions,$recordingLoops > 0,,,"tstHPMissionPinnacleLoopContinue:Continue",1
-tstHPMissionPinnacleLoopEntry1,tstHPMissionPinnacleLoopEntry,,"$recordingLoops++","Another grainy video of the bridge of the prototype. All the same crew are present, but at different stations, wearing different uniforms. One thing is the same; the sequence of events. A warning, a dive, then an empty bridge.
+tstHPMissionPinnacleLoopOptionsContinue,tstHPMissionPinnacleLoopOptions,$recordingLoops > 0,,,tstHPMissionPinnacleLoopContinue:Continue,1
+tstHPMissionPinnacleLoopEntry1,tstHPMissionPinnacleLoopEntry,,$recordingLoops++,"Another grainy video of the bridge of the prototype. All the same crew are present, but at different stations, wearing different uniforms. One thing is the same; the sequence of events. A warning, a dive, then an empty bridge.
 OR
 This recording is similar to the first. Though the snow of radiation obscures details, it seems to be same crew, though wearing a different set of uniforms, in different positions. Once again, the strike warning flares on the viewscreen, the phase coils engage, and after the whiteout nobody remains.
 OR
@@ -252,18 +252,18 @@ $global.tstHP_mPinnacle_stage_RETURN = true
 unset $foundWreck
 $doneExplore = true 1
 Call $global.tstHP_mPinnacle_ref updateStage","The prototype Pinnacle has been patched up, ready for return to Heliopause Innovations.",,1
-# ---------------- Stage 4: Recovered the fleet, returning ----------------
+# ---------------- Stage 4: Recovered the fleet, returning ----------------,,,,,
 tstHPMissionPinnacleReturn,PickGreeting,"$id == tstHP_heliopause_ceo score:2000
 $global.tstHP_mPinnacle_stage_RETURN","ShowPersonVisual
 FireAll tstHPMissionPinnacleNews","After a short delay, your comms officer informs you the call is ready to connect, and $name springs onto the viewscreen.
 
 ""Ah, you're back! Marvellous, marvellous. How was your jaunt to the depths of hyperspace?""",,1
-tstHPMissionPinnacleNewsGood,tstHPMissionPinnacleNews,"!$newsGood",,,"tstHPMissionPinnacleNewsGood1:Give $himOrHer the good news",1
-tstHPMissionPinnacleNewsGood1,DialogOptionSelected,"$option == tstHPMissionPinnacleNewsGood1","RemoveOption tstHPMissionPinnacleNewsGood1
+tstHPMissionPinnacleNewsGood,tstHPMissionPinnacleNews,!$newsGood,,,tstHPMissionPinnacleNewsGood1:Give $himOrHer the good news,1
+tstHPMissionPinnacleNewsGood1,DialogOptionSelected,$option == tstHPMissionPinnacleNewsGood1,"RemoveOption tstHPMissionPinnacleNewsGood1
 $newsGood = true 1
 FireAll tstHPMissionPinnacleNews","You forward engineering's report on the salvaged ship. Structural damage is minimal, and almost all systems have been fully repaired. After a short stay in dry dock, the ship could be as good as new.",,1
-tstHPMissionPinnacleNewsBad,tstHPMissionPinnacleNews,"!$newsBad",,,"tstHPMissionPinnacleNewsBad1:Give $himOrHer the bad news",1
-tstHPMissionPinnacleNewsBad1,DialogOptionSelected,"$option == tstHPMissionPinnacleNewsBad1","RemoveOption tstHPMissionPinnacleNewsBad1
+tstHPMissionPinnacleNewsBad,tstHPMissionPinnacleNews,!$newsBad,,,tstHPMissionPinnacleNewsBad1:Give $himOrHer the bad news,1
+tstHPMissionPinnacleNewsBad1,DialogOptionSelected,$option == tstHPMissionPinnacleNewsBad1,"RemoveOption tstHPMissionPinnacleNewsBad1
 $newsBad = true 1
 FireAll tstHPMissionPinnacleNews","You forward your copy of the black-box data archives. $personFirstName eagerly opens up the bridge logs, and you can see them focus intently on a holoscreen, before switching to an expression of confusion and playing the next log. Then the next.
 
@@ -272,23 +272,71 @@ A polite cough jolts them out of the loop.
 ""Ah. Rather unsettling for a practical joke, I suppose. I must say, this isn't exactly what we were hoping for, but I suppose R&D will see if they can do anything with the physical black box. A shame, though - imagine what we could have done with all that data!""",,1
 tstHPMissionPinnacleNewsOdd,tstHPMissionPinnacleNews,"$newsBad
 $newsGood","unset $newsBad
-unset $newsGood",,"tstHPMissionPinnacleNewsOdd1:Continue",1
-tstHPMissionPinnacleNewsOdd1,DialogOptionSelected,"$option == tstHPMissionPinnacleNewsOdd1",,"You recount your interaction with the electromagnetic phenomena surrounding the prototype, and forward the sensor readings and combat logs. $personFirstName's surprise and disappointment from earlier quickly turns into a wide-eyed fascination.
+unset $newsGood",,tstHPMissionPinnacleNewsOdd1:Continue,1
+tstHPMissionPinnacleNewsOdd1,DialogOptionSelected,$option == tstHPMissionPinnacleNewsOdd1,,"You recount your interaction with the electromagnetic phenomena surrounding the prototype, and forward the sensor readings and combat logs. $personFirstName's surprise and disappointment from earlier quickly turns into a wide-eyed fascination.
 
 ""Incredible! A truly fascinating account, and such rigorous data gathering. R&D will be positively giddy with this discovery. Please, do give my thanks to the relevant crew!""
 
 You see $himOrHer wrestle to contain $hisOrHer excitement and display an appropriate level of contrition. ""Though, ahem, I must also congratulate your cool head in such unprecedented circumstances. I must admit, my predecessors records didn't quite cover the, ah, complications of the prototype fully. Rest assured, we will vet any future tasks with a bit more vigor!""
 
-""In any case, your help here has been invaluable, and well-deserving of your compensation.""","tstHPMissionPinnacleReward:Continue",1
-tstHPMissionPinnacleReward,DialogOptionSelected,"$option == tstHPMissionPinnacleReward","unset $global.tst_mPinnacle_stage_RETURN
+""In any case, your help here has been invaluable, and well-deserving of your compensation.""",tstHPMissionPinnacleReward:Continue,1
+tstHPMissionPinnacleReward,DialogOptionSelected,$option == tstHPMissionPinnacleReward,"unset $global.tst_mPinnacle_stage_RETURN
 $global.tstHP_mPinnacle_stage_COMPLETED = true
 Call $global.tstHP_mPinnacle_ref updateStage
 AddTextSmall ""Received updated Pinnacle Mk 1 Storm Dampner algorithms"" highlight","As $personFirstName begins processing the transfer, $heOrShe starts. ""Aha! Of course, the matter of the prototype itself. You may be pleased to learn we uncovered the last set of refinements to the dampner algorithm in the archives, that were never rolled out as all prototypes had been lost. I'll have R&D install them for you. By all means, please keep hold of the prototype and put it to good use collecting data - after all, you are clearly more prepared than most for any, ah, teething troubles that might pop up.""
 
-Your business concluded, $personFirstName signs off.","cutCommLink:Close the comm link",1
+Your business concluded, $personFirstName signs off.",cutCommLink:Close the comm link,1
+,,,,,,
+# ================ Mission 2: Gather data using the Prototype Holiday ================,,,,,,
+# ---------------- Stage 1: Talk to CEO ----------------,,,,,,
+tstHPMissionHolidayOption,tstHP_mHoliday_option,,,,tstHPMissionHolidayText:Ask about the trial data.,1
+tstHPMissionHolidayOptionDev,tstHP_mHoliday_option,$global.isDevMode,,,tstHPMissionHolidayDev:>> (dev) Accept mission.,1
+tstHPMissionHolidayBlurb,tstHP_mHoliday_blurb,,,"""Ah, we were just about to launch a new trial! You're just the person to help with the data gathering.""",,1
+tstHPMissionHolidayText,DialogOptionSelected,$option == tstHPMissionHolidayText,$missionId = tstHP_mHoliday,"""Excellent, excellent! Now, for a little context, tell me - have you spent much time in cryo?""","tstHPMissionHolidayText1Lots:""A very long time.""
+tstHPMissionHolidayText1Little:""Some, from time to time.""
+tstHPMissionHolidayText1Little:""Thankfully not.""",1
+tstHPMissionHolidayText1Lots,DialogOptionSelected,$option == tstHPMissionHolidayText1Lots,FireAll tstHPMissionHolidayText1,"$personFirstName raises their eyebrows in slight concern.
 
-# ================ Comms with possessed ships ================
-tstHPFactionPossessedComms,OpenCommLink,"$faction.id == tstHP_possessed_faction score:1000","EndConversation","Your comms officer bravely attempts to wrestle a signal out of the broad-spectrum EM emissions from the derelicts, but is eventually forced to admit defeat.
+""Well, I'm glad to see you've made it through no worse for the wear.""",,1
+tstHPMissionHolidayText1Little,DialogOptionSelected,$option == tstHPMissionHolidayText1Little,FireAll tstHPMissionHolidayText1,"""Yes, most spacers I've met have  had the odd stint.""",,1
+tstHPMissionHolidayText1None,DialogOptionSelected,$option == tstHPMissionHolidayText1None,FireAll tstHPMissionHolidayText1,"$personFirstName raises their eyebrowns in slight surprise.
+
+""Ah, I suppose you're one of the lucky ones then. Or good, rather.""",,1
+tstHPMissionHolidayText1,tstHPMissionHolidayText1,,,"""Now, I myself have spent a little time in the freezer! A short stint to preserve oxygen after our filters failed out on a survey.""
+
+$HeOrShe briefly shivers as they recall the memories. ""Not a pleasant experience I must say, and by no means as safe as the technique's long pedigree should suggest. Fortunately, I aroused with mere freezer burn, but several of my colleagues sadly never woke at all. A waste of fine minds, and finer folk.""","tstHPMissionHolidayText2:""Continue""",1
+tstHPMissionHolidayText2,DialogOptionSelected,$option == tstHPMissionHolidayText2,,"$HeOrShe swipes several holo-displays, and their mood clearly lifts as a ship begins to float in front of them.
+
+""Heliopause Innovations has, er, innovated a solution for our woes! Pre-Collapse, one of our main trials was the Holiday - a fascinating application of temporal physics for what marketing has insisted we call 'chronosleep', but is frankly simply stasis. Unlike cryosleep, the technique is failsafe! Should the power be cut, or systems damaged,  'chronosleepers'  simply return to local timeflows.""
+
+""Consider the applications! The  great irony of space travel has always been that our defeat  of relativity and time dilation has subjected us to months of tedium. With this technology, passengers can simply skip to the end of their journey, without enduring the risks of cryosleep. ""
+
+$HisOrHer previously sombre tone has now been completely subsumed into a tide of enthusiasm.","tstHPMissionHolidayText3:""Why do you need my help?""",1
+tstHPMissionHolidayText3,DialogOptionSelected,$option == tstHPMissionHolidayText3,,"""Aha, here is the tricky bit! The technology is somewhat hard to scale, and our platform for it, the Holiday, is based on the Starliner. A grand vessel, I'm sure you'd agree, but somewhat too grand for our depleted sector.  A smaller vessel would be much more commercially viable, and so R&D had the idea to use a Holiday as a 'scale model' of one - after all, to a large ship the spacetime near of a black hole is as warped as that near a star is to a small one! We simply need some occupants for the stasis chambers.""
+
+""The ethics there are something of a challenge, I'll admit. Fortunately for us, if perhaps not for all, an accident at Nomios defrosted a bank of patients with no brain activity. The cryosanctum has agreed to transfer us the patients for our trial whilst  the lawsuit is ongoing, to save on the medical bills. A win-win! Well, excepting the poor unfortunates themselves, but I'm sure they would be comforted to know of their contribution to the cutting-edge of science.""","tstHPMissionHolidayText4Merc:""The legal fees will be high enough.""
+tstHPMissionHolidayText4Knowledge:""Better to die for something than nothing.""
+tstHPMissionHolidayText4Humanitarian:""This is undignified.""",
+tstHPMissionHolidayText4Mercenary,DialogOptionSelected,$option == tstHPMissionHolidayText3Knowledge,FireAll tstHPMissionHolidayText4,,,1
+tstHPMissionHolidayText4Knowledge,DialogOptionSelected,$option == tstHPMissionHolidayText3Knowledge,FireAll tstHPMissionHolidayText4,,,1
+tstHPMissionHolidayText4Humanitarian,DialogOptionSelected,$option == tstHPMissionHolidayText3Knowledge,FireAll tstHPMissionHolidayText4,,,1
+tstHPMissionHolidayText4,tstHPMissionHolidayText3Actual,,,"Beaming with triumph, $heOrShe is clearly too caught up in the telling of the tale to hear.
+
+""Anyway, what that means is that they've triangulated the prototype using, ah, the 'reflected glow' of the storm, or close enough. Which means it is within our grasp once again! So to get to the point, we're offering to commission you and your $shipOrFleet to recover and and return it.""","tstHP_mHoliday_briefing4:""Where should I look?""",1
+tstHPMissionHolidayText5,DialogOptionSelected,$option == tstHPMissionHolidayText3Actual,"SetTextHighlights $tstHP_mHoliday_reward
+Call $global.tstHP_mHoliday_ref showMap ""Target: Deep Hyperspace""","""Excellent! It's, ah, somewhere around here-ish"". $HeOrShe waves $hisOrHer hand towards one of the privacy-blurred holos on their desk, before remembering to approve transmission. The fuzzy shapes resolve into a point on a hyperspace chart of the sector.
+
+""Excellent! You're venturing into the storm, but we'll certainly make it worth your while - if the black box kept running, there'll be almost 200 years of data in it, let alone the value our engineering department will get from recovery! Let's say $tstHP_mPinnacle_reward credits.""","tstHP_mHoliday_briefing5:""I'll be back with your missing ship.""",1
+tstHPMissionHolidayText6,DialogOptionSelected,$option == tstHP_mHoliday_briefing5,"AddTextSmall ""Received enhanced hyperspace sensor protocols"" highlight
+Call $mHub accept $missionId
+Call $mHub returnToList","""Marvellous! Then burn bright, as they say.""
+A ping on your communications officer's terminal indicates the approximate location of your target has been transferred.",cutCommLink:Close the comm link,1
+tstHPMissionHolidayDev,DialogOptionSelected,$option == tstHPMissionHolidayDev,"$missionId = tstHP_mHoliday
+Call $mHub accept $missionId",>> Accepted mission,cutCommLink:Close the comm link,1
+,,,,,,
+,,,,,,
+# ================ Comms with possessed ships ================,,,,,,
+tstHPFactionPossessedComms,OpenCommLink,$faction.id == tstHP_possessed_faction score:1000,EndConversation,"Your comms officer bravely attempts to wrestle a signal out of the broad-spectrum EM emissions from the derelicts, but is eventually forced to admit defeat.
 
 ""Sorry $playerSirOrMadam, I can't get anything but noise.""
 

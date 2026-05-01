@@ -59,7 +59,10 @@
         "info_ready": "READY",
         "info_out_of_range": "OUT OF RANGE",
         "info_no_target": "NO TARGET",
-},
+    },
+    "tstHP_stasis_projector_mk1":{
+        "floating_text": "Accelerated time",
+    },
     "tstHP_storm_dampner":{
         "cr_event": "Resisted hyperspace storm damage.",
         "resisted_message": "{{ship}} loses {{cr}} CR resisting storm damage."

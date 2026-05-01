@@ -7,13 +7,9 @@
     "spriteName":"graphics/toaster/hp/ships/pinnacle/pinnacle_mk1.png",
     "baseValueMult":1.5,
     "systemId":"tstHP_attractor_field_mk1",
-    "removeWeaponSlots":["WS 012"], 		# ids
-    "removeEngineSlots":[], 		# indices, as engine slots have no id in the .ship file
-    "removeBuiltInMods":[], 		# hullmod ids,
-    "removeBuiltInWings":["tstHP_pinnacle_drone_wing"],
-    "removeBuiltInWeapons":[""], 		# weapon slot ids
     "builtInMods":["tstHP_pinnacle_mk1_hullmod"],
-    "builtInWeapons":{}
+    "removeWeaponSlots":["WS 012"], 		# ids
+    "removeBuiltInWings":["tstHP_pinnacle_drone_wing"]
 }
 
 

@@ -15,15 +15,6 @@ As part of the redesign, the Apogee-class' forward section is replaced with a ba
 The ship is a relatively uncommon sight, at least in part due to difficulties recruiting sufficient sensor and field technicians. With the forward section repurposed, crews are relegated to what were originally shift quarters in the engine block and converted cargo bays, facing greater risks than Apogee-class crews in worse conditions.
 
 These can include, due to fundamental design flaws, the sudden overload and failure of the projectors if the ship enters sufficiently deep hyperspace. Though a non-issue in abyssal hyperspace where no storm protection is needed, crews occasionally find themselves scrambling to reset systems during regular storms."
-tstHP_pinnacle_mk1,SHIP,"A licensed modification of the Apogee-class, the Pinnacle acts as a lightning rod that protects exploration fleets from hyperspace storm strikes by attracting then intercepting them with ablative drones.
-
-As part of the redesign, the Apogee-class' forward section is replaced with a battery of compute cores and high-powered field projectors. In hyperspace, this allows the ship to monitor and modify the drive bubble on the fly, whilst in N-space the ship can use the same arrays to redirect high-energy projectiles.
-
-The ship is a relatively uncommon sight, at least in part due to difficulties recruiting sufficient sensor and field technicians. With the forward section repurposed, crews are relegated to what were originally shift quarters in the engine block and converted cargo bays, facing greater risks than Apogee-class crews in worse conditions.
-
-These can include, due to fundamental design flaws, the sudden overload and failure of the projectors if the ship enters sufficiently deep hyperspace. Though a non-issue in abyssal hyperspace where no storm protection is needed, crews occasionally find themselves scrambling to reset systems during regular storms.
-
-This early prototype does not use ablative drones to intercept storm strikes, instead using its field projectors to displace the ship into P-space to avoid them."
 tstHP_holiday,SHIP,"A licensed modification of the Starliner, the Holiday uses temporal manipulation as an alternative to cryosleep for long-distance missions.
 
 Frontier surveys routinely involve long travel times for large crews. As traditional cryosleep poses a risk of brain damage or death on during freezing or defrosting, the hazard pay required means long-distance trips can be ruinously expensive. Instead, the Holiday uses 'chronosleep' - holding passengers in stasis using temporal dampening fields.
@@ -51,8 +42,12 @@ Using esoteric high-energy physics and an array of sub-AI compute cores, the shi
 This prototype version uses a shallow displacement into P-Space to evade attracted strikes, instead of intercepting them with drones. This feature was removed from the production model due to persistent safety concerns.",Special,"Phases the ship whilst projecting a field that attracts projectiles.",,"Redirects projectiles within {{1600}} units towards the ship by {{120}} degrees per second, and slows them by {{33%}} per second. The ship is phased during the system's activation."
 tstHP_stasis_projector,SHIP_SYSTEM,"Freezes a ship in place, rendering it immune to damage.
 
-""Apparently the maths 'came to them in a dream', but they know you don't sleep. My bet? They're laundering a hidden AI core.""
+""Apparently the maths 'came to them in a dream'. They know you don't sleep in there. My bet's they got an AI core stashed somewhere.""
 - Overheard, Heliopause Innovations R&D",Special,"Freezes a ship in place, rendering it immune to damage.",,"The target ship reduces time rate by {{95%}} and damage by {{100%}} for {{3}} seconds."
+tstHP_stasis_projector_mk1,SHIP_SYSTEM,"Freezes a ship in place, rendering it immune to damage. If the ship is friendly, when stasis wears off it experiences a burst of accelerated time.
+
+""Apparently the maths 'came to them in a dream'. They know you don't sleep in there. My bet's they got an AI core stashed somewhere.""
+- Overheard, Heliopause Innovations R&D",Special,"Freezes a ship in place, rendering it immune to damage.",,"The target ship reduces time rate by {{95%}} and damage by {{100%}} for {{3}} seconds. If friendly, they then have {{1 second}} at {{300%}} time rate."
 
 tstHP_possessed_damper_system,SHIP_SYSTEM,"Highly-charged hull plating dramatically reduces damage.
 

@@ -37,8 +37,10 @@ public class StasisProjector extends BaseShipSystemScript {
     public static final String INFO_TEXT_OUT_OF_RANGE = Global.getSettings().getString(ID, "info_out_of_range");  /// The system info text shown when the mouse is out of range.
     public static final String INFO_TEXT_NO_TARGET = Global.getSettings().getString(ID, "info_no_target");  /// The system info text shown when there's no target.
 
-    public static final Color JITTER_COLOR = new Color(90,165,255,55);
-    public static final Color JITTER_UNDER_COLOR = new Color(90,165,255,155);
+    public static final Color FAST_JITTER_COLOR = new Color(90,165,255,55);
+    public static final Color FAST_JITTER_UNDER_COLOR = new Color(90,165,255,155);
+    public static final Color SLOW_JITTER_COLOR = new Color(255,165,90,55);
+    public static final Color SLOW_JITTER_UNDER_COLOR = new Color(255,165,90,155);
     public static final float JITTER_UNDER_BONUS = 7f;
     public static final float JITTER_MAX_RANGE_BONUS = 10f;
 
@@ -101,6 +103,84 @@ public class StasisProjector extends BaseShipSystemScript {
 	}
 
     /**
+     * Plugin added that runs the stasis effect.
+     */
+    public static class StasisProjectorTargetPlugin extends BaseEveryFrameCombatPlugin {
+        private final String id;
+        private final TargetData targetData;
+        private final StasisProjector stasisProjector;
+
+        public StasisProjectorTargetPlugin(StasisProjector stasisProjector, TargetData targetData, String id) {
+            this.id = id;
+            this.targetData = targetData;
+            this.stasisProjector = stasisProjector;
+        }
+
+        @Override
+        public void advance(float amount, List<InputEventAPI> events) {
+            CombatEngineAPI engine = Global.getCombatEngine();
+
+            if (engine.isPaused()) return;
+
+            if (targetData.target == engine.getPlayerShip()) {
+                engine.maintainStatusForPlayerShip(
+                        KEY_TARGET,
+                        targetData.ship.getSystem().getSpecAPI().getIconSpriteName(),
+                        targetData.ship.getSystem().getDisplayName(),
+                        "" + (int)(getTimeRate(targetData.currTimeMult) * 100f) + " " + STATUS_TARGET_TEXT, true
+                );
+            }
+
+            if (targetData.currDamageMult == 1f || !targetData.ship.isAlive()) {
+                engine.getTimeMult().unmodifyMult(id);
+                targetData.target.getMutableStats().getTimeMult().unmodifyMult(id);
+                targetData.target.getMutableStats().getHullDamageTakenMult().unmodify(id);
+                targetData.target.getMutableStats().getArmorDamageTakenMult().unmodify(id);
+                targetData.target.getMutableStats().getShieldDamageTakenMult().unmodify(id);
+                targetData.target.getMutableStats().getEmpDamageTakenMult().unmodify(id);
+                targetData.target.getMutableStats().getProjectileSpeedMult().unmodify(id);
+                engine.removePlugin(targetData.targetEffectPlugin);
+                stasisProjector.applyPostStasisEffect(targetData, id);
+
+            } else {
+                targetData.target.getMutableStats().getTimeMult().modifyMult(id, targetData.currTimeMult);
+                targetData.target.getMutableStats().getHullDamageTakenMult().modifyMult(id, targetData.currDamageMult);
+                targetData.target.getMutableStats().getArmorDamageTakenMult().modifyMult(id, targetData.currDamageMult);
+                targetData.target.getMutableStats().getShieldDamageTakenMult().modifyMult(id, targetData.currDamageMult);
+                targetData.target.getMutableStats().getEmpDamageTakenMult().modifyMult(id, targetData.currDamageMult);
+                targetData.target.getMutableStats().getProjectileSpeedMult().modifyMult(id, targetData.currDamageMult);
+                targetData.target.setJitter(
+                        this, SLOW_JITTER_COLOR, targetData.jitterLevel,
+                        3, 0, 0 + targetData.jitterLevel *  JITTER_MAX_RANGE_BONUS
+                );
+                targetData.target.setJitterUnder(
+                        this, SLOW_JITTER_UNDER_COLOR, targetData.jitterLevel,
+                        25, 0f, JITTER_UNDER_BONUS + targetData.jitterLevel *  JITTER_MAX_RANGE_BONUS
+                );
+                targetData.target.getEngineController().fadeToOtherColor(
+                        this, SLOW_JITTER_COLOR, SLOW_JITTER_COLOR, targetData.engineFadeLevel, 0.5f
+                );
+            }
+
+            if (targetData.state == State.IN || targetData.state == State.ACTIVE) {
+                targetData.target.getEngineController().fadeToOtherColor(
+                        this, SLOW_JITTER_COLOR, SLOW_JITTER_COLOR, 1f - targetData.currDamageMult, 1f
+                );
+            }
+        }
+    }
+
+    /**
+     * Stub for overriding by the Mk 1.
+     *
+     * @param targetData The target data used.
+     * @param id The id of the ship for mod applying/unapplying.
+     */
+    public void applyPostStasisEffect(TargetData targetData, String id) {
+        return;
+    }
+
+    /**
      * Called every frame to update the target data to apply to the targeted ship.
      *
      * @param stats The stats of the ship the system is on.
@@ -150,60 +230,63 @@ public class StasisProjector extends BaseShipSystemScript {
         targetData.jitterLevel = getJitterLevel(effectLevel, state, ship.getSystem().getChargeUpDur());
 
 		if (targetData.targetEffectPlugin == null) {
-			targetData.targetEffectPlugin = new BaseEveryFrameCombatPlugin() {
-				@Override
-				public void advance(float amount, List<InputEventAPI> events) {
-                    CombatEngineAPI engine = Global.getCombatEngine();
-
-					if (engine.isPaused()) return;
-
-					if (targetData.target == engine.getPlayerShip()) {
-                        engine.maintainStatusForPlayerShip(
-                                KEY_TARGET,
-								targetData.ship.getSystem().getSpecAPI().getIconSpriteName(),
-								targetData.ship.getSystem().getDisplayName(), 
-								"" + (int)(getTimeRate(targetData.currTimeMult) * 100f) + " " + STATUS_TARGET_TEXT, true
-                        );
-					}
-					
-					if (targetData.currDamageMult == 1f || !targetData.ship.isAlive()) {
-                        engine.getTimeMult().unmodifyMult(id);
-                        targetData.target.getMutableStats().getTimeMult().unmodifyMult(id);
-						targetData.target.getMutableStats().getHullDamageTakenMult().unmodify(id);
-						targetData.target.getMutableStats().getArmorDamageTakenMult().unmodify(id);
-						targetData.target.getMutableStats().getShieldDamageTakenMult().unmodify(id);
-						targetData.target.getMutableStats().getEmpDamageTakenMult().unmodify(id);
-                        targetData.target.getMutableStats().getProjectileSpeedMult().unmodify(id);
-                        engine.removePlugin(targetData.targetEffectPlugin);
-
-					} else {
-                        targetData.target.getMutableStats().getTimeMult().modifyMult(id, targetData.currTimeMult);
-						targetData.target.getMutableStats().getHullDamageTakenMult().modifyMult(id, targetData.currDamageMult);
-						targetData.target.getMutableStats().getArmorDamageTakenMult().modifyMult(id, targetData.currDamageMult);
-						targetData.target.getMutableStats().getShieldDamageTakenMult().modifyMult(id, targetData.currDamageMult);
-						targetData.target.getMutableStats().getEmpDamageTakenMult().modifyMult(id, targetData.currDamageMult);
-                        targetData.target.getMutableStats().getProjectileSpeedMult().modifyMult(id, targetData.currDamageMult);
-                        targetData.target.setJitter(
-                                this, JITTER_COLOR, targetData.jitterLevel,
-                                3, 0, 0 + targetData.jitterLevel *  JITTER_MAX_RANGE_BONUS
-                        );
-                        targetData.target.setJitterUnder(
-                                this, JITTER_UNDER_COLOR, targetData.jitterLevel,
-                                25, 0f, JITTER_UNDER_BONUS + targetData.jitterLevel *  JITTER_MAX_RANGE_BONUS
-                        );
-                        targetData.target.getEngineController().fadeToOtherColor(
-                                this, JITTER_COLOR, JITTER_COLOR, targetData.engineFadeLevel, 0.5f
-                        );
-					}
-
-                    if (state == State.IN || state == State.ACTIVE) {
-                        targetData.target.getEngineController().fadeToOtherColor(
-                                this, JITTER_COLOR, JITTER_COLOR, 1f - targetData.currDamageMult, 1f
-                        );
-                    }
-				}
-			};
+            targetData.targetEffectPlugin = new StasisProjectorTargetPlugin(this, targetData, id);
             engine.addPlugin(targetData.targetEffectPlugin);
+
+//			targetData.targetEffectPlugin = new BaseEveryFrameCombatPlugin() {
+//				@Override
+//				public void advance(float amount, List<InputEventAPI> events) {
+//                    CombatEngineAPI engine = Global.getCombatEngine();
+//
+//					if (engine.isPaused()) return;
+//
+//					if (targetData.target == engine.getPlayerShip()) {
+//                        engine.maintainStatusForPlayerShip(
+//                                KEY_TARGET,
+//								targetData.ship.getSystem().getSpecAPI().getIconSpriteName(),
+//								targetData.ship.getSystem().getDisplayName(),
+//								"" + (int)(getTimeRate(targetData.currTimeMult) * 100f) + " " + STATUS_TARGET_TEXT, true
+//                        );
+//					}
+//
+//					if (targetData.currDamageMult == 1f || !targetData.ship.isAlive()) {
+//                        engine.getTimeMult().unmodifyMult(id);
+//                        targetData.target.getMutableStats().getTimeMult().unmodifyMult(id);
+//						targetData.target.getMutableStats().getHullDamageTakenMult().unmodify(id);
+//						targetData.target.getMutableStats().getArmorDamageTakenMult().unmodify(id);
+//						targetData.target.getMutableStats().getShieldDamageTakenMult().unmodify(id);
+//						targetData.target.getMutableStats().getEmpDamageTakenMult().unmodify(id);
+//                        targetData.target.getMutableStats().getProjectileSpeedMult().unmodify(id);
+//                        engine.removePlugin(targetData.targetEffectPlugin);
+//
+//					} else {
+//                        targetData.target.getMutableStats().getTimeMult().modifyMult(id, targetData.currTimeMult);
+//						targetData.target.getMutableStats().getHullDamageTakenMult().modifyMult(id, targetData.currDamageMult);
+//						targetData.target.getMutableStats().getArmorDamageTakenMult().modifyMult(id, targetData.currDamageMult);
+//						targetData.target.getMutableStats().getShieldDamageTakenMult().modifyMult(id, targetData.currDamageMult);
+//						targetData.target.getMutableStats().getEmpDamageTakenMult().modifyMult(id, targetData.currDamageMult);
+//                        targetData.target.getMutableStats().getProjectileSpeedMult().modifyMult(id, targetData.currDamageMult);
+//                        targetData.target.setJitter(
+//                                this, JITTER_COLOR, targetData.jitterLevel,
+//                                3, 0, 0 + targetData.jitterLevel *  JITTER_MAX_RANGE_BONUS
+//                        );
+//                        targetData.target.setJitterUnder(
+//                                this, JITTER_UNDER_COLOR, targetData.jitterLevel,
+//                                25, 0f, JITTER_UNDER_BONUS + targetData.jitterLevel *  JITTER_MAX_RANGE_BONUS
+//                        );
+//                        targetData.target.getEngineController().fadeToOtherColor(
+//                                this, JITTER_COLOR, JITTER_COLOR, targetData.engineFadeLevel, 0.5f
+//                        );
+//					}
+//
+//                    if (state == State.IN || state == State.ACTIVE) {
+//                        targetData.target.getEngineController().fadeToOtherColor(
+//                                this, JITTER_COLOR, JITTER_COLOR, 1f - targetData.currDamageMult, 1f
+//                        );
+//                    }
+//				}
+//			};
+//            engine.addPlugin(targetData.targetEffectPlugin);
 		}
 	}
 
