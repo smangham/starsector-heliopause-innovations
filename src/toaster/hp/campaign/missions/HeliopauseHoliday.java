@@ -340,9 +340,3 @@ public class HeliopauseHoliday extends HubMissionWithSearch {
         return super.getPostfixForState();
     }
 }
-
-
-
-
-
-

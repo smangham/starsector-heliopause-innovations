@@ -317,23 +317,25 @@ tstHPMissionHolidayText3,DialogOptionSelected,$option == tstHPMissionHolidayText
 ""The ethics there are something of a challenge, I'll admit. Fortunately for us, if perhaps not for all, an accident at Nomios defrosted a bank of patients with no brain activity. The cryosanctum has agreed to transfer us the patients for our trial whilst  the lawsuit is ongoing, to save on the medical bills. A win-win! Well, excepting the poor unfortunates themselves, but I'm sure they would be comforted to know of their contribution to the cutting-edge of science.""","tstHPMissionHolidayText4Merc:""The legal fees will be high enough.""
 tstHPMissionHolidayText4Knowledge:""Better to die for something than nothing.""
 tstHPMissionHolidayText4Humanitarian:""This is undignified.""",
-tstHPMissionHolidayText4Mercenary,DialogOptionSelected,$option == tstHPMissionHolidayText3Knowledge,FireAll tstHPMissionHolidayText4,,,1
-tstHPMissionHolidayText4Knowledge,DialogOptionSelected,$option == tstHPMissionHolidayText3Knowledge,FireAll tstHPMissionHolidayText4,,,1
-tstHPMissionHolidayText4Humanitarian,DialogOptionSelected,$option == tstHPMissionHolidayText3Knowledge,FireAll tstHPMissionHolidayText4,,,1
-tstHPMissionHolidayText4,tstHPMissionHolidayText3Actual,,,"Beaming with triumph, $heOrShe is clearly too caught up in the telling of the tale to hear.
-
-""Anyway, what that means is that they've triangulated the prototype using, ah, the 'reflected glow' of the storm, or close enough. Which means it is within our grasp once again! So to get to the point, we're offering to commission you and your $shipOrFleet to recover and and return it.""","tstHP_mHoliday_briefing4:""Where should I look?""",1
-tstHPMissionHolidayText5,DialogOptionSelected,$option == tstHPMissionHolidayText3Actual,"SetTextHighlights $tstHP_mHoliday_reward
-Call $global.tstHP_mHoliday_ref showMap ""Target: Deep Hyperspace""","""Excellent! It's, ah, somewhere around here-ish"". $HeOrShe waves $hisOrHer hand towards one of the privacy-blurred holos on their desk, before remembering to approve transmission. The fuzzy shapes resolve into a point on a hyperspace chart of the sector.
-
-""Excellent! You're venturing into the storm, but we'll certainly make it worth your while - if the black box kept running, there'll be almost 200 years of data in it, let alone the value our engineering department will get from recovery! Let's say $tstHP_mPinnacle_reward credits.""","tstHP_mHoliday_briefing5:""I'll be back with your missing ship.""",1
-tstHPMissionHolidayText6,DialogOptionSelected,$option == tstHP_mHoliday_briefing5,"AddTextSmall ""Received enhanced hyperspace sensor protocols"" highlight
+tstHPMissionHolidayText4Mercenary,DialogOptionSelected,$option == tstHPMissionHolidayText3Knowledge,"FireAll tstHPMissionHolidayText4
+$player.ethosMercenary++","$HeOrShe nods. ""Whilst I must admit I business is not my first love, as CEO have certainly come to appreciate a good deal when one presents itself.""",,1
+tstHPMissionHolidayText4Knowledge,DialogOptionSelected,$option == tstHPMissionHolidayText3Knowledge,"FireAll tstHPMissionHolidayText4
+$player.ethosKnowledge++","$HeOrShe beams. ""Exactly! Better that you leave the world richer in knowledge than you found it.""",,1
+tstHPMissionHolidayText4Humanitarian,DialogOptionSelected,$option == tstHPMissionHolidayText3Knowledge,"FireAll tstHPMissionHolidayText4
+$player.ethosHumanitarian++","$HeOrShe frowns. ""I can hardly think of a more dignified cause than the pursuit of knowledge.""",,1
+tstHPMissionHolidayText4,tstHPMissionHolidayText4,,,"""Anyway, whilst the legal wrangling is likely to be interminable, we're keen to start our trials as soon as possible. Can I prevail on you to take the prototype to Nomios and then on to the test location?""","tstHPMissionHolidayAccept:""Yes""
+tstHPMissionHolidayDecline:""No""",1
+tstHPMissionHolidayAccept,DialogOptionSelected,$option == tstHPMissionHolidayAccept,"SetTextHighlights $tstHP_mHoliday_reward
+Call $global.tstHP_mHoliday_ref showMap ""Target: Deep Hyperspace""","""Marvellous! You prove ever the reliable collaborator.""",tstHPMissionHolidayAccept1:Continue,1
+tstHPMissionHolidayAccept2,DialogOptionSelected,$option == tstHPMissionHolidayAccept2,"SetTextHighlights $tstHP_mHoliday_reward
+Call $global.tstHP_mHoliday_ref showMap ""Target: Deep Hyperspace""","After the schematics for the Holiday are beamed through, Tech and Engineering quickly assemble a skeleton crew capable of managing the esoteric systems aboard, who shuttle down for a short briefing with Heliopause Innovations R&D. Tech relays that, much their disappointment, the amenities for which the Starliner is famous are absent - airy corridors choked with snaking cables and the numerous bars and function rooms now humming banks of t",cutCommLink:Leave,1
+tstHPMissionHolidayDecline,DialogOptionSelected,$option == tstHPMissionHolidayDecline,"AddTextSmall ""Received enhanced hyperspace sensor protocols"" highlight
 Call $mHub accept $missionId
 Call $mHub returnToList","""Marvellous! Then burn bright, as they say.""
-A ping on your communications officer's terminal indicates the approximate location of your target has been transferred.",cutCommLink:Close the comm link,1
+A ping on your communications officer's terminal indicates the approximate location of your target has been transferred.",,1
 tstHPMissionHolidayDev,DialogOptionSelected,$option == tstHPMissionHolidayDev,"$missionId = tstHP_mHoliday
 Call $mHub accept $missionId",>> Accepted mission,cutCommLink:Close the comm link,1
-,,,,,,
+# ---------------- Stage 2: Talk to Chief Counsel ----------------,,,,,,
 ,,,,,,
 # ================ Comms with possessed ships ================,,,,,,
 tstHPFactionPossessedComms,OpenCommLink,$faction.id == tstHP_possessed_faction score:1000,EndConversation,"Your comms officer bravely attempts to wrestle a signal out of the broad-spectrum EM emissions from the derelicts, but is eventually forced to admit defeat.
