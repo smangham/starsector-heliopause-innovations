@@ -335,7 +335,20 @@ Call $mHub returnToList","""Marvellous! Then burn bright, as they say.""
 A ping on your communications officer's terminal indicates the approximate location of your target has been transferred.",,1
 tstHPMissionHolidayDev,DialogOptionSelected,$option == tstHPMissionHolidayDev,"$missionId = tstHP_mHoliday
 Call $mHub accept $missionId",>> Accepted mission,cutCommLink:Close the comm link,1
-# ---------------- Stage 2: Talk to Chief Counsel ----------------,,,,,,
+# ---------------- Stage 2: Collect Cryopatients  ----------------,,,,,,
+,PickGreeting,"$global.tstHP_mHoliday_stage_COLLECT_CRYO
+$market.id == nomios
+$postId == executive",,,,
+,,,,,,
+# ---------------- Stage 3: Reach Black Hole  ----------------,,,,,,
+,,,,,,
+,,,,,,
+# ---------------- Stage 4: Return Cryopatients  ----------------,,,,,,
+,,,,,,
+,,,,,,
+# ---------------- Stage 5: Return to Heliopause  ----------------,,,,,,
+tstHPMissionHolidayReturn,PickGreeting,"$id == tstHP_heliopause_ceo score:2000
+$global.tstHP_mHoliday_stage_RETURN",ShowPersonVisual,,,
 ,,,,,,
 # ================ Comms with possessed ships ================,,,,,,
 tstHPFactionPossessedComms,OpenCommLink,$faction.id == tstHP_possessed_faction score:1000,EndConversation,"Your comms officer bravely attempts to wrestle a signal out of the broad-spectrum EM emissions from the derelicts, but is eventually forced to admit defeat.
